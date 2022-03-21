@@ -6,7 +6,7 @@ import edu.hitsz.bullet.AbstractBullet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AbstractEnemy extends AbstractAircraft {
+public abstract class AbstractEnemy extends AbstractAircraft {
     private int score;
 
     public AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score) {

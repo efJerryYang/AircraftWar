@@ -1,7 +1,8 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
-import edu.hitsz.bullet.AbstractBullet;
+import edu.hitsz.bullet.*;
+//import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.basic.FlyingObject;
 
 import javax.swing.*;
@@ -158,7 +159,10 @@ public class Game extends JPanel {
     }
 
     private void shootAction() {
-        // TODO 敌机射击
+        // [DONE] TODO 敌机射击
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            enemyBullets.addAll(enemyAircraft.shoot());
+        }
 
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
@@ -187,8 +191,16 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // TODO 敌机子弹攻击英雄
-
+        // [DONE] TODO 敌机子弹攻击英雄
+        for (AbstractBullet bullet : enemyBullets) {
+            if (bullet.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(bullet)) {
+                heroAircraft.decreaseHp(bullet.getPower());
+                bullet.vanish();
+            }
+        }
         // 英雄子弹攻击敌机
         for (AbstractBullet bullet : heroBullets) {
             if (bullet.notValid()) {
@@ -214,6 +226,7 @@ public class Game extends JPanel {
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
+                    // my Todo: 添加爆炸特效
                 }
             }
         }
