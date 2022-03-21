@@ -4,6 +4,10 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.*;
 //import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.basic.FlyingObject;
+import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BloodProp;
+import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.BulletProp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +39,7 @@ public class Game extends JPanel {
     private final List<AbstractEnemy> enemyAircrafts;
     private final List<AbstractBullet> heroBullets;
     private final List<AbstractBullet> enemyBullets;
+    private final List<AbstractProp> props;
 
     private int enemyMaxNumber = 5;
 
@@ -49,6 +54,8 @@ public class Game extends JPanel {
     private int cycleTime = 0;
     private int mobCnt = 0;
     private int mobCntMax = 15;
+    private int propSpeedX = 0;
+    private int propSpeedY = 1;
 
     public Game() {
         heroAircraft = new HeroAircraft(
@@ -59,7 +66,7 @@ public class Game extends JPanel {
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
-
+        props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
         executorService = new ScheduledThreadPoolExecutor(1);
 
@@ -115,6 +122,8 @@ public class Game extends JPanel {
 
             // 飞机移动
             aircraftsMoveAction();
+
+            propMoveAction();
 
             // 撞击检测
             crashCheckAction();
@@ -183,6 +192,11 @@ public class Game extends JPanel {
         }
     }
 
+    private void propMoveAction() {
+        for (AbstractProp prop : props) {
+            prop.forward();
+        }
+    }
 
     /**
      * 碰撞检测：
@@ -218,8 +232,26 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        // TODO 获得分数，产生道具补给
+                        // [DONE] TODO 获得分数，产生道具补给
                         score += enemyAircraft.getScore();
+                        if (Math.random() < 1.0 / 3) {
+                            double randNum = Math.random();
+                            String type = randNum < 1.0 / 3 ? "blood"
+                                    : randNum < 2.0 / 3 ? "bomb"
+                                    : "bullet";
+                            if (type == "blood") {
+                                props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        propSpeedX, propSpeedY, type));
+                            } else if (type == "bomb") {
+                                props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        propSpeedX, propSpeedY, type));
+
+                            } else if (type == "bullet") {
+                                props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        propSpeedX, propSpeedY, type));
+                            }
+
+                        }
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
@@ -230,7 +262,6 @@ public class Game extends JPanel {
                 }
             }
         }
-
         // Todo: 我方获得道具，道具生效
 
     }
@@ -278,7 +309,7 @@ public class Game extends JPanel {
         paintImageWithPositionRevised(g, heroBullets);
 
         paintImageWithPositionRevised(g, enemyAircrafts);
-
+        paintImageWithPositionRevised(g, props);
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
                 heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
 
@@ -309,6 +340,5 @@ public class Game extends JPanel {
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
-
 
 }
