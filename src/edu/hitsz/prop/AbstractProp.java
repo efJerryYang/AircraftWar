@@ -1,9 +1,13 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.AbstractEnemy;
+import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.FlyingObject;
 
-public class AbstractProp extends FlyingObject {
+import java.util.List;
+
+public abstract class AbstractProp extends FlyingObject {
 
     // my Todo: 这里需要重构，对于FlyingObject的分类是不完全合理的，敌方飞行物应当放在一类里面
     private String type = null;
@@ -30,6 +34,13 @@ public class AbstractProp extends FlyingObject {
             // 向上飞行出界
             vanish();
         }
+    }
+
+    public void activate(HeroAircraft heroAircraft){
 
     }
+    public void activate(List<AbstractEnemy> abstractEnemyList) {
+
+    }
+
 }

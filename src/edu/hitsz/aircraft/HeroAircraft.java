@@ -2,6 +2,10 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.AbstractBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BloodProp;
+import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.BulletProp;
 
 import java.util.LinkedList;
 import java.util.List;

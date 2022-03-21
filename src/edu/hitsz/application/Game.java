@@ -263,6 +263,17 @@ public class Game extends JPanel {
             }
         }
         // Todo: 我方获得道具，道具生效
+        for (AbstractProp prop : props) {
+            if (prop.notValid()) {
+                continue;
+            }
+            if (prop.crash(heroAircraft)) {
+                prop.activate(heroAircraft);
+                prop.activate(enemyAircrafts);
+                prop.vanish();
+                // my Todo: 添加加血特效
+            }
+        }
 
     }
 
@@ -278,6 +289,7 @@ public class Game extends JPanel {
         enemyBullets.removeIf(FlyingObject::notValid);
         heroBullets.removeIf(FlyingObject::notValid);
         enemyAircrafts.removeIf(FlyingObject::notValid);
+        props.removeIf(FlyingObject::notValid);
     }
 
 
