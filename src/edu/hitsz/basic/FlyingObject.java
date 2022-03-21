@@ -73,6 +73,7 @@ public abstract class FlyingObject {
     /**
      * 可飞行对象根据速度移动
      * 若飞行对象触碰到横向边界，横向速度反向
+     * 若飞行对象超出y轴表示范围，标记为出界
      */
     public void forward() {
         locationX += speedX;
@@ -81,19 +82,27 @@ public abstract class FlyingObject {
             // 横向超出边界后反向
             speedX = -speedX;
         }
+        // 判定 y 轴出界
+        if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT) {
+            // 向下飞行出界
+            vanish();
+        } else if (locationY <= 0) {
+            // 向上飞行出界
+            vanish();
+        }
     }
 
     /**
      * 碰撞检测，当对方坐标进入我方范围，判定我方击中<br>
      * 对方与我方覆盖区域有交叉即判定撞击。
-     *  <br>
+     * <br>
      * 非飞机对象区域：
-     *  横向，[x - width/2, x + width/2]
-     *  纵向，[y - height/2, y + height/2]
-     *  <br>
+     * 横向，[x - width/2, x + width/2]
+     * 纵向，[y - height/2, y + height/2]
+     * <br>
      * 飞机对象区域：
-     *  横向，[x - width/2, x + width/2]
-     *  纵向，[y - height/4, y + height/4]
+     * 横向，[x - width/2, x + width/2]
+     * 纵向，[y - height/4, y + height/4]
      *
      * @param flyingObject 撞击对方
      * @return true: 我方被击中; false 我方未被击中
@@ -108,10 +117,10 @@ public abstract class FlyingObject {
         int fWidth = flyingObject.getWidth();
         int fHeight = flyingObject.getHeight();
 
-        return x + (fWidth+this.getWidth())/2 > locationX
-                && x - (fWidth+this.getWidth())/2 < locationX
-                && y + ( fHeight/fFactor+this.getHeight()/factor )/2 > locationY
-                && y - ( fHeight/fFactor+this.getHeight()/factor )/2 < locationY;
+        return x + (fWidth + this.getWidth()) / 2 > locationX
+                && x - (fWidth + this.getWidth()) / 2 < locationX
+                && y + (fHeight / fFactor + this.getHeight() / factor) / 2 > locationY
+                && y - (fHeight / fFactor + this.getHeight() / factor) / 2 < locationY;
     }
 
     public int getLocationX() {
@@ -122,7 +131,7 @@ public abstract class FlyingObject {
         return locationY;
     }
 
-    public void setLocation(double locationX, double locationY){
+    public void setLocation(double locationX, double locationY) {
         this.locationX = (int) locationX;
         this.locationY = (int) locationY;
     }
@@ -132,14 +141,14 @@ public abstract class FlyingObject {
     }
 
     public BufferedImage getImage() {
-        if (image == null){
+        if (image == null) {
             image = ImageManager.get(this);
         }
         return image;
     }
 
     public int getWidth() {
-        if (width == -1){
+        if (width == -1) {
             // 若未设置，则查询图片宽度并设置
             width = ImageManager.get(this).getWidth();
         }
@@ -147,12 +156,13 @@ public abstract class FlyingObject {
     }
 
     public int getHeight() {
-        if (height == -1){
+        if (height == -1) {
             // 若未设置，则查询图片高度并设置
             height = ImageManager.get(this).getHeight();
         }
         return height;
     }
+
     public boolean notValid() {
         return !this.isValid;
     }
@@ -165,7 +175,8 @@ public abstract class FlyingObject {
     public void vanish() {
         isValid = false;
     }
-    public void explode(){
+
+    public void explode() {
         // my Todo: load explode images (2-4) from other airwar repo
     }
 

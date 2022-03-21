@@ -7,12 +7,12 @@ import java.util.List;
 
 public class BloodProp extends AbstractProp {
 
-    public BloodProp(int locationX, int locationY, int speedX, int speedY, String type) {
-        super(locationX, locationY, speedX, speedY, type);
+    public BloodProp(int locationX, int locationY, int speedX, int speedY, int score, String type) {
+        super(locationX, locationY, speedX, speedY, score, type);
     }
 
     public void activate(HeroAircraft heroAircraft) {
         System.out.println("BloodSupply active!");
-        heroAircraft.increaseHp(50);
+        heroAircraft.increaseHp(100);
     }
 }

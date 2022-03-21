@@ -2,7 +2,6 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.*;
-//import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.basic.FlyingObject;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
@@ -11,6 +10,8 @@ import edu.hitsz.prop.BulletProp;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.concurrent.*;
  *
  * @author hitsz
  */
-public class Game extends JPanel {
+public class Game extends JPanel implements KeyListener {
 
     private int backGroundTop = 0;
 
@@ -37,11 +38,11 @@ public class Game extends JPanel {
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractEnemy> enemyAircrafts;
-    private final List<AbstractBullet> heroBullets;
-    private final List<AbstractBullet> enemyBullets;
+    private final List<BaseBullet> heroBullets;
+    private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
 
-    private int enemyMaxNumber = 5;
+    private int enemyMaxNumber = 3;
 
     private boolean gameOverFlag = false;
     private int score = 0;
@@ -56,16 +57,21 @@ public class Game extends JPanel {
     private int mobCntMax = 15;
     private int propSpeedX = 0;
     private int propSpeedY = 1;
+    private int baseScore = 10;
+    private int scoreCnt = 0;
+    private boolean bossFlag = false;
+
+    private boolean keyFlag = false;
 
     public Game() {
         heroAircraft = new HeroAircraft(
                 Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                0, 0, 100);
+                0, 0, 300);
 
         enemyAircrafts = new LinkedList<>();
-        heroBullets = new LinkedList<>();
-        enemyBullets = new LinkedList<>();
+        heroBullets = new LinkedList<BaseBullet>();
+        enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
         executorService = new ScheduledThreadPoolExecutor(1);
@@ -89,6 +95,7 @@ public class Game extends JPanel {
             if (timeCountAndNewCycleJudge()) {
                 System.out.println(time);
                 // 新敌机产生
+                boolean moveRight = Math.random() * 2 < 1;
                 if (enemyAircrafts.size() < enemyMaxNumber) {
                     boolean createElite = Math.random() * 5 < 1;
                     if (mobCnt < mobCntMax && !createElite) {
@@ -98,20 +105,37 @@ public class Game extends JPanel {
                                 0,
                                 10,
                                 30,
-                                10
+                                10,
+                                "mob"
                         ));
                         mobCnt++;
                     } else {
                         enemyAircrafts.add(new EliteEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) * 1,
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
-                                0,
-                                10,
-                                150,
-                                50
+                                moveRight ? 10 : -10,
+                                5,
+                                60,
+                                50,
+                                "elite"
                         ));
                         mobCnt = 0;
                     }
+                }
+
+                if (score > 500 && scoreCnt <= 0) {
+                    enemyAircrafts.add(new BossEnemy(
+                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) * 1,
+                            (int) (Main.WINDOW_HEIGHT * 0.1) * 1,
+                            moveRight ? 10 : -10,
+                            1,
+                            300 * heroAircraft.getShootNum(),
+                            1000,
+                            "boss"
+                    ));
+                    scoreCnt = 500;
+                    bossFlag = true;
+                    enemyMaxNumber++;
                 }
                 // 飞机射出子弹
                 shootAction();
@@ -178,10 +202,10 @@ public class Game extends JPanel {
     }
 
     private void bulletsMoveAction() {
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             bullet.forward();
         }
-        for (AbstractBullet bullet : enemyBullets) {
+        for (BaseBullet bullet : enemyBullets) {
             bullet.forward();
         }
     }
@@ -206,7 +230,7 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // [DONE] TODO 敌机子弹攻击英雄
-        for (AbstractBullet bullet : enemyBullets) {
+        for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
             }
@@ -216,12 +240,15 @@ public class Game extends JPanel {
             }
         }
         // 英雄子弹攻击敌机
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
             }
             for (AbstractEnemy enemyAircraft : enemyAircrafts) {
                 if (enemyAircraft.notValid()) {
+                    if (enemyAircraft.getType() == "boss") {
+                        bossFlag = false;
+                    }
                     // 已被其他子弹击毁的敌机，不再检测
                     // 避免多个子弹重复击毁同一敌机的判定
                     continue;
@@ -232,23 +259,28 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        // [DONE] TODO 获得分数，产生道具补给
-                        score += enemyAircraft.getScore();
-                        if (Math.random() < 1.0 / 3) {
-                            double randNum = Math.random();
-                            String type = randNum < 1.0 / 3 ? "blood"
-                                    : randNum < 2.0 / 3 ? "bomb"
-                                    : "bullet";
-                            if (type == "blood") {
-                                props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                        propSpeedX, propSpeedY, type));
-                            } else if (type == "bomb") {
-                                props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                        propSpeedX, propSpeedY, type));
+                        int increment = enemyAircraft.getScore();
+                        score += increment;
+                        scoreCnt -= bossFlag ? 0 : increment;
+                        if (enemyAircraft.getType().equals("elite")) {
+                            // [DONE] TODO 获得分数，产生道具补给
+                            if (Math.random() >= 1.0 / 3) {
+                                double randNum = Math.random();
+                                String type = randNum < 1.0 / 3 ? "blood"
+                                        : randNum < 2.0 / 3 ? "bomb"
+                                        : "bullet";
+                                if (type == "blood") {
+                                    props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                } else if (type == "bomb") {
+                                    props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
 
-                            } else if (type == "bullet") {
-                                props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                        propSpeedX, propSpeedY, type));
+                                } else if (type == "bullet") {
+                                    props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                }
+
                             }
 
                         }
@@ -270,8 +302,13 @@ public class Game extends JPanel {
             if (prop.crash(heroAircraft)) {
                 prop.activate(heroAircraft);
                 prop.activate(enemyAircrafts);
+                int increment = prop.getScore();
+                score += increment;
+                scoreCnt -= bossFlag ? 0 : increment;
                 prop.vanish();
+
                 // my Todo: 添加加血特效
+                // my Todo: 添加爆炸特效
             }
         }
 
@@ -353,4 +390,38 @@ public class Game extends JPanel {
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
 
+//    public boolean isBossFlag() {
+//        return bossFlag;
+//    }
+//
+//    public void setBossFlag(boolean bossFlag) {
+//        this.bossFlag = bossFlag;
+//    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (KeyEvent.VK_BACK_QUOTE == e.getKeyCode() && !keyFlag) {
+            System.out.println("press key: [~ `]");
+            keyFlag = true;
+        } else if (KeyEvent.VK_ESCAPE == e.getKeyCode() && !keyFlag) {
+            System.out.println("press key: [ESC]");
+            keyFlag = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (KeyEvent.VK_BACK_QUOTE == e.getKeyCode() && keyFlag) {
+            System.out.println("release key: [~ `]");
+            keyFlag = false;
+        } else if (KeyEvent.VK_ESCAPE == e.getKeyCode() && keyFlag) {
+            System.out.println("release key: [ESC]");
+            keyFlag = false;
+        }
+    }
 }
