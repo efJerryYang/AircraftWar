@@ -22,7 +22,7 @@ import java.util.concurrent.*;
  *
  * @author hitsz
  */
-public class Game extends JPanel implements KeyListener {
+public class Game extends JPanel {
 
     private int backGroundTop = 0;
 
@@ -60,8 +60,6 @@ public class Game extends JPanel implements KeyListener {
     private int baseScore = 10;
     private int scoreCnt = 0;
     private boolean bossFlag = false;
-
-    private boolean keyFlag = false;
 
     public Game() {
         heroAircraft = new HeroAircraft(
@@ -125,7 +123,7 @@ public class Game extends JPanel implements KeyListener {
 
                 if (score > 500 && scoreCnt <= 0) {
                     enemyAircrafts.add(new BossEnemy(
-                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) * 1,
+                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.BOSS_ENEMY_IMAGE.getWidth())) * 1,
                             (int) (Main.WINDOW_HEIGHT * 0.1) * 1,
                             moveRight ? 10 : -10,
                             1,
@@ -397,31 +395,4 @@ public class Game extends JPanel implements KeyListener {
 //    public void setBossFlag(boolean bossFlag) {
 //        this.bossFlag = bossFlag;
 //    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (KeyEvent.VK_BACK_QUOTE == e.getKeyCode() && !keyFlag) {
-            System.out.println("press key: [~ `]");
-            keyFlag = true;
-        } else if (KeyEvent.VK_ESCAPE == e.getKeyCode() && !keyFlag) {
-            System.out.println("press key: [ESC]");
-            keyFlag = true;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (KeyEvent.VK_BACK_QUOTE == e.getKeyCode() && keyFlag) {
-            System.out.println("release key: [~ `]");
-            keyFlag = false;
-        } else if (KeyEvent.VK_ESCAPE == e.getKeyCode() && keyFlag) {
-            System.out.println("release key: [ESC]");
-            keyFlag = false;
-        }
-    }
 }
