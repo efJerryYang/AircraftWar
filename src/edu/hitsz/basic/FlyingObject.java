@@ -165,6 +165,9 @@ public abstract class FlyingObject {
     public void vanish() {
         isValid = false;
     }
+    public void explode(){
+        // my Todo: load explode images (2-4) from other airwar repo
+    }
 
 }
 
