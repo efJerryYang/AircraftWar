@@ -18,18 +18,4 @@ public class MobEnemy extends AbstractEnemy {
         super(locationX, locationY, speedX, speedY, hp, score);
     }
 
-//    @Override
-//    public void forward() {
-//        super.forward();
-//        // 判定 y 轴向下飞行出界
-//        if (locationY >= Main.WINDOW_HEIGHT ) {
-//            vanish();
-//        }
-//    }
-//
-//    @Override
-//    public List<AbstractBullet> shoot() {
-//        return new LinkedList<>();
-//    }
-
 }
