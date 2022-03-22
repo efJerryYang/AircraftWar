@@ -1,0 +1,104 @@
+@startuml
+class BloodProp {
++ void activate(HeroAircraft)
+}
+abstract class AbstractEnemy {
+- int score
+- String type
++ void forward()
++ List<BaseBullet> shoot()
++ int getScore()
++ void setScore(int)
++ String getType()
+}
+class HeroBullet {
+}
+class BaseBullet {
+- int power
++ void forward()
++ int getPower()
+}
+class EliteEnemy {
+- int shootNum
+- int power
+- int direction
++ void forward()
++ List<BaseBullet> shoot()
++ int getShootNum()
++ void setShootNum(int)
++ int getPower()
++ void setPower(int)
+}
+class HeroAircraft {
+- int shootNum
+- int power
+- int direction
++ void forward()
++ List<BaseBullet> shoot()
++ int getShootNum()
++ void setShootNum(int)
++ int getPower()
++ void setPower(int)
+}
+abstract class AbstractAircraft {
+# int maxHp
+# int hp
++ void decreaseHp(int)
++ void increaseHp(int)
++ int getHp()
++ {abstract}List<BaseBullet> shoot()
+}
+abstract class FlyingObject {
+# int locationX
+# int locationY
+# int speedX
+# int speedY
+# BufferedImage image
+# int width
+# int height
+# boolean isValid
++ void forward()
++ boolean crash(FlyingObject)
++ int getLocationX()
++ int getLocationY()
++ void setLocation(double,double)
++ int getSpeedY()
++ BufferedImage getImage()
++ int getWidth()
++ int getHeight()
++ boolean notValid()
++ void vanish()
++ void explode()
+}
+class BossEnemy {
+}
+class MobEnemy {
+}
+class BombProp {
++ void activate(List<AbstractEnemy>)
+}
+class BulletProp {
++ void activate(HeroAircraft)
+}
+class EnemyBullet {
+}
+abstract class AbstractProp {
++ void activate(HeroAircraft)
++ void activate(List<AbstractEnemy>)
+}
+
+
+AbstractProp <|-- BloodProp
+AbstractAircraft <|-- AbstractEnemy
+BaseBullet <|-- HeroBullet
+FlyingObject <|-- BaseBullet
+MobEnemy <|-- EliteEnemy
+AbstractAircraft <|-- HeroAircraft
+FlyingObject <|-- AbstractAircraft
+EliteEnemy <|-- BossEnemy
+AbstractEnemy <|-- MobEnemy
+AbstractProp <|-- BombProp
+AbstractProp <|-- BulletProp
+BaseBullet <|-- EnemyBullet
+AbstractEnemy <|-- AbstractProp
+@enduml

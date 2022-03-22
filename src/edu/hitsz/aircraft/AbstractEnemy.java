@@ -47,4 +47,8 @@ public abstract class AbstractEnemy extends AbstractAircraft {
     public String getType() {
         return type;
     }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

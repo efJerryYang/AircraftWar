@@ -17,6 +17,14 @@ public class EliteEnemy extends MobEnemy {
         super(locationX, locationY, speedX, speedY, hp, score, type);
     }
 
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     @Override
     public void forward() {
         super.forward();
