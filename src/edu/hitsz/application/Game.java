@@ -1,18 +1,21 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
-import edu.hitsz.bullet.*;
 import edu.hitsz.basic.FlyingObject;
-import edu.hitsz.prop.*;
+import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BloodProp;
+import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.BulletProp;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 游戏主面板，游戏启动
@@ -21,24 +24,20 @@ import java.util.concurrent.*;
  */
 public class Game extends JPanel {
 
-    private int backGroundTop = 0;
-
     /**
      * Scheduled 线程池，用于任务调度
      */
     private final ScheduledExecutorService executorService;
-
-    /**
-     * 时间间隔(ms)，控制刷新频率
-     */
-    private int timeInterval = 40;
-
     private final HeroAircraft heroAircraft;
     private final List<AbstractEnemy> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
-
+    private int backGroundTop = 0;
+    /**
+     * 时间间隔(ms)，控制刷新频率
+     */
+    private int timeInterval = 40;
     private int enemyMaxNumber = 3;
     private int enemyMaxNumberUpperBound = 10;
 

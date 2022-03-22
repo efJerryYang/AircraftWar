@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.FlyingObject;
+import edu.hitsz.bullet.BaseBullet;
 
 import java.util.List;
 
@@ -32,12 +32,14 @@ public abstract class AbstractAircraft extends FlyingObject {
             vanish();
         }
     }
+
     public void increaseHp(int increase) {
         hp += increase;
         if (hp >= maxHp) {
             hp = maxHp;
         }
     }
+
     public int getHp() {
         return hp;
     }

@@ -1,9 +1,6 @@
 package edu.hitsz.prop;
 
-import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-
-import java.util.List;
 
 public class BloodProp extends AbstractProp {
 

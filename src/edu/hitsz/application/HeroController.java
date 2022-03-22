@@ -2,7 +2,8 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.HeroAircraft;
 
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * 英雄机控制类
