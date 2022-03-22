@@ -57,6 +57,7 @@ public class HeroAircraft extends AbstractAircraft {
         }
         return res;
     }
+
     public int getShootNum() {
         return shootNum;
     }

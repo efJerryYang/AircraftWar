@@ -17,7 +17,6 @@ public abstract class AbstractAircraft extends FlyingObject {
      */
     protected int maxHp;
     protected int hp;
-//    protected int score;
 
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);

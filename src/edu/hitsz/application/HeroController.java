@@ -2,8 +2,7 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.HeroAircraft;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 /**
  * 英雄机控制类
@@ -15,6 +14,8 @@ public class HeroController {
     private Game game;
     private HeroAircraft heroAircraft;
     private MouseAdapter mouseAdapter;
+//    private KeyListener keyListener;
+//    private KeyAdapter keyAdapter;
 
     public HeroController(Game game, HeroAircraft heroAircraft) {
         this.game = game;
@@ -46,10 +47,34 @@ public class HeroController {
                 heroAircraft.setLocation(x, y);
             }
         };
-
+//        keyAdapter = new KeyAdapter() {
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                int x = heroAircraft.getLocationX();
+//                int y = heroAircraft.getLocationY();
+//                super.keyPressed(e);
+//                if (KeyEvent.VK_W == e.getKeyCode() || KeyEvent.VK_UP == e.getKeyCode()) {
+//                    y = heroAircraft.getLocationY() + 10;
+//                } else if (KeyEvent.VK_S == e.getKeyCode() || KeyEvent.VK_DOWN == e.getKeyCode()) {
+//                    y = heroAircraft.getLocationY() - 10;
+//                } else if (KeyEvent.VK_A == e.getKeyCode() || KeyEvent.VK_LEFT == e.getKeyCode()) {
+//                    x = heroAircraft.getLocationX() - 10;
+//                } else if (KeyEvent.VK_D == e.getKeyCode() || KeyEvent.VK_RIGHT == e.getKeyCode()) {
+//                    x = heroAircraft.getLocationX() + 10;
+//                }
+//                heroAircraft.setLocation(x, y);
+//
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                super.keyReleased(e);
+//            }
+//        };
         game.addMouseListener(mouseAdapter);
         game.addMouseMotionListener(mouseAdapter);
+//        game.addKeyListener(keyAdapter);
+
     }
-
-
 }
