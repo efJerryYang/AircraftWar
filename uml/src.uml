@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>D:/Projects/IdeaProjects/AircraftWar/src</OriginalElement>
+  <nodes>
+    <node x="30.5" y="730.5">edu.hitsz.aircraft.MobEnemy</node>
+    <node x="358.70588235294116" y="706.0">edu.hitsz.prop.AbstractProp</node>
+    <node x="0.0" y="1080.0">edu.hitsz.application.ImageManager</node>
+    <node x="454.0" y="1080.0">edu.hitsz.application.HeroController</node>
+    <node x="210.99999999999997" y="868.0">edu.hitsz.prop.BulletProp</node>
+    <node x="977.4264705882351" y="0.0">edu.hitsz.application.Game</node>
+    <node x="336.92647058823525" y="358.0">edu.hitsz.aircraft.AbstractAircraft</node>
+    <node x="730.1764705882352" y="381.0">edu.hitsz.bullet.BaseBullet</node>
+    <node x="476.92647058823525" y="0.0">edu.hitsz.basic.FlyingObject</node>
+    <node x="32.0" y="1007.0">edu.hitsz.aircraft.BossEnemy</node>
+    <node x="661.0" y="868.0">edu.hitsz.prop.BombProp</node>
+    <node x="442.42647058823525" y="532.0">edu.hitsz.aircraft.HeroAircraft</node>
+    <node x="653.4264705882352" y="580.0">edu.hitsz.bullet.EnemyBullet</node>
+    <node x="809.4264705882352" y="580.0">edu.hitsz.bullet.HeroBullet</node>
+    <node x="231.42647058823525" y="532.0">edu.hitsz.aircraft.AbstractEnemy</node>
+    <node x="0.0" y="833.0">edu.hitsz.aircraft.EliteEnemy</node>
+    <node x="251.0" y="1080.0">edu.hitsz.application.Main</node>
+    <node x="436.0" y="868.0">edu.hitsz.prop.BloodProp</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.hitsz.aircraft.BossEnemy" target="edu.hitsz.aircraft.EliteEnemy" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="edu.hitsz.aircraft.AbstractEnemy" target="edu.hitsz.aircraft.AbstractAircraft" relationship="GENERALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="326.92647058823525" y="507.0" />
+      <point x="432.42647058823525" y="507.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="edu.hitsz.bullet.BaseBullet" target="edu.hitsz.basic.FlyingObject" relationship="GENERALIZATION">
+      <point x="0.0" y="-39.0" />
+      <point x="796.1764705882352" y="333.0" />
+      <point x="598.9264705882352" y="333.0" />
+      <point x="0.0" y="154.0" />
+    </edge>
+    <edge source="edu.hitsz.prop.BloodProp" target="edu.hitsz.prop.AbstractProp" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="538.5" y="808.0" />
+      <point x="487.70588235294116" y="808.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="edu.hitsz.aircraft.AbstractAircraft" target="edu.hitsz.basic.FlyingObject" relationship="GENERALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="432.42647058823525" y="333.0" />
+      <point x="598.9264705882352" y="333.0" />
+      <point x="0.0" y="154.0" />
+    </edge>
+    <edge source="edu.hitsz.prop.BombProp" target="edu.hitsz.prop.AbstractProp" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="790.0" y="808.0" />
+      <point x="487.70588235294116" y="808.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="edu.hitsz.prop.AbstractProp" target="edu.hitsz.aircraft.AbstractEnemy" relationship="GENERALIZATION">
+      <point x="0.0" y="-38.5" />
+      <point x="487.70588235294116" y="681.0" />
+      <point x="326.92647058823525" y="681.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="edu.hitsz.aircraft.MobEnemy" target="edu.hitsz.aircraft.AbstractEnemy" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="95.5" y="681.0" />
+      <point x="326.92647058823525" y="681.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="edu.hitsz.aircraft.EliteEnemy" target="edu.hitsz.aircraft.MobEnemy" relationship="GENERALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="edu.hitsz.prop.BulletProp" target="edu.hitsz.prop.AbstractProp" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="313.5" y="808.0" />
+      <point x="487.70588235294116" y="808.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="edu.hitsz.aircraft.HeroAircraft" target="edu.hitsz.aircraft.AbstractAircraft" relationship="GENERALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="537.9264705882352" y="507.0" />
+      <point x="432.42647058823525" y="507.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="edu.hitsz.bullet.EnemyBullet" target="edu.hitsz.bullet.BaseBullet" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="721.4264705882352" y="507.0" />
+      <point x="796.1764705882352" y="507.0" />
+      <point x="0.0" y="39.0" />
+    </edge>
+    <edge source="edu.hitsz.bullet.HeroBullet" target="edu.hitsz.bullet.BaseBullet" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="870.9264705882352" y="507.0" />
+      <point x="796.1764705882352" y="507.0" />
+      <point x="0.0" y="39.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.4885301614273575" showDependencies="false" x="232.3338575862117" y="578.5000000000002" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
