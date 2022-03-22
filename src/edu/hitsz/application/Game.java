@@ -3,10 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.*;
 import edu.hitsz.basic.FlyingObject;
-import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
+import edu.hitsz.prop.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +40,7 @@ public class Game extends JPanel {
     private final List<AbstractProp> props;
 
     private int enemyMaxNumber = 3;
+    private int enemyMaxNumberUpperBound = 10;
 
     private boolean gameOverFlag = false;
     private int score = 0;
@@ -53,11 +51,26 @@ public class Game extends JPanel {
      */
     private int cycleDuration = 600;
     private int cycleTime = 0;
+
+    /**
+     * 普通敌机计数器
+     * 控制每出现 mobCntMax 个普通敌机，至少产生一个精英机
+     * 用于控制产生频率的底线，避免随机巧合导致一直没有精英机产生
+     */
     private int mobCnt = 0;
     private int mobCntMax = 15;
+
     private int propSpeedX = 0;
     private int propSpeedY = 1;
     private int baseScore = 10;
+    /**
+     * boss机生成控制
+     * 当scoreCnt == 0，并且score > 500时，产生boss敌机，bossFlag = true
+     * 当boos机存在时，bossFlag = true，初始化scoreCnt = 500
+     * 当boss机失效后，bossFlag = false, scoreCnt -= increment
+     * 其中，increment是每次score变化的增量，通用控制语句如下
+     * scoreCnt -= bossFlag ? 0 : increment;
+     */
     private int scoreCnt = 0;
     private boolean bossFlag = false;
 
@@ -94,7 +107,8 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 boolean moveRight = Math.random() * 2 < 1;
-                if (enemyAircrafts.size() < enemyMaxNumber) {
+                if (enemyAircrafts.size() < enemyMaxNumber && enemyMaxNumber < enemyMaxNumberUpperBound) {
+                    // 随机数控制产生精英敌机
                     boolean createElite = Math.random() * 5 < 1;
                     if (mobCnt < mobCntMax && !createElite) {
                         enemyAircrafts.add(new MobEnemy(
@@ -120,7 +134,7 @@ public class Game extends JPanel {
                         mobCnt = 0;
                     }
                 }
-
+                // 控制生成boss敌机
                 if (score > 500 && scoreCnt <= 0) {
                     enemyAircrafts.add(new BossEnemy(
                             (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.BOSS_ENEMY_IMAGE.getWidth())) * 1,
@@ -133,7 +147,8 @@ public class Game extends JPanel {
                     ));
                     scoreCnt = 500;
                     bossFlag = true;
-                    enemyMaxNumber++;
+                    if (enemyMaxNumber < enemyMaxNumberUpperBound)
+                        enemyMaxNumber++;
                 }
                 // 飞机射出子弹
                 shootAction();
@@ -194,12 +209,12 @@ public class Game extends JPanel {
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
-
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
     }
 
     private void bulletsMoveAction() {
+        // 子弹移动
         for (BaseBullet bullet : heroBullets) {
             bullet.forward();
         }
@@ -210,11 +225,28 @@ public class Game extends JPanel {
 
     private void aircraftsMoveAction() {
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            // [feature]:
+            // 如果敌机失效是超出下边界导致，按照特定规则扣除一定的积分，表示敌军越过了本方防线
+            // subNum 相当于是代表敌军的威胁程度，若扣除后分数低于0，则归零处理
+            // subNum 计算原则:
+            // [if] enemy type is "mob",  then subNum = enemy's HP / 2.0
+            // [else if] type is "elite", then subNum = enemy's HP / 2.0 * 1.5
+            // [else if] type is "boss",  then subNum = enemy's HP / 2.0 * 2.0
+            // [else] type is the others (not exist), subNum = 0
+            boolean outOfBound = enemyAircraft.notValid();
             enemyAircraft.forward();
+            if (enemyAircraft.notValid() != outOfBound) {
+                String type = enemyAircraft.getType();
+                double subNum = enemyAircraft.getHp() / 2.0;
+                subNum *= type.equals("mob") ? 1 : type.equals("elite") ? 1.5 : type.equals("boss") ? 2.0 : 0;
+                score -= subNum;
+                score = Math.max(score, 0);
+            }
         }
     }
 
     private void propMoveAction() {
+        // 道具移动
         for (AbstractProp prop : props) {
             prop.forward();
         }
@@ -244,7 +276,9 @@ public class Game extends JPanel {
             }
             for (AbstractEnemy enemyAircraft : enemyAircrafts) {
                 if (enemyAircraft.notValid()) {
-                    if (enemyAircraft.getType() == "boss") {
+                    // 如果击毁的敌机是boss机，代表boss机在当前窗口消失
+                    // 潜在的bug，如果boss机因为超过底线而消失，会不会导致之后boss机不出现？
+                    if (enemyAircraft.getType().equals("boss")) {
                         bossFlag = false;
                     }
                     // 已被其他子弹击毁的敌机，不再检测
@@ -262,21 +296,27 @@ public class Game extends JPanel {
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (enemyAircraft.getType().equals("elite")) {
                             // [DONE] TODO 获得分数，产生道具补给
+                            // 以 2/3 概率生成道具
                             if (Math.random() >= 1.0 / 3) {
                                 double randNum = Math.random();
+                                // my Todo: 这里的设计有点冗余，type似乎变得多余，以后优化的时候修改
                                 String type = randNum < 1.0 / 3 ? "blood"
                                         : randNum < 2.0 / 3 ? "bomb"
                                         : "bullet";
-                                if (type == "blood") {
-                                    props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
-                                } else if (type == "bomb") {
-                                    props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                switch (type) {
+                                    case "blood":
+                                        props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                                propSpeedX, propSpeedY, baseScore * 3, type));
+                                        break;
+                                    case "bomb":
+                                        props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                                propSpeedX, propSpeedY, baseScore * 3, type));
 
-                                } else if (type == "bullet") {
-                                    props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                        break;
+                                    case "bullet":
+                                        props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                                propSpeedX, propSpeedY, baseScore * 3, type));
+                                        break;
                                 }
 
                             }
@@ -292,7 +332,7 @@ public class Game extends JPanel {
                 }
             }
         }
-        // Todo: 我方获得道具，道具生效
+        // (DONE) Todo: 我方获得道具，道具生效
         for (AbstractProp prop : props) {
             if (prop.notValid()) {
                 continue;
@@ -304,7 +344,6 @@ public class Game extends JPanel {
                 score += increment;
                 scoreCnt -= bossFlag ? 0 : increment;
                 prop.vanish();
-
                 // my Todo: 添加加血特效
                 // my Todo: 添加爆炸特效
             }
@@ -387,12 +426,4 @@ public class Game extends JPanel {
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
-
-//    public boolean isBossFlag() {
-//        return bossFlag;
-//    }
-//
-//    public void setBossFlag(boolean bossFlag) {
-//        this.bossFlag = bossFlag;
-//    }
 }
