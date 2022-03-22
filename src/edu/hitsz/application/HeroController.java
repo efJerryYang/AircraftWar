@@ -21,10 +21,22 @@ public class HeroController {
         this.heroAircraft = heroAircraft;
 
         mouseAdapter = new MouseAdapter() {
+            // 同时使用mouseMoved和mouseDragged，完美解决瞬移bug
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
-                // (DONE) my Todo: 瞬移bug, 点击鼠标会出现瞬移, 把Drag改为Move
+                int x = e.getX();
+                int y = e.getY();
+                if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) {
+                    // 防止超出边界
+                    return;
+                }
+                heroAircraft.setLocation(x, y);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
                 int x = e.getX();
                 int y = e.getY();
                 if (x < 0 || x > Main.WINDOW_WIDTH || y < 0 || y > Main.WINDOW_HEIGHT) {
