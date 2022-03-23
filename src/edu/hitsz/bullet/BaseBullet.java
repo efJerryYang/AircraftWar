@@ -1,7 +1,7 @@
 package edu.hitsz.bullet;
 
 import edu.hitsz.application.Main;
-import edu.hitsz.basic.FlyingObject;
+import edu.hitsz.basic.AbstractFlyingObject;
 
 /**
  * 子弹类。
@@ -9,7 +9,7 @@ import edu.hitsz.basic.FlyingObject;
  *
  * @author hitsz
  */
-public class BaseBullet extends FlyingObject {
+public class BaseBullet extends AbstractFlyingObject {
 
     private int power = 10;
 

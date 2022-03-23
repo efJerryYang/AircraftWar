@@ -1,6 +1,6 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.basic.FlyingObject;
+import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-public abstract class AbstractAircraft extends FlyingObject {
+public abstract class AbstractAircraft extends AbstractFlyingObject {
     /**
      * 生命值
      */

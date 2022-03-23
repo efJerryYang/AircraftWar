@@ -15,11 +15,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello Aircraft War");
+        System.out.println("Hello AbstractAircraft War");
 
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame frame = new JFrame("Aircraft War");
+        JFrame frame = new JFrame("AbstractAircraft War");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setResizable(false);
         //设置窗口的大小和位置,居中放置
