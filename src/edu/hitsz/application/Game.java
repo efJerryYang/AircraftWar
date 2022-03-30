@@ -309,19 +309,12 @@ public class Game extends JPanel {
                                         : randNum < 2.0 / 3 ? "bomb"
                                         : "bullet";
                                 switch (type) {
-                                    case "blood":
-                                        props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                                propSpeedX, propSpeedY, baseScore * 3, type));
-                                        break;
-                                    case "bomb":
-                                        props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                                propSpeedX, propSpeedY, baseScore * 3, type));
-
-                                        break;
-                                    case "bullet":
-                                        props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                                propSpeedX, propSpeedY, baseScore * 3, type));
-                                        break;
+                                    case "blood" -> props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                    case "bomb" -> props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                    case "bullet" -> props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                            propSpeedX, propSpeedY, baseScore * 3, type));
                                 }
 
                             }
