@@ -17,13 +17,6 @@ public class HeroAircraft extends AbstractAircraft {
 
 
     /**
-     * 攻击方式
-     */
-    private int shootNum = 1;     //子弹一次发射数量
-    private int power = 30;       //子弹伤害
-    private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
-
-    /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
      * @param speedX    英雄机射出的子弹的基准速度（英雄机无特定速度）
@@ -31,14 +24,23 @@ public class HeroAircraft extends AbstractAircraft {
      * @param hp        初始生命值
      */
     private volatile static HeroAircraft heroAircraft;
+    /**
+     * 攻击方式
+     */
+    private int shootNum = 1;     //子弹一次发射数量
+    private int power = 30;       //子弹伤害
+    private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
+    private boolean bulletValid = false;
+    private boolean shieldValid = false;
 
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
-    public static HeroAircraft getHeroAircraft(){
-        if (heroAircraft==null){
-            synchronized (HeroAircraft.class){
-                if(heroAircraft == null){
+
+    public static HeroAircraft getHeroAircraft() {
+        if (heroAircraft == null) {
+            synchronized (HeroAircraft.class) {
+                if (heroAircraft == null) {
                     heroAircraft = new HeroAircraft(
                             Main.WINDOW_WIDTH / 2,
                             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
@@ -48,6 +50,7 @@ public class HeroAircraft extends AbstractAircraft {
         }
         return heroAircraft;
     }
+
     public int getDirection() {
         return direction;
     }
@@ -99,5 +102,20 @@ public class HeroAircraft extends AbstractAircraft {
         this.power = power;
     }
 
+    public boolean isBulletValid() {
+        return bulletValid;
+    }
 
+    public void setBulletValid(boolean bulletValid) {
+
+        this.bulletValid = this.bulletValid;
+    }
+
+    public boolean isShieldValid() {
+        return shieldValid;
+    }
+
+    public void setShieldValid(boolean shieldValid) {
+        this.shieldValid = shieldValid;
+    }
 }

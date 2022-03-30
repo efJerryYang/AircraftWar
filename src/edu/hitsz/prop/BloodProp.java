@@ -1,9 +1,15 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.factory.PropFactory;
+import edu.hitsz.bullet.BaseBullet;
 
-public class BloodProp extends AbstractProp{
+import java.util.List;
+
+public class BloodProp extends AbstractProp {
+
+    private int speedX = 0;
+    private int speedY = 1;
 
     public BloodProp(int locationX, int locationY, int speedX, int speedY, int score, String type) {
         super(locationX, locationY, speedX, speedY, score, type);
@@ -11,7 +17,7 @@ public class BloodProp extends AbstractProp{
 
 
     @Override
-    public void activate(HeroAircraft heroAircraft) {
+    public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time) {
         System.out.println("BloodSupply active!");
         heroAircraft.increaseHp(100);
     }

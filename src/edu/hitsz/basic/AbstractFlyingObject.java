@@ -29,36 +29,31 @@ public abstract class AbstractFlyingObject {
      * x 轴移动速度
      */
     protected int speedX;
-
     /**
      * y 轴移动速度
      */
     protected int speedY;
-
     /**
      * 图片,
      * null 表示未设置
      */
     protected BufferedImage image = null;
-
     /**
      * x 轴长度，根据图片尺寸获得
      * -1 表示未设置
      */
     protected int width = -1;
-
     /**
      * y 轴长度，根据图片尺寸获得
      * -1 表示未设置
      */
     protected int height = -1;
-
-
     /**
      * 有效（生存）标记，
      * 通常标记为 false的对象会再下次刷新时清除
      */
     protected boolean isValid = true;
+
 
     public AbstractFlyingObject() {
     }
@@ -68,6 +63,15 @@ public abstract class AbstractFlyingObject {
         this.locationY = locationY;
         this.speedX = speedX;
         this.speedY = speedY;
+    }
+
+    public int getSpeedX() {
+        return speedX;
+    }
+
+    public int setSpeedX(int speedX) {
+        this.speedX = speedX;
+        return speedX;
     }
 
     /**

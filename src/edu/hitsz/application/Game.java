@@ -66,9 +66,6 @@ public class Game extends JPanel {
     private int mobCnt = 0;
     private int mobCntMax = 15;
 
-    private int propSpeedX = 0;
-    private int propSpeedY = 1;
-    private int baseScore = 10;
     /**
      * boss机生成控制
      * 当scoreCnt == 0，并且score > 500时，产生boss敌机，bossFlag = true
@@ -226,6 +223,7 @@ public class Game extends JPanel {
                 double subNum = enemyAircraft.getHp() / 2.0;
                 subNum *= type.equals("mob") ? 1 : type.equals("elite") ? 1.5 : type.equals("boss") ? 2.0 : 0;
                 score -= subNum;
+                scoreCnt += bossFlag ? 0 : subNum;
                 score = Math.max(score, 0);
             }
         }
@@ -294,12 +292,12 @@ public class Game extends JPanel {
                                         : randNum < 2.0 / 3 ? "bomb"
                                         : "bullet";
                                 switch (type) {
-                                    case "blood" -> props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
-                                    case "bomb" -> props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
-                                    case "bullet" -> props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
-                                            propSpeedX, propSpeedY, baseScore * 3, type));
+                                    case "blood" -> props.add(bloodPropFactory.createProp(
+                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                    case "bomb" -> props.add(bombPropFactory.createProp(
+                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                    case "bullet" -> props.add(bulletPropFactory.createProp(
+                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
                                 }
 
                             }
@@ -321,8 +319,8 @@ public class Game extends JPanel {
                 continue;
             }
             if (prop.crash(heroAircraft)) {
-                prop.activate(heroAircraft);
-                prop.activate(enemyAircrafts);
+                prop.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+//                heroAircraft.setBulletValid(true);
                 int increment = prop.getScore();
                 score += increment;
                 scoreCnt -= bossFlag ? 0 : increment;
