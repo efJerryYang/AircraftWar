@@ -1,14 +1,11 @@
 package edu.hitsz.application;
 
-import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraft.AbstractEnemy;
+import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.factory.BloodPropFactory;
-import edu.hitsz.factory.BombPropFactory;
-import edu.hitsz.factory.BulletPropFactory;
+import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,10 +32,14 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+
     private final BloodPropFactory bloodPropFactory;
     private final BulletPropFactory bulletPropFactory;
     private final BombPropFactory bombPropFactory;
 
+    private final MobFactory mobFactory;
+    private final EliteFactory eliteFactory;
+    private final BossFactory bossFactory;
     private int backGroundTop = 0;
     /**
      * 时间间隔(ms)，控制刷新频率
@@ -90,6 +91,10 @@ public class Game extends JPanel {
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
+        mobFactory = new MobFactory();
+        eliteFactory = new EliteFactory();
+        bossFactory = new BossFactory();
+
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -115,40 +120,17 @@ public class Game extends JPanel {
                     // 随机数控制产生精英敌机
                     boolean createElite = Math.random() * 5 < 1;
                     if (mobCnt < mobCntMax && !createElite) {
-                        enemyAircrafts.add(new MobEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) * 1,
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
-                                0,
-                                10,
-                                30,
-                                10,
-                                "mob"
-                        ));
+                        enemyAircrafts.add(mobFactory.createEnemy(heroAircraft.getShootNum()));
                         mobCnt++;
                     } else {
-                        enemyAircrafts.add(new EliteEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) * 1,
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) * 1,
-                                moveRight ? 10 : -10,
-                                5,
-                                60,
-                                50,
-                                "elite"
-                        ));
+                        enemyAircrafts.add(eliteFactory.createEnemy(heroAircraft.getShootNum()));
                         mobCnt = 0;
                     }
                 }
                 // 控制生成boss敌机
+                System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
                 if (score > 500 && scoreCnt <= 0) {
-                    enemyAircrafts.add(new BossEnemy(
-                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.BOSS_ENEMY_IMAGE.getWidth())) * 1,
-                            (int) (Main.WINDOW_HEIGHT * 0.1) * 1,
-                            moveRight ? 10 : -10,
-                            1,
-                            300 * heroAircraft.getShootNum(),
-                            1000,
-                            "boss"
-                    ));
+                    enemyAircrafts.add(bossFactory.createEnemy(heroAircraft.getShootNum()));
                     scoreCnt = 500;
                     bossFlag = true;
                     if (enemyMaxNumber < enemyMaxNumberUpperBound)
@@ -296,6 +278,9 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
+                        if (enemyAircraft.getType().equals("boss")) {
+                            bossFlag = false;
+                        }
                         int increment = enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
