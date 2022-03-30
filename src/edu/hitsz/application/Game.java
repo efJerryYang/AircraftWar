@@ -3,8 +3,10 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.factory.BloodPropFactory;
+import edu.hitsz.factory.BombPropFactory;
+import edu.hitsz.factory.BulletPropFactory;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
 
@@ -33,6 +35,10 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+    private final BloodPropFactory bloodPropFactory;
+    private final BulletPropFactory bulletPropFactory;
+    private final BombPropFactory bombPropFactory;
+
     private int backGroundTop = 0;
     /**
      * 时间间隔(ms)，控制刷新频率
@@ -81,6 +87,9 @@ public class Game extends JPanel {
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
         executorService = new ScheduledThreadPoolExecutor(1);
+        bloodPropFactory = new BloodPropFactory();
+        bulletPropFactory = new BulletPropFactory();
+        bombPropFactory = new BombPropFactory();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -301,16 +310,16 @@ public class Game extends JPanel {
                                         : "bullet";
                                 switch (type) {
                                     case "blood":
-                                        props.add(new BloodProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
                                                 propSpeedX, propSpeedY, baseScore * 3, type));
                                         break;
                                     case "bomb":
-                                        props.add(new BombProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
                                                 propSpeedX, propSpeedY, baseScore * 3, type));
 
                                         break;
                                     case "bullet":
-                                        props.add(new BulletProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
+                                        props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY(),
                                                 propSpeedX, propSpeedY, baseScore * 3, type));
                                         break;
                                 }
