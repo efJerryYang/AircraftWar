@@ -74,11 +74,7 @@ public class Game extends JPanel {
     private boolean bossFlag = false;
 
     public Game() {
-        heroAircraft = new HeroAircraft(
-                Main.WINDOW_WIDTH / 2,
-                Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                0, 0, 300);
-
+        heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<BaseBullet>();
         enemyBullets = new LinkedList<BaseBullet>();
@@ -204,7 +200,7 @@ public class Game extends JPanel {
     }
 
     private void shootAction() {
-        // [DONE] TODO 敌机射击
+        // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
@@ -258,7 +254,7 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // [DONE] TODO 敌机子弹攻击英雄
+        // [DONE] 敌机子弹攻击英雄
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -274,6 +270,7 @@ public class Game extends JPanel {
                 continue;
             }
             for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+                // my Todo: bug, 在有一定的可能性导致之后无敌机产生，一般是击败几个boss敌机之后
                 if (enemyAircraft.notValid()) {
                     // 如果击毁的敌机是boss机，代表boss机在当前窗口消失
                     // 潜在的bug，如果boss机因为超过底线而消失，会不会导致之后boss机不出现？
@@ -294,7 +291,7 @@ public class Game extends JPanel {
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (enemyAircraft.getType().equals("elite")) {
-                            // [DONE] TODO 获得分数，产生道具补给
+                            // [DONE] 获得分数，产生道具补给
                             // 以 2/3 概率生成道具
                             if (Math.random() >= 1.0 / 3) {
                                 double randNum = Math.random();
@@ -331,7 +328,7 @@ public class Game extends JPanel {
                 }
             }
         }
-        // (DONE) Todo: 我方获得道具，道具生效
+        // (DONE) 我方获得道具，道具生效
         for (AbstractProp prop : props) {
             if (prop.notValid()) {
                 continue;
