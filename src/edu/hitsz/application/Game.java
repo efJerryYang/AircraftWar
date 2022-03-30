@@ -299,9 +299,7 @@ public class Game extends JPanel {
                                     case "bullet" -> props.add(bulletPropFactory.createProp(
                                             enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
                                 }
-
                             }
-
                         }
                     }
                 }

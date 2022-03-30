@@ -1,0 +1,201 @@
+@startuml
+abstract class AbstractFlyingObject {
+# int locationX
+# int locationY
+# int speedX
+# int speedY
+# BufferedImage image
+# int width
+# int height
+# boolean isValid
++ <<Create>> AbstractFlyingObject()
++ <<Create>> AbstractFlyingObject(int,int,int,int)
++ int getSpeedX()
++ int setSpeedX(int)
++ void forward()
++ boolean crash(AbstractFlyingObject)
++ int getLocationX()
++ int getLocationY()
++ void setLocation(double,double)
++ int getSpeedY()
++ BufferedImage getImage()
++ int getWidth()
++ int getHeight()
++ boolean notValid()
++ void vanish()
++ void explode()
+}
+'class BombProp {
+'+ <<Create>> BombProp(int locationX, int locationY, int speedX, int speedY, int score, String type)
+'+ void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets,int time)
+'}
+'class EnemyBullet {
+'+ <<Create>> EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
+'}
+'class BossFactory {
+'- int locationX
+'- int locationY
+'- int speedX
+'- int hp
+'- int speedY
+'- int score
+'- String type
+'+ AbstractEnemy createEnemy(int difficulty)
+'}
+abstract class AbstractAircraft {
+# int maxHp
+# int hp
++ <<Create>> AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
++ void decreaseHp(int decrease)
++ void increaseHp(int increase)
++ int getHp()
++ {abstract}List<BaseBullet> shoot()
+}
+'class BulletProp {
+'+ <<Create>> BulletProp(int locationX, int locationY, int speedX, int speedY, int score, String type)
+'+ void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time)
+'}
+'class EliteEnemy {
+'- int shootNum
+'- int power
+'- int direction
+'+ <<Create>> EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type)
+'+ int getDirection()
+'+ void setDirection(int direction)
+'+ void forward()
+'+ List<BaseBullet> shoot()
+'+ int getShootNum()
+'+ void setShootNum(int shootNum)
+'+ int getPower()
+'+ void setPower(int power)
+'}
+'class BulletPropFactory {
+'- int speedX
+'- int speedY
+'- int score
+'+ AbstractProp createProp(int locationX, int locationY, String type)
+'}
+'class BaseBullet {
+'- int power
+'+ <<Create>> BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+'+ void forward()
+'+ int getPower()
+'}
+'class MobFactory {
+'- int locationX
+'- int locationY
+'- int speedX
+'- int speedY
+'- int hp
+'- int score
+'- String type
+'+ AbstractEnemy createEnemy(int difficulty))
+'}
+'class BombPropFactory {
+'- int speedX
+'- int speedY
+'- int score
+'+ AbstractProp createProp(int locationX, int locationY, String type)
+'}
+'class HeroBullet {
+'+ <<Create>> HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
+'}
+'class MobEnemy {
+'+ <<Create>> MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type)
+'}
+'class BloodPropFactory {
+'- int speedX
+'- int speedY
+'- int score
+'+ AbstractProp createProp(int locationX, int locationY, String type)
+'}
+'interface EnemyFactory {
+'+ {abstract}AbstractEnemy createEnemy(int difficulty))
+'}
+'class EliteFactory {
+'- int locationX
+'- int locationY
+'- int speedX
+'- int speedY
+'- int hp
+'- int score
+'- String type
+'+ AbstractEnemy createEnemy(int difficulty))
+'}
+class HeroAircraft {
+- {static} HeroAircraft heroAircraft
+- int shootNum
+- int power
+- int direction
+- boolean bulletValid
+- boolean shieldValid
+- <<Create>> HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
++ {static} HeroAircraft getHeroAircraft()
++ int getDirection()
++ void setDirection(int direction))
++ void forward()
++ List<BaseBullet> shoot()
++ int getShootNum()
++ void setShootNum(int shootNum))
++ int getPower()
++ void setPower(int)
++ boolean isBulletValid()
++ void setBulletValid(boolean bulletValid)
++ boolean isShieldValid()
++ void setShieldValid(boolean shieldValid)
+}
+'interface PropFactory {
+'~ AbstractProp createProp(int locationX, int locationY, String type)
+'}
+'abstract class AbstractEnemy {
+'- int score
+'- String type
+'+ <<Create>> AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type)
+'+ void forward()
+'+ List<BaseBullet> shoot()
+'+ int getScore()
+'+ void setScore(int score)
+'+ String getType()
+'+ void setType(String type)
+'}
+'class BloodProp {
+'- int speedX
+'- int speedY
+'+ <<Create>> BloodProp(int locationX, int locationY, int speedX, int speedY, int score, String type)
+'+ void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time)
+'}
+'abstract class AbstractProp {
+'+ <<Create>> AbstractProp(int locationX, int locationY, int speedX, int speedY, int score, String type)
+'+ void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time)
+'}
+'class BossEnemy {
+'+ <<Create>> BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type)
+'}
+
+
+'AbstractProp <|-- BombProp
+'BaseBullet <|-- EnemyBullet
+'EnemyFactory <|.. BossFactory
+AbstractFlyingObject <|-- AbstractAircraft
+'AbstractProp <|-- BulletProp
+'MobEnemy <|-- EliteEnemy
+'PropFactory <|.. BulletPropFactory
+'AbstractFlyingObject <|-- BaseBullet
+'EnemyFactory <|.. MobFactory
+'PropFactory <|.. BombPropFactory
+'BaseBullet <|-- HeroBullet
+'AbstractEnemy <|-- MobEnemy
+'PropFactory <|.. BloodPropFactory
+'EnemyFactory <|.. EliteFactory
+AbstractAircraft <|-- HeroAircraft
+'AbstractAircraft <|-- AbstractEnemy
+'AbstractProp <|-- BloodProp
+'AbstractEnemy <|-- AbstractProp
+'EliteEnemy <|-- BossEnemy
+'BloodProp <.. BloodPropFactory
+'BombProp <.. BombPropFactory
+'BulletProp <.. BulletPropFactory
+'BossEnemy <.. BossFactory
+'EliteEnemy <.. EliteFactory
+'MobEnemy <.. MobFactory
+@enduml
