@@ -23,7 +23,7 @@ public class HeroAircraft extends AbstractAircraft {
      * @param speedY    英雄机射出的子弹的基准速度（英雄机无特定速度）
      * @param hp        初始生命值
      */
-    private volatile static HeroAircraft heroAircraft;
+    private static HeroAircraft heroAircraft = null;
     /**
      * 攻击方式
      */
@@ -37,16 +37,12 @@ public class HeroAircraft extends AbstractAircraft {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
-    public static HeroAircraft getHeroAircraft() {
+    public static synchronized HeroAircraft getHeroAircraft() {
         if (heroAircraft == null) {
-            synchronized (HeroAircraft.class) {
-                if (heroAircraft == null) {
-                    heroAircraft = new HeroAircraft(
-                            Main.WINDOW_WIDTH / 2,
-                            Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                            0, 0, 300);
-                }
-            }
+            heroAircraft = new HeroAircraft(
+                    Main.WINDOW_WIDTH / 2,
+                    Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
+                    0, 0, 300);
         }
         return heroAircraft;
     }
