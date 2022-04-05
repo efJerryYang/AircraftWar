@@ -5,8 +5,44 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/images" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="JUnit5.8.1">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="player">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/AudioPlayer-0.2.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/commons-io-1.3.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/jflac-codec-1.5.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/jlayer-1.0.1.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/jorbis-0.0.17.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-3.8.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/mp3spi-1.9.5.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/slf4j-api-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/slf4j-simple-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/tritonus-share-0.3.7.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/vorbisspi-1.0.3.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

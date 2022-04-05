@@ -32,6 +32,7 @@ public class HeroAircraft extends AbstractAircraft {
     private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
     private boolean bulletValid = false;
     private boolean shieldValid = false;
+    private boolean bulletSpeedUp = false;
 
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
@@ -45,6 +46,17 @@ public class HeroAircraft extends AbstractAircraft {
                     0, 0, 300);
         }
         return heroAircraft;
+    }
+
+    public void initialize() {
+        heroAircraft.setShootNum(1);
+        heroAircraft.setMaxHp(300);
+        heroAircraft.setHp(300);
+        heroAircraft.setDirection(-1);
+        heroAircraft.setPower(30);
+//        heroAircraft.setLocation();
+        heroAircraft.setBulletValid(false);
+        heroAircraft.setShieldValid(false);
     }
 
     public int getDirection() {
@@ -70,16 +82,32 @@ public class HeroAircraft extends AbstractAircraft {
         List<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction * 2;
-        int speedX = 0;
+        int speedX = 1;
         int speedY = this.getSpeedY() + direction * 5;
         BaseBullet baseBullet;
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
-            baseBullet = new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power);
-            res.add(baseBullet);
+            int center = i * 2 - shootNum + 1;
+            int xloc = x + center;
+//            int yloc = y + (int) (100 * -Math.cos((double) center / shootNum));
+            int yloc = y + center * center;
+            if (bulletSpeedUp) {
+                baseBullet = new HeroBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY * 2, Math.max(power, shootNum * power / 2));
+                System.out.println(xloc + "\t" + yloc + "\t" + "");
+                res.add(baseBullet);
+            } else {
+                baseBullet = new HeroBullet(xloc + center * 10, yloc, 0, speedY, power);
+                System.out.println(xloc + "\t" + yloc + "\t" + "");
+                res.add(baseBullet);
+            }
         }
         return res;
+    }
+
+    @Override
+    public void decreaseHp(int decrease) {
+
     }
 
     public int getShootNum() {
@@ -103,8 +131,7 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     public void setBulletValid(boolean bulletValid) {
-
-        this.bulletValid = this.bulletValid;
+        this.bulletValid = bulletValid;
     }
 
     public boolean isShieldValid() {
@@ -113,5 +140,13 @@ public class HeroAircraft extends AbstractAircraft {
 
     public void setShieldValid(boolean shieldValid) {
         this.shieldValid = shieldValid;
+    }
+
+    public boolean isBulletSpeedUp() {
+        return bulletSpeedUp;
+    }
+
+    public void setBulletSpeedUp(boolean bulletSpeedUp) {
+        this.bulletSpeedUp = bulletSpeedUp;
     }
 }

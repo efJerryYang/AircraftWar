@@ -12,17 +12,25 @@ import java.util.List;
  * @author hitsz
  */
 public abstract class AbstractAircraft extends AbstractFlyingObject {
+    protected int hp;
     /**
      * 生命值
      */
-    protected int maxHp;
-    protected int hp;
+    private int maxHp;
 
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);
         this.hp = hp;
         this.maxHp = hp;
 //        this.score = score;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
     }
 
     public void decreaseHp(int decrease) {
@@ -44,6 +52,9 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         return hp;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 
     /**
      * 飞机射击方法，可射击对象必须实现
