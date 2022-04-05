@@ -27,7 +27,7 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 攻击方式
      */
-    private int shootNum = 1;     //子弹一次发射数量
+    private int shootNum = 10;     //子弹一次发射数量
     private int power = 30;       //子弹伤害
     private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
     private boolean bulletValid = false;
@@ -43,15 +43,15 @@ public class HeroAircraft extends AbstractAircraft {
             heroAircraft = new HeroAircraft(
                     Main.WINDOW_WIDTH / 2,
                     Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                    0, 0, 300);
+                    0, 0, 400);
         }
         return heroAircraft;
     }
 
     public void initialize() {
         heroAircraft.setShootNum(1);
-        heroAircraft.setMaxHp(300);
-        heroAircraft.setHp(300);
+        heroAircraft.setMaxHp(400);
+        heroAircraft.setHp(400);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
 //        heroAircraft.setLocation();
