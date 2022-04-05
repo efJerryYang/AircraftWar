@@ -6,10 +6,12 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import javazoom.jl.decoder.JavaLayerException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -76,6 +78,10 @@ public class Game extends JPanel {
      */
     private int scoreCnt = 0;
     private boolean bossFlag = false;
+    private boolean bombFlag = false;
+    private boolean bloodFlag = false;
+    private boolean bulletFlag = false;
+    private boolean crashFlag = false;
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
@@ -84,7 +90,7 @@ public class Game extends JPanel {
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(1);
+        executorService = new ScheduledThreadPoolExecutor(5);
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
@@ -98,16 +104,38 @@ public class Game extends JPanel {
 
     }
 
+    public boolean isBombFlag() {
+        return bombFlag;
+    }
+
+    public void setBombFlag(boolean bombFlag) {
+        this.bombFlag = bombFlag;
+    }
+
+    public boolean isBloodFlag() {
+        return bloodFlag;
+    }
+
+    public void setBloodFlag(boolean bloodFlag) {
+        this.bloodFlag = bloodFlag;
+    }
+
+    public boolean isBulletFlag() {
+        return bulletFlag;
+    }
+
+    public void setBulletFlag(boolean bulletFlag) {
+        this.bulletFlag = bulletFlag;
+    }
+
     /**
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-        Runnable task = () -> {
-
+        Runnable task1 = () -> {
             time += timeInterval;
-
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
                 System.out.println(time);
@@ -130,8 +158,9 @@ public class Game extends JPanel {
                     enemyAircrafts.add(bossFactory.createEnemy(heroAircraft.getShootNum()));
                     scoreCnt = 500;
                     bossFlag = true;
-                    if (enemyMaxNumber < enemyMaxNumberUpperBound)
+                    if (enemyMaxNumber < enemyMaxNumberUpperBound) {
                         enemyMaxNumber++;
+                    }
                 }
                 // 飞机射出子弹
                 shootAction();
@@ -161,14 +190,80 @@ public class Game extends JPanel {
                 gameOverFlag = true;
                 System.out.println("Game Over!");
             }
+        };
+        Runnable task2 = () -> {
+            try {
+                AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+                audioPlayer.playAudio();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
+        };
+        Runnable task3 = () -> {
+            // 需要处理线程安全的问题
+            if (bombFlag) {
+                bombFlag = false;
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/boom2.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (JavaLayerException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bloodFlag) {
+                bloodFlag = false;
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/healing.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (JavaLayerException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (bulletFlag) {
+                bulletFlag = false;
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add-bullet.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (JavaLayerException e) {
+                    e.printStackTrace();
+                }
+
+            }
 
         };
-
+//        Runnable task4 = () -> {
+//            if (bossFlag) {
+//                try {
+//                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/vsboss.mp3");
+//                    audioPlayer.playAudio();
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                } catch (JavaLayerException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        };
         /**
          * 以固定延迟时间进行执行
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
-        executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(task1, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(task2, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(task3, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+//        executorService.execute(task4);
+//        if (!bossFlag) {
+//            executorService.submit(task4).cancel(!bossFlag);
+//        }
 
     }
 
@@ -279,6 +374,7 @@ public class Game extends JPanel {
                         if (enemyAircraft.getType().equals("boss")) {
                             bossFlag = false;
                         }
+                        crashFlag = true;
                         int increment = enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
@@ -298,6 +394,8 @@ public class Game extends JPanel {
                                             enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
                                     case "bullet" -> props.add(bulletPropFactory.createProp(
                                             enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                    default -> {
+                                    }
                                 }
                             }
                         }
@@ -318,6 +416,14 @@ public class Game extends JPanel {
             }
             if (prop.crash(heroAircraft)) {
                 prop.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+                if ("bomb".equals(prop.getType())) {
+                    bombFlag = true;
+                } else if ("bullet".equals(prop.getType())) {
+                    bulletFlag = true;
+                } else if ("blood".equals(prop.getType())) {
+                    bloodFlag = true;
+                }
+
 //                heroAircraft.setBulletValid(true);
                 int increment = prop.getScore();
                 score += increment;

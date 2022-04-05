@@ -9,8 +9,8 @@ public class BossFactory implements EnemyFactory {
     private int locationX;
     private int locationY;
     private int speedX;
-    private int hp = 300;
-    private int speedY = 1;
+    private int hp = 500;
+    private int speedY = 0;
     private int score = 50;
     private String type = "boss";
 
