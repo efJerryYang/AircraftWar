@@ -90,25 +90,22 @@ public class HeroAircraft extends AbstractAircraft {
             // 多个子弹横向分散
             int center = i * 2 - shootNum + 1;
             int xloc = x + center;
-//            int yloc = y + (int) (100 * -Math.cos((double) center / shootNum));
             int yloc = y + center * center;
             if (bulletSpeedUp) {
                 baseBullet = new HeroBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY * 2, Math.max(power, shootNum * power / 2));
-                System.out.println(xloc + "\t" + yloc + "\t" + "");
-                res.add(baseBullet);
             } else {
                 baseBullet = new HeroBullet(xloc + center * 10, yloc, 0, speedY, power);
-                System.out.println(xloc + "\t" + yloc + "\t" + "");
-                res.add(baseBullet);
             }
+//            System.out.println(xloc + "\t" + yloc + "\t" + "");
+            res.add(baseBullet);
         }
         return res;
     }
 
-    @Override
-    public void decreaseHp(int decrease) {
-
-    }
+//    @Override
+//    public void decreaseHp(int decrease) {
+//
+//    }
 
     public int getShootNum() {
         return shootNum;

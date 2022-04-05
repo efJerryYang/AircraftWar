@@ -29,7 +29,7 @@ public class BossEnemy extends EliteEnemy {
             int xloc = x + center;
             int yloc = y - center * center + 10;
             baseBullet = new EnemyBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY, this.getPower());
-            System.out.println(xloc + "\t" + yloc + "\t" + "");
+//            System.out.println(xloc + "\t" + yloc + "\t" + "");
             res.add(baseBullet);
         }
         return res;
