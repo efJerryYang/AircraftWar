@@ -315,7 +315,7 @@ public class Game extends JPanel {
             if (enemyAircraft.notValid() != outOfBound) {
                 String type = enemyAircraft.getType();
                 double subNum = enemyAircraft.getHp() / 2.0;
-                subNum *= type.equals("mob") ? 1 : type.equals("elite") ? 1.5 : type.equals("boss") ? 2.0 : 0;
+                subNum *= "mob".equals(type) ? 1 : "elite".equals(type) ? 1.5 : "boss".equals(type) ? 2.0 : 0;
                 score -= subNum;
                 scoreCnt += bossFlag ? 0 : subNum;
                 score = Math.max(score, 0);
@@ -357,7 +357,7 @@ public class Game extends JPanel {
                 if (enemyAircraft.notValid()) {
                     // 如果击毁的敌机是boss机，代表boss机在当前窗口消失
                     // 潜在的bug，如果boss机因为超过底线而消失，会不会导致之后boss机不出现？
-                    if (enemyAircraft.getType().equals("boss")) {
+                    if ("boss".equals(enemyAircraft.getType())) {
                         bossFlag = false;
                     }
                     // 已被其他子弹击毁的敌机，不再检测
@@ -370,14 +370,14 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        if (enemyAircraft.getType().equals("boss")) {
+                        if ("boss".equals(enemyAircraft.getType())) {
                             bossFlag = false;
                         }
                         crashFlag = true;
                         int increment = enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
-                        if (enemyAircraft.getType().equals("elite")) {
+                        if ("elite".equals(enemyAircraft.getType())) {
                             // [DONE] 获得分数，产生道具补给
                             // 以 2/3 概率生成道具
                             if (Math.random() >= 1.0 / 3) {
