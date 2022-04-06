@@ -5,6 +5,9 @@ import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 
+/**
+ * @author JerryYang
+ */
 public class MobFactory implements EnemyFactory {
     private int locationX;
     private int locationY;

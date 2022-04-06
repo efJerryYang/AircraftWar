@@ -1,7 +1,10 @@
 package edu.hitsz.application;
 
+import javazoom.jl.decoder.JavaLayerException;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  * 程序入口
@@ -30,6 +33,10 @@ public class Main {
         Game game = new Game();
         frame.add(game);
         frame.setVisible(true);
-        game.action();
+        try {
+            game.action();
+        } catch (FileNotFoundException | JavaLayerException e) {
+            e.printStackTrace();
+        }
     }
 }

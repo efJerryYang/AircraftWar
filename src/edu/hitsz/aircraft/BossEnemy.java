@@ -6,6 +6,9 @@ import edu.hitsz.bullet.EnemyBullet;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author JerryYang
+ */
 public class BossEnemy extends EliteEnemy {
 
     public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type) {

@@ -18,6 +18,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
+
 /**
  * 游戏主面板，游戏启动
  *
@@ -131,7 +133,7 @@ public class Game extends JPanel {
     /**
      * 游戏启动入口，执行游戏逻辑
      */
-    public void action() {
+    public void action() throws FileNotFoundException, JavaLayerException {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task1 = () -> {
@@ -154,9 +156,9 @@ public class Game extends JPanel {
                 }
                 // 控制生成boss敌机
                 System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
-                if (score > 500 && scoreCnt <= 0) {
+                if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
                     enemyAircrafts.add(bossFactory.createEnemy(heroAircraft.getShootNum()));
-                    scoreCnt = 500;
+                    scoreCnt = BOSS_APPEAR_SCORE;
                     bossFlag = true;
                     if (enemyMaxNumber < enemyMaxNumberUpperBound) {
                         enemyMaxNumber++;
@@ -164,24 +166,18 @@ public class Game extends JPanel {
                 }// 飞机射出子弹
                 shootAction();
             }
-
             // 子弹移动
             bulletsMoveAction();
-
             // 飞机移动
             aircraftsMoveAction();
-
+            // 道具移动
             propMoveAction();
-
             // 撞击检测
             crashCheckAction();
-
             // 后处理
             postProcessAction();
-
             //每个时刻重绘界面
             repaint();
-
             // 游戏结束检查
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
@@ -194,22 +190,17 @@ public class Game extends JPanel {
             try {
                 AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
                 audioPlayer.playAudio();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (JavaLayerException e) {
+            } catch (FileNotFoundException | JavaLayerException e) {
                 e.printStackTrace();
             }
         };
         Runnable task3 = () -> {
-            // 需要处理线程安全的问题
             if (bombFlag) {
                 bombFlag = false;
                 try {
                     AudioPlayer audioPlayer = new AudioPlayer("/src/audio/boom2.mp3");
                     audioPlayer.playAudio();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (JavaLayerException e) {
+                } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
                 }
             }
@@ -218,40 +209,20 @@ public class Game extends JPanel {
                 try {
                     AudioPlayer audioPlayer = new AudioPlayer("/src/audio/healing.mp3");
                     audioPlayer.playAudio();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (JavaLayerException e) {
+                } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
                 }
-
             }
             if (bulletFlag) {
                 bulletFlag = false;
                 try {
                     AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add-bullet.mp3");
                     audioPlayer.playAudio();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (JavaLayerException e) {
+                } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
                 }
-
             }
-
         };
-//        Runnable task4 = () -> {
-//            if (bossFlag) {
-//                try {
-//                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/vsboss.mp3");
-//                    audioPlayer.playAudio();
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (JavaLayerException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        };
         /**
          * 以固定延迟时间进行执行
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
@@ -259,11 +230,6 @@ public class Game extends JPanel {
         executorService.scheduleWithFixedDelay(task1, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         executorService.scheduleWithFixedDelay(task2, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         executorService.scheduleWithFixedDelay(task3, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-//        executorService.execute(task4);
-//        if (!bossFlag) {
-//            executorService.submit(task4).cancel(!bossFlag);
-//        }
-
     }
 
     //***********************
@@ -387,14 +353,23 @@ public class Game extends JPanel {
                                         : randNum < 2.0 / 3 ? "bomb"
                                         : "bullet";
                                 switch (type) {
-                                    case "blood" -> props.add(bloodPropFactory.createProp(
-                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                    case "bomb" -> props.add(bombPropFactory.createProp(
-                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                    case "bullet" -> props.add(bulletPropFactory.createProp(
-                                            enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                    default -> {
+                                    case "blood": {
+                                        props.add(bloodPropFactory.createProp(
+                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                        break;
                                     }
+                                    case "bomb": {
+                                        props.add(bombPropFactory.createProp(
+                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                        break;
+                                    }
+                                    case "bullet": {
+                                        props.add(bulletPropFactory.createProp(
+                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
+                                        break;
+                                    }
+                                    default:
+
                                 }
                             }
                         }
@@ -422,8 +397,6 @@ public class Game extends JPanel {
                 } else if ("blood".equals(prop.getType())) {
                     bloodFlag = true;
                 }
-
-//                heroAircraft.setBulletValid(true);
                 int increment = prop.getScore();
                 score += increment;
                 scoreCnt -= bossFlag ? 0 : increment;

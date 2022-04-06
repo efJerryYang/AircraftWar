@@ -6,6 +6,9 @@ import edu.hitsz.bullet.BaseBullet;
 
 import java.util.List;
 
+/**
+ * @author JerryYang
+ */
 public class BloodProp extends AbstractProp {
 
     private int speedX = 0;

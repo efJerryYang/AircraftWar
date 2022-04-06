@@ -6,6 +6,9 @@ import edu.hitsz.bullet.EnemyBullet;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author JerryYang
+ */
 public class EliteEnemy extends MobEnemy {
 
 

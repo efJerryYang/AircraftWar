@@ -12,9 +12,11 @@ import java.util.List;
  * 英雄飞机，游戏玩家操控
  *
  * @author hitsz
+ *
  */
 public class HeroAircraft extends AbstractAircraft {
-
+    public static final int SCATTERING_SHOOTNUM = 4;
+    public static final int BOSS_APPEAR_SCORE = 500;
 
     /**
      * @param locationX 英雄机位置x坐标
@@ -27,9 +29,15 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 攻击方式
      */
-    private int shootNum = 1;     //子弹一次发射数量
-    private int power = 30;       //子弹伤害
-    private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
+    private int shootNum = 1;
+    /**
+     * power        英雄机子弹的伤害
+     */
+    private int power = 30;
+    /**
+     * direction    飞行的方向，-1向上，1向下
+     */
+    private int direction = -1;
     private boolean bulletValid = false;
     private boolean shieldValid = false;
     private boolean bulletSpeedUp = false;
@@ -54,7 +62,6 @@ public class HeroAircraft extends AbstractAircraft {
         heroAircraft.setHp(300);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
-//        heroAircraft.setLocation();
         heroAircraft.setBulletValid(false);
         heroAircraft.setShieldValid(false);
     }
@@ -101,10 +108,9 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
-//    @Override
-//    public void decreaseHp(int decrease) {
-//
-//    }
+/* Todo: 这里可以使英雄机不掉血
+    public void decreaseHp(int decrease){ }
+*/
 
     public int getShootNum() {
         return shootNum;

@@ -3,6 +3,9 @@ package edu.hitsz.factory;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BombProp;
 
+/**
+ * @author JerryYang
+ */
 public class BombPropFactory implements PropFactory{
     private int speedX = 0;
     private int speedY = 1;

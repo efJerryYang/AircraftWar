@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeroAircraftTest {
+
+
     private List<AbstractEnemy> enemyAircrafts;
     private List<BaseBullet> heroBullets;
     private List<BaseBullet> enemyBullets;

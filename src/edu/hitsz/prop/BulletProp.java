@@ -6,6 +6,11 @@ import edu.hitsz.bullet.BaseBullet;
 
 import java.util.List;
 
+import static edu.hitsz.aircraft.HeroAircraft.SCATTERING_SHOOTNUM;
+
+/**
+ * @author JerryYang
+ */
 public class BulletProp extends AbstractProp {
     public BulletProp(int locationX, int locationY, int speedX, int speedY, int score, String type) {
         super(locationX, locationY, speedX, speedY, score, type);
@@ -15,9 +20,9 @@ public class BulletProp extends AbstractProp {
     @Override
     public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time) {
         System.out.println("BulletSupply active!");
-        if (heroAircraft.getShootNum() < 4) {
+        if (heroAircraft.getShootNum() < SCATTERING_SHOOTNUM) {
             heroAircraft.setShootNum(heroAircraft.getShootNum() * 2);
-        } else if (heroAircraft.getShootNum() == 4) {
+        } else if (heroAircraft.getShootNum() == SCATTERING_SHOOTNUM) {
             heroAircraft.setBulletSpeedUp(true);
             heroAircraft.setShootNum(heroAircraft.getShootNum() + 1);
         } else {

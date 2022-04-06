@@ -7,6 +7,9 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * @author JerryYang
+ */
 public class AudioPlayer {
     private Player player;
     private BufferedInputStream name;

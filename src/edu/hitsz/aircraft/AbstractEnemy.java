@@ -11,6 +11,7 @@ import java.util.List;
  * <p>
  * score用于记录击毁敌人所获得的分数，或者获取道具时获取的分数
  * type用于记录敌人种类
+ * @author JerryYang
  */
 public abstract class AbstractEnemy extends AbstractAircraft {
     private int score;
