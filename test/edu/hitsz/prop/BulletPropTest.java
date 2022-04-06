@@ -57,13 +57,16 @@ class BulletPropTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {8})
+// 根据要求只运行一个测试用例
     void activate(int x) {
-        System.out.println("\ttest: BulletProp.activate()");
+        System.out.println("\tTest: BulletProp.activate()");
         time = 0;
         AbstractProp bulletProp = bulletPropFactory.createProp(100, 100, "bullet");
-        System.out.print("\tbulletProp " + x + "\t");
-        for (int i = 0; i < x; i++) {
+        System.out.println("\tbulletProp: " + x);
+        for (int i = 1; i <= x; i++) {
+            System.out.print("\tactivate number: " + i + "\t");
             bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
         }
         int p = (int) pow(2, x);
@@ -72,7 +75,7 @@ class BulletPropTest {
 
     @Test
     void getScore() {
-        System.out.println("\ttest: BulletProp.getScore()");
+        System.out.println("\tTest: BulletProp.getScore()");
         BulletProp bulletProp = (BulletProp) bulletPropFactory.createProp(100, 200, "bullet");
         assertEquals(30, bulletProp.getScore());
     }

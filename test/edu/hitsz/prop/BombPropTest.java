@@ -65,9 +65,11 @@ class BombPropTest {
     }
 
     @ParameterizedTest
+//    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+// 根据要求只运行一个测试用例
     void activate(int x) {
-        System.out.println("\ttest: BombProp.activate()");
+        System.out.println("\tTest: BombProp.activate()");
         time = 0;
         int difficulty = 2;
         BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
@@ -86,7 +88,7 @@ class BombPropTest {
 
     @Test
     void getScore() {
-        System.out.println("\ttest: BombProp.getScore()");
+        System.out.println("\tTest: BombProp.getScore()");
         BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
         assertEquals(30, bombProp.getScore());
     }

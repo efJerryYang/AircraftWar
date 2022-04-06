@@ -43,15 +43,15 @@ public class HeroAircraft extends AbstractAircraft {
             heroAircraft = new HeroAircraft(
                     Main.WINDOW_WIDTH / 2,
                     Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                    0, 0, 400);
+                    0, 0, 300);
         }
         return heroAircraft;
     }
 
     public void initialize() {
         heroAircraft.setShootNum(1);
-        heroAircraft.setMaxHp(400);
-        heroAircraft.setHp(400);
+        heroAircraft.setMaxHp(300);
+        heroAircraft.setHp(300);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
 //        heroAircraft.setLocation();

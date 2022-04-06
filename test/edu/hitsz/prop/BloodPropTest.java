@@ -59,9 +59,11 @@ class BloodPropTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {300, 0, 0, 0, 10, 20, 50, 100, 199, 200, 201, 250, 300})
+//    @ValueSource(ints = {300, 0, 0, 0, 10, 20, 50, 100, 199, 200, 201, 250, 300})
+    @ValueSource(ints = {250})
+//  根据要求只运行一个测试用例
     void activate(int x) {
-        System.out.println("\ttest: BloodProp.activate()");
+        System.out.println("\tTest: BloodProp.activate()");
         time = 0;
         BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200, "blood");
 
@@ -75,7 +77,7 @@ class BloodPropTest {
 
     @Test
     void getScore() {
-        System.out.println("\ttest: BloodProp.getScore()");
+        System.out.println("\tTest: BloodProp.getScore()");
         BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200, "blood");
         assertEquals(30, bloodProp.getScore());
     }

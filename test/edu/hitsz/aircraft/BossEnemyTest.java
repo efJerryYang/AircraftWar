@@ -21,7 +21,6 @@ class BossEnemyTest {
     private BulletPropFactory bulletPropFactory;
     private BloodPropFactory bloodPropFactory;
     private BombPropFactory bombPropFactory;
-    //    private HeroAircraft heroAircraft;
     private MobFactory mobFactory;
     private EliteFactory eliteFactory;
     private BossFactory bossFactory;
@@ -31,10 +30,6 @@ class BossEnemyTest {
     @BeforeEach
     void setUp() {
         System.out.println("before each test");
-//        if (this.heroAircraft == null) {
-//            this.heroAircraft = HeroAircraft.getHeroAircraft();
-//        }
-//        this.heroAircraft.initialize();
         this.enemyAircrafts = new LinkedList<>();
         this.heroBullets = new LinkedList<>();
         this.enemyBullets = new LinkedList<>();
@@ -48,10 +43,6 @@ class BossEnemyTest {
     @AfterEach
     void tearDown() {
         System.out.println("after each test");
-//        if (this.heroAircraft == null) {
-//            this.heroAircraft = HeroAircraft.getHeroAircraft();
-//        }
-//        this.heroAircraft.initialize();
         this.enemyAircrafts = null;
         this.heroBullets = null;
         this.enemyBullets = null;
@@ -63,9 +54,11 @@ class BossEnemyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {8})
+        // 根据要求只运行一个测试用例
     void shoot(int x) {
-        System.out.println("\ttest: BossEnemy.shoot()");
+        System.out.println("\tTest: BossEnemy.shoot()");
         time = 0;
         for (int i = 0; i < x; i++) {
             if (i > 5) {
@@ -76,10 +69,8 @@ class BossEnemyTest {
             int sumX = 0;
             for (int j = 0; j < boss.getShootNum(); j++) {
                 BaseBullet bullet = res.get(j);
-//                System.out.println("\n" + bullet.getLocationX() + "\t" + bullet.getLocationY());
                 int center = j * 2 - boss.getShootNum() + 1;
-                assertEquals(boss.getLocationY() + boss.getDirection() * 2 - center * center + 10,
-                        bullet.getLocationY());
+                assertEquals(boss.getLocationY() + boss.getDirection() * 2 - center * center + 10, bullet.getLocationY());
                 sumX += bullet.getLocationX();
             }
             assertEquals(boss.getLocationX(), sumX / res.size());
@@ -88,7 +79,9 @@ class BossEnemyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {8})
+//  根据要求只运行一个测试用例
     void getHp(int x) {
         System.out.println("\tTest: BossEnemy.getHp()");
         int difficulty = Math.max(1, x);

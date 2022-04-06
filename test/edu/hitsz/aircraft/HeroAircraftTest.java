@@ -83,9 +83,11 @@ class HeroAircraftTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {8})
+// 根据要求只运行一个测试用例
     void shoot(int x) {
-        System.out.println("\ttest: HeroAircraft.shoot()");
+        System.out.println("\tTest: HeroAircraft.shoot()");
         time = 0;
         AbstractProp bulletProp = bulletPropFactory.createProp(100, 100, "bullet");
         System.out.println("\tactivate times: " + x);
