@@ -141,7 +141,7 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 boolean moveRight = Math.random() * 2 < 1;
-                if (enemyAircrafts.size() < enemyMaxNumber && enemyMaxNumber < enemyMaxNumberUpperBound) {
+                if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
                     // 随机数控制产生精英敌机
                     boolean createElite = Math.random() * 5 < 1;
                     if (mobCnt < mobCntMax && !createElite) {
@@ -161,8 +161,7 @@ public class Game extends JPanel {
                     if (enemyMaxNumber < enemyMaxNumberUpperBound) {
                         enemyMaxNumber++;
                     }
-                }
-                // 飞机射出子弹
+                }// 飞机射出子弹
                 shootAction();
             }
 

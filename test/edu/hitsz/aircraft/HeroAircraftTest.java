@@ -3,10 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -79,6 +76,7 @@ class HeroAircraftTest {
         assertEquals(1, heroAircraft.getDirection());
     }
 
+    @Disabled
     @Test
     void forward() {
 
@@ -130,18 +128,22 @@ class HeroAircraftTest {
         assertEquals(100, heroAircraft.getPower());
     }
 
+    @Disabled
     @Test
     void isBulletValid() {
     }
 
+    @Disabled
     @Test
     void setBulletValid() {
     }
 
+    @Disabled
     @Test
     void isShieldValid() {
     }
 
+    @Disabled
     @Test
     void setShieldValid() {
     }

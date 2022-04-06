@@ -18,7 +18,7 @@ public class BombProp extends AbstractProp {
         System.out.println("BombSupply active!");
         for (AbstractEnemy enemy : abstractEnemyList
         ) {
-            if (enemy.getType().equals("boss")) {
+            if ("boss".equals(enemy.getType())) {
                 continue;
             }
             this.setScore(this.getScore() + enemy.getScore());

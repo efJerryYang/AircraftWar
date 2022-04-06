@@ -9,6 +9,7 @@ import edu.hitsz.factory.BulletPropFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -58,7 +59,7 @@ class BloodPropTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {300,0, 0, 0, 10, 20, 50, 100, 199, 200, 201, 250, 300})
+    @ValueSource(ints = {300, 0, 0, 0, 10, 20, 50, 100, 199, 200, 201, 250, 300})
     void activate(int x) {
         System.out.println("\ttest: BloodProp.activate()");
         time = 0;
@@ -70,6 +71,13 @@ class BloodPropTest {
         int expected = x <= 0 ? 0 :
                 Math.min(x + 100, 300);
         assertEquals(expected, heroAircraft.getHp());
+    }
+
+    @Test
+    void getScore() {
+        System.out.println("\ttest: BloodProp.getScore()");
+        BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200, "blood");
+        assertEquals(30, bloodProp.getScore());
     }
 
 }

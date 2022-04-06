@@ -7,6 +7,7 @@ import edu.hitsz.factory.BulletPropFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -67,5 +68,12 @@ class BulletPropTest {
         }
         int p = (int) pow(2, x);
         assertEquals(Math.min(p, 5), heroAircraft.getShootNum());
+    }
+
+    @Test
+    void getScore() {
+        System.out.println("\ttest: BulletProp.getScore()");
+        BulletProp bulletProp = (BulletProp) bulletPropFactory.createProp(100, 200, "bullet");
+        assertEquals(30, bulletProp.getScore());
     }
 }

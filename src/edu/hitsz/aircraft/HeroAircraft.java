@@ -27,7 +27,7 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 攻击方式
      */
-    private int shootNum = 10;     //子弹一次发射数量
+    private int shootNum = 1;     //子弹一次发射数量
     private int power = 30;       //子弹伤害
     private int direction = -1;  //子弹射击方向 (向上发射：-1，向下发射：1)
     private boolean bulletValid = false;
@@ -96,7 +96,6 @@ public class HeroAircraft extends AbstractAircraft {
             } else {
                 baseBullet = new HeroBullet(xloc + center * 10, yloc, 0, speedY, power);
             }
-//            System.out.println(xloc + "\t" + yloc + "\t" + "");
             res.add(baseBullet);
         }
         return res;

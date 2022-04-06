@@ -48,6 +48,39 @@ public abstract class AbstractFlyingObject {
      * -1 表示未设置
      */
     protected int height = -1;
+
+    public void setLocationX(int locationX) {
+        this.locationX = locationX;
+    }
+
+    public void setLocationY(int locationY) {
+        this.locationY = locationY;
+    }
+
+    public void setSpeedY(int speedY) {
+        this.speedY = speedY;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
     /**
      * 有效（生存）标记，
      * 通常标记为 false的对象会再下次刷新时清除

@@ -8,6 +8,7 @@ import edu.hitsz.factory.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -81,5 +82,12 @@ class BombPropTest {
         bombProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);  // boss enemy will not be removed
         assertEquals(Math.min(x, 5), enemyAircrafts.size());
+    }
+
+    @Test
+    void getScore() {
+        System.out.println("\ttest: BombProp.getScore()");
+        BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
+        assertEquals(30, bombProp.getScore());
     }
 }
