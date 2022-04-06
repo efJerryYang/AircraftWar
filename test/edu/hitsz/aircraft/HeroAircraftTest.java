@@ -104,6 +104,7 @@ class HeroAircraftTest {
             assertEquals(heroAircraft.getLocationY() + heroAircraft.getDirection() * 2 + center * center,
                     bullet.getLocationY());
             sumX += bullet.getLocationX();
+            System.out.println("\tx_offset: " + center + " \ty_offset: " + center * center);
         }
         assertEquals(heroAircraft.getLocationX(), sumX / res.size());
     }

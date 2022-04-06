@@ -64,16 +64,22 @@ class BossEnemyTest {
             if (i > 5) {
                 break;
             }
-            BossEnemy boss = (BossEnemy) bossFactory.createEnemy(i);
+            int difficulty = Math.max(1, i);
+            System.out.println("\tDifficulty: " + difficulty);
+            BossEnemy boss = (BossEnemy) bossFactory.createEnemy(difficulty);
             List<BaseBullet> res = boss.shoot();
             int sumX = 0;
             for (int j = 0; j < boss.getShootNum(); j++) {
                 BaseBullet bullet = res.get(j);
                 int center = j * 2 - boss.getShootNum() + 1;
+//                System.out.print(boss.getLocationY() + boss.getDirection() * 2 - center * center + 10);
                 assertEquals(boss.getLocationY() + boss.getDirection() * 2 - center * center + 10, bullet.getLocationY());
                 sumX += bullet.getLocationX();
+                System.out.println("\tx_offset: " + center + " \ty_offset: " + center * center);
             }
             assertEquals(boss.getLocationX(), sumX / res.size());
+//            System.out.print(boss.getLocationX());
+            System.out.println();
         }
 
     }

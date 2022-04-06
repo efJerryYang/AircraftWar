@@ -5,7 +5,6 @@ import edu.hitsz.factory.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.LinkedList;
@@ -91,7 +90,9 @@ class EliteEnemyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {6})
+//  根据要求只运行一个测试用例
     void shoot(int x) {
         System.out.println("\tTest: EliteEnemy.shoot()");
         time = 0;
@@ -106,12 +107,15 @@ class EliteEnemyTest {
                 int center = j * 2 - elite.getShootNum() + 1;
                 assertEquals(elite.getLocationX() + center * 10, bullet.getLocationX());
                 assertEquals(elite.getLocationY() + elite.getDirection() * 2, bullet.getLocationY());
+//                System.out.println(bullet.getLocationX() + "\t" + bullet.getLocationY());
             }
         }
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+//    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {9})
+//  根据要求只运行一个测试用例
     void getHp(int x) {
         System.out.println("\tTest: EliteEnemy.getHp()");
         int difficulty = Math.max(1, x);

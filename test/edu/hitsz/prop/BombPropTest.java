@@ -66,7 +66,7 @@ class BombPropTest {
 
     @ParameterizedTest
 //    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {7})
 // 根据要求只运行一个测试用例
     void activate(int x) {
         System.out.println("\tTest: BombProp.activate()");
@@ -74,16 +74,13 @@ class BombPropTest {
         int difficulty = 2;
         BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
         for (int i = 1; i <= x; i++) {
-            if (i > 5) {
-                break;
-            }
             enemyAircrafts.add(mobFactory.createEnemy(difficulty));
             enemyAircrafts.add(eliteFactory.createEnemy(difficulty));
             enemyAircrafts.add(bossFactory.createEnemy(difficulty));
         }
         bombProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);  // boss enemy will not be removed
-        assertEquals(Math.min(x, 5), enemyAircrafts.size());
+        assertEquals(x, enemyAircrafts.size());
     }
 
     @Test
