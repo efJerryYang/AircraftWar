@@ -91,7 +91,7 @@ class HeroAircraftTest {
     void shoot(int x) {
         System.out.println("\tTest: HeroAircraft.shoot()");
         time = 0;
-        AbstractProp bulletProp = bulletPropFactory.createProp(100, 100, "bullet");
+        AbstractProp bulletProp = bulletPropFactory.createProp(100, 100);
         System.out.println("\tactivate times: " + x);
         for (int i = 0; i < x; i++) {
             System.out.print("\tactivate number: " + (i + 1) + "\t");

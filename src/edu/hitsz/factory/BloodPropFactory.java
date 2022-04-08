@@ -12,8 +12,8 @@ public class BloodPropFactory implements PropFactory {
     private int score = 30;
 
     @Override
-    public AbstractProp createProp(int locationX, int locationY, String type) {
-        return new BloodProp(locationX, locationY, speedX, speedY, score, type);
+    public AbstractProp createProp(int locationX, int locationY) {
+        return new BloodProp(locationX, locationY, speedX, speedY, score, "blood");
     }
 
 }

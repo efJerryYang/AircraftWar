@@ -65,7 +65,7 @@ class BloodPropTest {
     void activate(int x) {
         System.out.println("\tTest: BloodProp.activate()");
         time = 0;
-        BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200, "blood");
+        BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200);
 
         heroAircraft.decreaseHp(heroAircraft.getMaxHp() - x);
         System.out.print("\t");
@@ -78,7 +78,7 @@ class BloodPropTest {
     @Test
     void getScore() {
         System.out.println("\tTest: BloodProp.getScore()");
-        BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200, "blood");
+        BloodProp bloodProp = (BloodProp) bloodPropFactory.createProp(100, 200);
         assertEquals(30, bloodProp.getScore());
     }
 

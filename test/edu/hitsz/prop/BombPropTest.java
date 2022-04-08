@@ -72,7 +72,7 @@ class BombPropTest {
         System.out.println("\tTest: BombProp.activate()");
         time = 0;
         int difficulty = 2;
-        BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
+        BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200);
         for (int i = 1; i <= x; i++) {
             enemyAircrafts.add(mobFactory.createEnemy(difficulty));
             enemyAircrafts.add(eliteFactory.createEnemy(difficulty));
@@ -86,7 +86,7 @@ class BombPropTest {
     @Test
     void getScore() {
         System.out.println("\tTest: BombProp.getScore()");
-        BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200, "bomb");
+        BombProp bombProp = (BombProp) bombPropFactory.createProp(100, 200);
         assertEquals(30, bombProp.getScore());
     }
 }

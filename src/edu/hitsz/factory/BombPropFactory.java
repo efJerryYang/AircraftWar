@@ -12,7 +12,7 @@ public class BombPropFactory implements PropFactory{
     private int score = 30;
 
     @Override
-    public AbstractProp createProp(int locationX, int locationY, String type) {
-        return new BombProp(locationX, locationY, speedX, speedY, score, type);
+    public AbstractProp createProp(int locationX, int locationY) {
+        return new BombProp(locationX, locationY, speedX, speedY, score, "bomb");
     }
 }

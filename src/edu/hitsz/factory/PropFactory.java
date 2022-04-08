@@ -14,5 +14,5 @@ public interface PropFactory {
      * @param type      prop type
      * @return          return a prop class instance
      */
-    AbstractProp createProp(int locationX, int locationY, String type);
+    AbstractProp createProp(int locationX, int locationY);
 }

@@ -63,7 +63,7 @@ class BulletPropTest {
     void activate(int x) {
         System.out.println("\tTest: BulletProp.activate()");
         time = 0;
-        AbstractProp bulletProp = bulletPropFactory.createProp(100, 100, "bullet");
+        AbstractProp bulletProp = bulletPropFactory.createProp(100, 100);
         System.out.println("\tbulletProp: " + x);
         for (int i = 1; i <= x; i++) {
             System.out.print("\tactivate number: " + i + "\t");
@@ -76,7 +76,7 @@ class BulletPropTest {
     @Test
     void getScore() {
         System.out.println("\tTest: BulletProp.getScore()");
-        BulletProp bulletProp = (BulletProp) bulletPropFactory.createProp(100, 200, "bullet");
+        BulletProp bulletProp = (BulletProp) bulletPropFactory.createProp(100, 200);
         assertEquals(30, bulletProp.getScore());
     }
 }

@@ -345,32 +345,17 @@ public class Game extends JPanel {
                         scoreCnt -= bossFlag ? 0 : increment;
                         if ("elite".equals(enemyAircraft.getType())) {
                             // [DONE] 获得分数，产生道具补给
-                            // 以 2/3 概率生成道具
-                            if (Math.random() >= 1.0 / 3) {
-                                double randNum = Math.random();
-                                // my Todo: 这里的设计有点冗余，type似乎变得多余，以后优化的时候修改
-                                String type = randNum < 1.0 / 3 ? "blood"
-                                        : randNum < 2.0 / 3 ? "bomb"
-                                        : "bullet";
-                                switch (type) {
-                                    case "blood": {
-                                        props.add(bloodPropFactory.createProp(
-                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                        break;
-                                    }
-                                    case "bomb": {
-                                        props.add(bombPropFactory.createProp(
-                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                        break;
-                                    }
-                                    case "bullet": {
-                                        props.add(bulletPropFactory.createProp(
-                                                enemyAircraft.getLocationX(), enemyAircraft.getLocationY(), type));
-                                        break;
-                                    }
-                                    default:
-
-                                }
+                            // 以 8/9 概率生成道具
+                            double randNum = Math.random();
+                            if (randNum < 0.3) {
+                                props.add(bloodPropFactory.createProp(
+                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                            } else if (randNum < 0.6) {
+                                props.add(bombPropFactory.createProp(
+                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                            } else if (randNum < 0.9) {
+                                props.add(bulletPropFactory.createProp(
+                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             }
                         }
                     }
