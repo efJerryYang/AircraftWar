@@ -17,12 +17,39 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      * 生命值
      */
     private int maxHp;
+    private int shootNum;
+    private int direction;
+    private int power = 30;
 
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);
         this.hp = hp;
         this.maxHp = hp;
 //        this.score = score;
+    }
+
+    public int getShootNum() {
+        return shootNum;
+    }
+
+    public void setShootNum(int shootNum) {
+        this.shootNum = shootNum;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 
     public int getMaxHp() {

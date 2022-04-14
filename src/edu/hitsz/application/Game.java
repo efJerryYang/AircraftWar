@@ -6,6 +6,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.strategy.StraightShoot;
 import javazoom.jl.decoder.JavaLayerException;
 
 import javax.swing.*;
@@ -68,7 +69,7 @@ public class Game extends JPanel {
      * 用于控制产生频率的底线，避免随机巧合导致一直没有精英机产生
      */
     private int mobCnt = 0;
-    private int mobCntMax = 15;
+    private int mobCntMax = 5;
 
     /**
      * boss机生成控制
@@ -84,6 +85,8 @@ public class Game extends JPanel {
     private boolean bloodFlag = false;
     private boolean bulletFlag = false;
     private boolean crashFlag = false;
+    private Context heroContext;
+    private Context enemyContext;
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
@@ -99,7 +102,8 @@ public class Game extends JPanel {
         mobFactory = new MobFactory();
         eliteFactory = new EliteFactory();
         bossFactory = new BossFactory();
-
+        heroContext = new Context(new StraightShoot());
+        enemyContext = new Context(new StraightShoot());
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -145,7 +149,7 @@ public class Game extends JPanel {
                 boolean moveRight = Math.random() * 2 < 1;
                 if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
                     // 随机数控制产生精英敌机
-                    boolean createElite = Math.random() * 5 < 1;
+                    boolean createElite = Math.random() * 3 < 1;
                     if (mobCnt < mobCntMax && !createElite) {
                         enemyAircrafts.add(mobFactory.createEnemy(heroAircraft.getShootNum()));
                         mobCnt++;
@@ -250,10 +254,11 @@ public class Game extends JPanel {
     private void shootAction() {
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyAircraft.shoot());
+//            enemyBullets.addAll(enemyAircraft.shoot());
+            enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
         }
         // 英雄射击
-        heroBullets.addAll(heroAircraft.shoot());
+        heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
     }
 
     private void bulletsMoveAction() {
@@ -356,7 +361,8 @@ public class Game extends JPanel {
                             } else if (randNum < 0.9) {
                                 props.add(bulletPropFactory.createProp(
                                         enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
-                            }
+                            } // else do nothing
+
                         }
                     }
                 }

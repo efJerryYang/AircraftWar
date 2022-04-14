@@ -18,10 +18,10 @@ public class AudioPlayer {
         name = new BufferedInputStream((new FileInputStream(System.getProperty("user.dir") + path)));
     }
 
-    public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
-        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
-        audioPlayer.playAudio();
-    }
+//    public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
+//        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+//        audioPlayer.playAudio();
+//    }
 
     public void playAudio() throws JavaLayerException {
         player = new Player(name);

@@ -14,16 +14,19 @@ public class EliteEnemy extends MobEnemy {
 
     private int shootNum = 1;
     private int power = 30;
-    private int direction = 1;
+    private int direction;
 
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type) {
         super(locationX, locationY, speedX, speedY, hp, score, type);
+        this.setDirection(1);
     }
 
+    @Override
     public int getDirection() {
         return direction;
     }
 
+    @Override
     public void setDirection(int direction) {
         this.direction = direction;
     }
@@ -51,18 +54,22 @@ public class EliteEnemy extends MobEnemy {
         return res;
     }
 
+    @Override
     public int getShootNum() {
         return shootNum;
     }
 
+    @Override
     public void setShootNum(int shootNum) {
         this.shootNum = shootNum;
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
+    @Override
     public void setPower(int power) {
         this.power = power;
     }

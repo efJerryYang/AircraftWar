@@ -12,12 +12,11 @@ import java.util.List;
  * 英雄飞机，游戏玩家操控
  *
  * @author hitsz
- *
  */
 public class HeroAircraft extends AbstractAircraft {
     public static final int SCATTERING_SHOOTNUM = 4;
     public static final int BOSS_APPEAR_SCORE = 500;
-
+    public static final int HERO_MAX_HP = 1000;
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -37,13 +36,12 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * direction    飞行的方向，-1向上，1向下
      */
-    private int direction = -1;
     private boolean bulletValid = false;
     private boolean shieldValid = false;
     private boolean bulletSpeedUp = false;
-
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        this.setDirection(-1);
     }
 
     public static synchronized HeroAircraft getHeroAircraft() {
@@ -51,27 +49,23 @@ public class HeroAircraft extends AbstractAircraft {
             heroAircraft = new HeroAircraft(
                     Main.WINDOW_WIDTH / 2,
                     Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                    0, 0, 300);
+                    0, 0, HERO_MAX_HP);
         }
         return heroAircraft;
     }
 
+    public static void setHeroAircraft(HeroAircraft heroAircraft) {
+        HeroAircraft.heroAircraft = heroAircraft;
+    }
+
     public void initialize() {
         heroAircraft.setShootNum(1);
-        heroAircraft.setMaxHp(300);
-        heroAircraft.setHp(300);
+        heroAircraft.setMaxHp(HERO_MAX_HP);
+        heroAircraft.setHp(HERO_MAX_HP);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
         heroAircraft.setBulletValid(false);
         heroAircraft.setShieldValid(false);
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
     }
 
     @Override
@@ -88,15 +82,15 @@ public class HeroAircraft extends AbstractAircraft {
     public List<BaseBullet> shoot() {
         List<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();
-        int y = this.getLocationY() + direction * 2;
+        int y = this.getLocationY() + this.getDirection() * 2;
         int speedX = 1;
-        int speedY = this.getSpeedY() + direction * 5;
+        int speedY = this.getSpeedY() + this.getDirection() * 5;
         BaseBullet baseBullet;
         for (int i = 0; i < shootNum; i++) {
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
             int center = i * 2 - shootNum + 1;
-            int xloc = x + center;
+            int xloc = x + center * 6;
             int yloc = y + center * center;
             if (bulletSpeedUp) {
                 baseBullet = new HeroBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY * 2, Math.max(power, shootNum * power / 2));
@@ -112,18 +106,22 @@ public class HeroAircraft extends AbstractAircraft {
     public void decreaseHp(int decrease){ }
 */
 
+    @Override
     public int getShootNum() {
         return shootNum;
     }
 
+    @Override
     public void setShootNum(int shootNum) {
         this.shootNum = shootNum;
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
+    @Override
     public void setPower(int power) {
         this.power = power;
     }
