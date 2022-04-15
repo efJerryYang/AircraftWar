@@ -6,6 +6,8 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.record.Record;
+import edu.hitsz.record.RecordDAOImpl;
 import edu.hitsz.strategy.StraightShoot;
 import javazoom.jl.decoder.JavaLayerException;
 
@@ -13,6 +15,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,6 +24,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
+import static java.lang.System.exit;
 
 /**
  * 游戏主面板，游戏启动
@@ -45,6 +50,7 @@ public class Game extends JPanel {
     private final MobFactory mobFactory;
     private final EliteFactory eliteFactory;
     private final BossFactory bossFactory;
+    private final RecordDAOImpl recordDAOImpl;
     private int backGroundTop = 0;
     /**
      * 时间间隔(ms)，控制刷新频率
@@ -88,7 +94,7 @@ public class Game extends JPanel {
     private Context heroContext;
     private Context enemyContext;
 
-    public Game() {
+    public Game() throws IOException, NoSuchAlgorithmException {
         heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<BaseBullet>();
@@ -104,6 +110,7 @@ public class Game extends JPanel {
         bossFactory = new BossFactory();
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
+        recordDAOImpl = new RecordDAOImpl();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -187,7 +194,19 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
+                Record record = null;
                 System.out.println("Game Over!");
+                try {
+                    record = new Record("TestUser", score);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                recordDAOImpl.addRecord(record);
+                recordDAOImpl.saveRecord();
+                System.out.println("======================= Rankings =======================");
+                recordDAOImpl.getAllRecords();
+                System.out.println("========================================================");
+                exit(0);
             }
         };
         Runnable task2 = () -> {

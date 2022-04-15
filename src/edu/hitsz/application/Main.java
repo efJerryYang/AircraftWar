@@ -5,6 +5,8 @@ import javazoom.jl.decoder.JavaLayerException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 程序入口
@@ -30,7 +32,12 @@ public class Main {
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Game game = new Game();
+        Game game = null;
+        try {
+            game = new Game();
+        } catch (IOException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         frame.add(game);
         frame.setVisible(true);
         try {

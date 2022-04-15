@@ -1,0 +1,86 @@
+[
+  {
+    "rank": 1,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 12295,
+    "datetime": "2022-04-16 08:25:38"
+  },
+  {
+    "rank": 2,
+    "username": "CA7D2973",
+    "difficulty": "MEDIUM",
+    "score": 4974,
+    "datetime": "2022-04-15 23:26:45"
+  },
+  {
+    "rank": 3,
+    "username": "6389688A",
+    "difficulty": "MEDIUM",
+    "score": 4738,
+    "datetime": "2022-04-15 23:26:45"
+  },
+  {
+    "rank": 4,
+    "username": "4771EFBA",
+    "difficulty": "MEDIUM",
+    "score": 4030,
+    "datetime": "2022-04-15 23:26:45"
+  },
+  {
+    "rank": 5,
+    "username": "22D8FF55",
+    "difficulty": "MEDIUM",
+    "score": 2990,
+    "datetime": "2022-04-15 23:26:45"
+  },
+  {
+    "rank": 6,
+    "username": "F9E84D8B",
+    "difficulty": "MEDIUM",
+    "score": 2561,
+    "datetime": "2022-04-15 23:26:45"
+  },
+  {
+    "rank": 7,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 2535,
+    "datetime": "2022-04-15 23:28:46"
+  },
+  {
+    "rank": 8,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 1505,
+    "datetime": "2022-04-16 08:28:43"
+  },
+  {
+    "rank": 9,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 970,
+    "datetime": "2022-04-16 08:35:58"
+  },
+  {
+    "rank": 10,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 360,
+    "datetime": "2022-04-15 23:27:23"
+  },
+  {
+    "rank": 11,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 130,
+    "datetime": "2022-04-16 08:19:31"
+  },
+  {
+    "rank": 12,
+    "username": "TestUser",
+    "difficulty": "MEDIUM",
+    "score": 50,
+    "datetime": "2022-04-16 08:30:01"
+  }
+]

@@ -1,0 +1,52 @@
+@startuml
+interface RecordDAO {
+~ List<Record> getAllRecords()
+~ Record getByRank(int)
+~ Record getByName(String)
+~ Record addRecord(Record)
+~ Record deleteByRank(int)
+~ Record deleteByName(String)
+~ void saveRecord()
+}
+class Record {
+- int rank
+- String username
+- String difficulty
+- int score
+- String datetime
++ <<Create>> Record()
++ <<Create>> Record(String,int)
++ int getRank()
++ void setRank(int)
++ {static} String getDateTime()
++ {static} String generateUsername(String)
++ {static} String prettyPrintHeader(boolean)
++ String prettyPrintRecord(boolean)
++ String getDatetime()
++ void setDatetime(String)
++ String getUsername()
++ void setUsername(String)
++ int getScore()
++ void setScore(int)
++ String getDifficulty()
++ void setDifficulty(String)
+}
+class RecordDAOImpl {
+- int TEST_RECORD_LENGTH
+- ArrayList<Record> recordList
+- String recordPath
++ <<Create>> RecordDAOImpl()
++ void createTestRecords()
++ List<Record> getAllRecords()
++ Record getByRank(int)
++ Record getByName(String)
++ Record addRecord(Record)
++ Record deleteByRank(int)
++ Record deleteByName(String)
++ void saveRecord()
+}
+
+Game -> RecordDAO
+Record <- RecordDAOImpl
+RecordDAOImpl ..|> RecordDAO
+@enduml
