@@ -48,45 +48,11 @@ public abstract class AbstractFlyingObject {
      * -1 表示未设置
      */
     protected int height = -1;
-
-    public void setLocationX(int locationX) {
-        this.locationX = locationX;
-    }
-
-    public void setLocationY(int locationY) {
-        this.locationY = locationY;
-    }
-
-    public void setSpeedY(int speedY) {
-        this.speedY = speedY;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
     /**
      * 有效（生存）标记，
      * 通常标记为 false的对象会再下次刷新时清除
      */
     protected boolean isValid = true;
-
 
     public AbstractFlyingObject() {
     }
@@ -96,6 +62,14 @@ public abstract class AbstractFlyingObject {
         this.locationY = locationY;
         this.speedX = speedX;
         this.speedY = speedY;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
     }
 
     public int getSpeedX() {
@@ -117,6 +91,7 @@ public abstract class AbstractFlyingObject {
         locationY += speedY;
         if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
             // 横向超出边界后反向
+            locationX = locationX <= 0 ? 1 : Main.WINDOW_WIDTH - 1;
             speedX = -speedX;
         }
         // 判定 y 轴出界
@@ -164,8 +139,16 @@ public abstract class AbstractFlyingObject {
         return locationX;
     }
 
+    public void setLocationX(int locationX) {
+        this.locationX = locationX;
+    }
+
     public int getLocationY() {
         return locationY;
+    }
+
+    public void setLocationY(int locationY) {
+        this.locationY = locationY;
     }
 
     public void setLocation(double locationX, double locationY) {
@@ -177,11 +160,19 @@ public abstract class AbstractFlyingObject {
         return speedY;
     }
 
+    public void setSpeedY(int speedY) {
+        this.speedY = speedY;
+    }
+
     public BufferedImage getImage() {
         if (image == null) {
             image = ImageManager.get(this);
         }
         return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
     public int getWidth() {
@@ -192,12 +183,20 @@ public abstract class AbstractFlyingObject {
         return width;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public int getHeight() {
         if (height == -1) {
             // 若未设置，则查询图片高度并设置
             height = ImageManager.get(this).getHeight();
         }
         return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public boolean notValid() {
