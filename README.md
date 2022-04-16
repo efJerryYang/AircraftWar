@@ -22,4 +22,15 @@
 
 ## Description
 
-* 添加了`gson`库用于保存`json`数据
+本次实验任务完成如下：
+
+* 使用策略模式重新封装shoot方法
+  * boss机散射
+  * 英雄机初始时为直射，在三个火力道具补充后英雄机散射且子弹加速伤害*2
+  * 所有的操作由Context的实例决定，本例中为heroContext和enemyContext
+* 使用数据访问对象模式操作成绩表数据
+  * Record类为数据的一跳记录
+  * RecordDAO为数据访问对象接口
+  * RecordDAOImpl为数据访问对象的实现
+  * 使用`gson`包用于读写`json`数据
+
