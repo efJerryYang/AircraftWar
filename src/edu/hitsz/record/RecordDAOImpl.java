@@ -14,10 +14,18 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * 我们要确保，只要必要的时候才需要对内容进行排序：其他时候只需要维护一个isSorted标记
+ * 1. 打印到屏幕的时候必须是有序的
+ * 2. 写入到文件的时候必须是有序的
+ * 3. 从文件读取的时候必须是有序的（但无法保证，所以必须排序）
+ * 4. 其他时候都只需要在操作了recordList内容的时候
+ *
  * @author JerryYang
  */
+
 public class RecordDAOImpl implements RecordDAO {
     private final int TEST_RECORD_LENGTH = 5;
+    boolean isSorted;
     private ArrayList<Record> recordList;
     private String recordPath;
 
@@ -29,21 +37,42 @@ public class RecordDAOImpl implements RecordDAO {
         }.getType());
     }
 
-//    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-//        RecordDAOImpl recordDAO = new RecordDAOImpl();
-//        Record record;
-//        recordDAO.createTestRecords();
-//        System.out.println("==================== getAllRecords ====================");
-//        recordDAO.getAllRecords();
-//        System.out.println("==================== getByRank ========================");
-//        recordDAO.getByRank(3).prettyPrintRecord(true);
-//        System.out.println("==================== getByName ========================");
-//        try {
-//            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
-//        } catch (NullPointerException e) {
-//            System.out.println("Username not exists!");
-//        }
-//    }
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+        RecordDAOImpl recordDAO = new RecordDAOImpl();
+        Record record;
+        recordDAO.createTestRecords();
+        System.out.println("==================== getAllRecords ====================");
+        recordDAO.getAllRecords();
+        System.out.println("==================== getByRank ========================");
+        recordDAO.getByRank(3).prettyPrintRecord(true);
+        System.out.println("==================== getByName ========================");
+        try {
+            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
+        } catch (NullPointerException e) {
+            System.out.println("Username not exists!");
+        }
+    }
+
+    public void sortByRank() {
+        recordList.sort(Comparator.comparing(Record::getScore).reversed());
+        for (int i = 0; i < recordList.size(); i++) {
+            recordList.get(i).setRank(i + 1);
+        }
+        isSorted = true;
+    }
+
+    public void sortByRank(boolean reverseRanking) {
+        // reverse ranking is just the score ascending sequence
+        if (reverseRanking) {
+            recordList.sort(Comparator.comparing(Record::getScore));
+        } else {
+            recordList.sort(Comparator.comparing(Record::getScore).reversed());
+        }
+        for (int i = 0; i < recordList.size(); i++) {
+            recordList.get(i).setRank(i + 1);
+        }
+        isSorted = true;
+    }
 
     public void createTestRecords() throws NoSuchAlgorithmException, IOException {
         recordList = new ArrayList<>();
@@ -56,10 +85,7 @@ public class RecordDAOImpl implements RecordDAO {
         // write to file
         FileWriter writer = new FileWriter(recordPath);
         // sort arraylist
-        recordList.sort(Comparator.comparing(Record::getScore).reversed());
-        for (int i = 0; i < recordList.size(); i++) {
-            recordList.get(i).setRank(i + 1);
-        }
+        this.sortByRank();
         gson.toJson(recordList, writer);
         writer.flush(); //flush data to file   <---
         writer.close(); //close write
@@ -72,6 +98,10 @@ public class RecordDAOImpl implements RecordDAO {
 
     @Override
     public List<Record> getAllRecords() {
+        if (!isSorted) {
+            sortByRank();
+            isSorted = true;
+        }
         Record.prettyPrintHeader(true);
         for (Record item : recordList) {
             item.prettyPrintRecord(true);
@@ -81,12 +111,19 @@ public class RecordDAOImpl implements RecordDAO {
 
     @Override
     public Record getByRank(int rank) {
-        recordList.sort(Comparator.comparing(Record::getScore).reversed());
+        if (!isSorted) {
+            sortByRank();
+            isSorted = true;
+        }
         return recordList.get(rank - 1);
     }
 
     @Override
     public Record getByName(String name) {
+        if (!isSorted) {
+            sortByRank();
+            isSorted = true;
+        }
         for (Record record : recordList) {
             if (name.equals(record.getUsername())) {
                 return record;
@@ -102,20 +139,26 @@ public class RecordDAOImpl implements RecordDAO {
         for (int i = 0; i < recordList.size(); i++) {
             recordList.get(i).setRank(i + 1);
         }
+        isSorted = true;
         return record;
     }
 
     @Override
     public Record deleteByRank(int rank) {
+        isSorted = false;
         return recordList.remove(rank - 1);
     }
 
     @Override
     public Record deleteByName(String name) {
-        // mytodo:return list
+        if (!isSorted) {
+            sortByRank();
+            isSorted = true;
+        }
         for (Record record : recordList) {
             if (name.equals(record.getUsername())) {
                 recordList.remove(record);
+                isSorted = false;
                 return record;
             }
         }
@@ -132,9 +175,9 @@ public class RecordDAOImpl implements RecordDAO {
             e.printStackTrace();
         }
         // sort arraylist
-        recordList.sort(Comparator.comparing(Record::getScore).reversed());
-        for (int i = 0; i < recordList.size(); i++) {
-            recordList.get(i).setRank(i + 1);
+        if (!isSorted) {
+            sortByRank();
+            isSorted = true;
         }
         gson.toJson(recordList, writer);
         try {
