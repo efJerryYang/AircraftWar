@@ -11,8 +11,8 @@ public interface EnemyFactory {
     /**
      * create enemy
      *
-     * @param difficulty game difficulty;
+     * @param level game level;
      * @return return an enemy class instance
      */
-    public abstract AbstractEnemy createEnemy(int difficulty);
+    public abstract AbstractEnemy createEnemy(int level);
 }

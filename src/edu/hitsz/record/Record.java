@@ -19,7 +19,7 @@ public class Record {
 
     private int rank;
     private String username;
-    private String difficulty;
+    private String level;
     private int score;
     private String datetime;
 
@@ -27,13 +27,13 @@ public class Record {
         this.datetime = Record.getDateTime();
         this.username = Record.generateUsername(datetime);
         this.score = (int) Math.round(Math.random() * 10000);
-        this.difficulty = "MEDIUM";
+        this.level = "MEDIUM";
     }
     public Record(String name,int score) throws NoSuchAlgorithmException {
         this.datetime = Record.getDateTime();
         this.username = name;
         this.score = score;
-        this.difficulty = "MEDIUM";
+        this.level = "MEDIUM";
     }
     public static String getDateTime() {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -66,7 +66,7 @@ public class Record {
     }
 
     public String prettyPrintRecord(boolean printRecord) {
-        String record = String.format("%4d\t%8s\t%6s\t%6d\t%20s", rank, username, difficulty, score, datetime);
+        String record = String.format("%4d\t%8s\t%6s\t%6d\t%20s", rank, username, level, score, datetime);
         if (printRecord) {
             System.out.println(record);
         }
@@ -97,11 +97,11 @@ public class Record {
         this.score = score;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public String getlevel() {
+        return level;
     }
 
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+    public void setlevel(String level) {
+        this.level = level;
     }
 }
