@@ -37,21 +37,21 @@ public class RecordDAOImpl implements RecordDAO {
         }.getType());
     }
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        RecordDAOImpl recordDAO = new RecordDAOImpl();
-        Record record;
-        recordDAO.createTestRecords();
-        System.out.println("==================== getAllRecords ====================");
-        recordDAO.getAllRecords();
-        System.out.println("==================== getByRank ========================");
-        recordDAO.getByRank(3).prettyPrintRecord(true);
-        System.out.println("==================== getByName ========================");
-        try {
-            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
-        } catch (NullPointerException e) {
-            System.out.println("Username not exists!");
-        }
-    }
+//    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+//        RecordDAOImpl recordDAO = new RecordDAOImpl();
+//        Record record;
+//        recordDAO.createTestRecords();
+//        System.out.println("==================== getAllRecords ====================");
+//        recordDAO.getAllRecords();
+//        System.out.println("==================== getByRank ========================");
+//        recordDAO.getByRank(3).prettyPrintRecord(true);
+//        System.out.println("==================== getByName ========================");
+//        try {
+//            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
+//        } catch (NullPointerException e) {
+//            System.out.println("Username not exists!");
+//        }
+//    }
 
     public void sortByRank() {
         recordList.sort(Comparator.comparing(Record::getScore).reversed());
