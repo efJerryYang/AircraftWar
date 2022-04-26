@@ -147,7 +147,7 @@ public class Game extends JPanel {
     public void action() throws FileNotFoundException, JavaLayerException {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-        Runnable task1 = () -> {
+        Runnable gameTask = () -> {
             time += timeInterval;
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
@@ -209,7 +209,7 @@ public class Game extends JPanel {
                 exit(0);
             }
         };
-        Runnable task2 = () -> {
+        Runnable bgm = () -> {
             try {
                 AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
                 audioPlayer.playAudio();
@@ -217,16 +217,30 @@ public class Game extends JPanel {
                 e.printStackTrace();
             }
         };
-        Runnable task3 = () -> {
+        Runnable bomb = () -> {
             if (bombFlag) {
                 bombFlag = false;
                 try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/boom2.mp3");
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb.mp3");
                     audioPlayer.playAudio();
                 } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
                 }
             }
+
+        };
+        Runnable bullet = () -> {
+            if (bulletFlag) {
+                bulletFlag = false;
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add_bullet.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException | JavaLayerException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Runnable blood = () -> {
             if (bloodFlag) {
                 bloodFlag = false;
                 try {
@@ -236,23 +250,17 @@ public class Game extends JPanel {
                     e.printStackTrace();
                 }
             }
-            if (bulletFlag) {
-                bulletFlag = false;
-                try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add-bullet.mp3");
-                    audioPlayer.playAudio();
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
-            }
         };
+
         /**
          * 以固定延迟时间进行执行
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
-        executorService.scheduleWithFixedDelay(task1, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(task2, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(task3, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
     //***********************
