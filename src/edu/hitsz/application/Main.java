@@ -3,10 +3,13 @@ package edu.hitsz.application;
 import javax.swing.*;
 import java.awt.*;
 
+import static edu.hitsz.application.Main.WINDOW_HEIGHT;
+import static edu.hitsz.application.Main.WINDOW_WIDTH;
+
 /**
  * 程序入口
  *
- * @author hitsz
+ * @author JerryYang
  */
 public class Main {
 
@@ -14,23 +17,28 @@ public class Main {
     public static final int WINDOW_HEIGHT = 768;
 
     public static void main(String[] args) {
-
-        System.out.println("Hello AbstractAircraft War");
-
-        // 获得屏幕的分辨率，初始化 Frame
+        System.out.println("Hello Aircraft War");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame frame = new JFrame("AbstractAircraft War");
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setResizable(false);
-        //设置窗口的大小和位置,居中放置
-        frame.setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
-                WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        GameFrame gameFrame = new GameFrame(screenSize);
+        int gameLevel = 1;
+        gameFrame.runGame(gameLevel);
+    }
+}
 
-        Game game = null;
-        game = new Game();
-        frame.add(game);
-        frame.setVisible(true);
+class GameFrame extends JFrame {
+    public GameFrame(Dimension screenSize) {
+        super("Aircraft War");
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setResizable(false);
+        setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
+                WINDOW_WIDTH, WINDOW_HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void runGame(int level) {
+        Game game = new Game(level);
+        add(game);
         game.action();
     }
 }
