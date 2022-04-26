@@ -94,14 +94,14 @@ public class Game extends JPanel {
     private Context heroContext;
     private Context enemyContext;
 
-    public Game() throws IOException, NoSuchAlgorithmException {
+    public Game(){
         heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<BaseBullet>();
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(5);
+        executorService = new ScheduledThreadPoolExecutor(4);
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
@@ -144,7 +144,7 @@ public class Game extends JPanel {
     /**
      * 游戏启动入口，执行游戏逻辑
      */
-    public void action() throws FileNotFoundException, JavaLayerException {
+    public void action()  {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable gameTask = () -> {

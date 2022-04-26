@@ -1,12 +1,7 @@
 package edu.hitsz.application;
 
-import javazoom.jl.decoder.JavaLayerException;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * 程序入口
@@ -33,17 +28,9 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Game game = null;
-        try {
-            game = new Game();
-        } catch (IOException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        game = new Game();
         frame.add(game);
         frame.setVisible(true);
-        try {
-            game.action();
-        } catch (FileNotFoundException | JavaLayerException e) {
-            e.printStackTrace();
-        }
+        game.action();
     }
 }

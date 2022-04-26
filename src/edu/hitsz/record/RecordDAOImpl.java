@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,10 +30,15 @@ public class RecordDAOImpl implements RecordDAO {
     private ArrayList<Record> recordList;
     private String recordPath;
 
-    public RecordDAOImpl() throws IOException, NoSuchAlgorithmException {
+    public RecordDAOImpl() {
         recordPath = System.getProperty("user.dir") + "/src/record/record.json";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        FileReader reader = new FileReader(recordPath);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(recordPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         recordList = gson.fromJson(reader, new TypeToken<List<Record>>() {
         }.getType());
     }
