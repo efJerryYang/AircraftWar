@@ -73,18 +73,25 @@
     "rank": 11,
     "username": "TestUser",
     "level": "MEDIUM",
+    "score": 619,
+    "datetime": "2022-04-25 13:19:37"
+  },
+  {
+    "rank": 12,
+    "username": "TestUser",
+    "level": "MEDIUM",
     "score": 360,
     "datetime": "2022-04-15 23:27:23"
   },
   {
-    "rank": 12,
+    "rank": 13,
     "username": "TestUser",
     "level": "MEDIUM",
     "score": 130,
     "datetime": "2022-04-16 08:19:31"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "username": "TestUser",
     "level": "MEDIUM",
     "score": 50,
