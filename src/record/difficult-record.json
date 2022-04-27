@@ -33,5 +33,12 @@
     "level": "DIFFICULT",
     "score": 3477,
     "datetime": "2022-04-27 10:08:34"
+  },
+  {
+    "rank": 6,
+    "username": "testUser",
+    "level": "DIFFICULT",
+    "score": 1450,
+    "datetime": "2022-04-27 23:35:56"
   }
 ]
