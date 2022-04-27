@@ -90,6 +90,7 @@ public class Game extends JPanel {
     private boolean bombFlag = false;
     private boolean bloodFlag = false;
     private boolean bulletFlag = false;
+    private boolean bulletCrash = false;
     private boolean crashFlag = false;
     private Context heroContext;
     private Context enemyContext;
@@ -195,7 +196,7 @@ public class Game extends JPanel {
             // 游戏结束检查
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
-                executorService.shutdownNow();
+                System.out.println(executorService.shutdownNow());
                 gameOverFlag = true;
                 Record record = null;
                 System.out.println("Game Over!");
@@ -212,7 +213,6 @@ public class Game extends JPanel {
                 synchronized (Main.class) {
                     (Main.class).notify();
                 }
-
             }
         };
         Runnable timeCounter = () -> {
@@ -254,7 +254,12 @@ public class Game extends JPanel {
         if (enableAudio) {
             Runnable bgm = () -> {
                 try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+                    AudioPlayer audioPlayer;
+                    if (bossFlag) {
+                        audioPlayer = new AudioPlayer("/src/audio/bgm_boss.mp3");
+                    } else {
+                        audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+                    }
                     audioPlayer.playAudio();
                 } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
@@ -293,25 +298,35 @@ public class Game extends JPanel {
                     }
                 }
             };
-//            Future<?> submit = executorService.submit(bgm);
-//            submit.cancel(true);
-//            executorService.shutdownNow();
-//            System.out.println(executorService.isShutdown());
-            boolean state = Thread.interrupted();
-            System.out.println(state);
+            Runnable bulletHit = () -> {
+                if (bulletCrash) {
+                    bulletCrash = false;
+                    try {
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bullet_hit.mp3");
+                        audioPlayer.playAudio();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+//            if (bossFlag) {
+//                Future<?> future = executorService.submit(bgm);
+//                future.cancel(true);
+//            }
             executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-            executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-            executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-            executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(bulletHit, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         }
-    /**
-     * 以固定延迟时间进行执行
-     * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-     */
-        executorService.scheduleWithFixedDelay(gameTask,timeInterval,timeInterval,TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(timeCounter,timeInterval,timeInterval,TimeUnit.MILLISECONDS);
+        /**
+         * 以固定延迟时间进行执行
+         * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
+         */
+        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
-}
+    }
 
     //***********************
     //      Action 各部分
@@ -413,6 +428,7 @@ public class Game extends JPanel {
                     continue;
                 }
                 if (enemyAircraft.crash(bullet)) {
+                    bulletCrash = true;
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
