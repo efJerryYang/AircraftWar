@@ -16,15 +16,17 @@ public class BombProp extends AbstractProp {
     }
 
     @Override
-    public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time) {
+    public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets,List<BaseBullet> enemyBullets, int time) {
         System.out.println("BombSupply active!");
-        for (AbstractEnemy enemy : abstractEnemyList
-        ) {
+        for (AbstractEnemy enemy : abstractEnemyList) {
             if ("boss".equals(enemy.getType())) {
                 continue;
             }
             this.setScore(this.getScore() + enemy.getScore());
             enemy.vanish();
+        }
+        for (BaseBullet enemyBullet: enemyBullets){
+            enemyBullet.vanish();
         }
     }
 

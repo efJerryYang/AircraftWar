@@ -29,6 +29,7 @@ public class HeroAircraft extends AbstractAircraft {
      * 攻击方式
      */
     private int shootNum = 1;
+    private int bulletPropStage = 0;
     /**
      * power        英雄机子弹的伤害
      */
@@ -39,6 +40,7 @@ public class HeroAircraft extends AbstractAircraft {
     private boolean bulletValid = false;
     private boolean shieldValid = false;
     private boolean bulletSpeedUp = false;
+
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
         this.setDirection(-1);
@@ -62,6 +64,7 @@ public class HeroAircraft extends AbstractAircraft {
         heroAircraft.setShootNum(1);
         heroAircraft.setMaxHp(HERO_MAX_HP);
         heroAircraft.setHp(HERO_MAX_HP);
+        heroAircraft.setBulletPropStage(0);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
         heroAircraft.setBulletValid(false);
@@ -102,9 +105,10 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
-/* Todo: 这里可以使英雄机不掉血
-    public void decreaseHp(int decrease){ }
-*/
+    /* Todo: 这里可以使英雄机不掉血
+       public void decreaseHp(int decrease) { }
+     */
+
 
     @Override
     public int getShootNum() {
@@ -148,5 +152,13 @@ public class HeroAircraft extends AbstractAircraft {
 
     public void setBulletSpeedUp(boolean bulletSpeedUp) {
         this.bulletSpeedUp = bulletSpeedUp;
+    }
+
+    public int getBulletPropStage() {
+        return bulletPropStage;
+    }
+
+    public void setBulletPropStage(int bulletPropStage) {
+        this.bulletPropStage = Math.max(bulletPropStage, 0);
     }
 }

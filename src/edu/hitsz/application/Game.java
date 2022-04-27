@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
-import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,8 +22,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
-import static edu.hitsz.application.Main.gameFrame;
-import static java.lang.System.exit;
 
 /**
  * 游戏主面板，游戏启动
@@ -51,11 +48,13 @@ public class Game extends JPanel {
     private final EliteFactory eliteFactory;
     private final BossFactory bossFactory;
     private final RecordDAOImpl recordDAOImpl;
+    private final boolean enableAudio;
     private int backGroundTop = 0;
     /**
      * 时间间隔(ms)，控制刷新频率
      */
     private int timeInterval = 40;
+    private int bulletValidTimeCnt = 0;
     private int enemyMaxNumber = 3;
     private int enemyMaxNumberUpperBound = 10;
 
@@ -97,6 +96,7 @@ public class Game extends JPanel {
 
     public Game(int gameLevel, boolean enableAudio) {
         this.level = gameLevel;
+        this.enableAudio = enableAudio;
         heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<BaseBullet>();
@@ -112,7 +112,7 @@ public class Game extends JPanel {
         bossFactory = new BossFactory();
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-        recordDAOImpl = new RecordDAOImpl();
+        recordDAOImpl = new RecordDAOImpl(level);
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -200,72 +200,104 @@ public class Game extends JPanel {
                 System.out.println("Game Over!");
                 // Todo: ranking table
                 Config.setScore(score);
-                gameFrame.showRanking();
-//                try {
-//                    record = new Record("TestUser", score);
-//                } catch (NoSuchAlgorithmException e) {
-//                    e.printStackTrace();
-//                }
-//                recordDAOImpl.addRecord(record);
-//                recordDAOImpl.saveRecord();
-//                System.out.println("======================= Rankings =======================");
-//                recordDAOImpl.getAllRecords();
-//                System.out.println("========================================================");
-//                exit(0);
+                synchronized (Main.class) {
+                    (Main.class).notify();
+                }
             }
         };
-        Runnable bgm = () -> {
-            try {
-                AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
-                audioPlayer.playAudio();
-            } catch (FileNotFoundException | JavaLayerException e) {
-                e.printStackTrace();
+        Runnable timeCounter = () -> {
+
+            if (heroAircraft.getBulletPropStage() > 0) {
+                bulletValidTimeCnt -= 1;
+                bulletValidTimeCnt = Math.max(bulletValidTimeCnt, 0);
             }
-        };
-        Runnable bomb = () -> {
-            if (bombFlag) {
-                bombFlag = false;
-                try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb.mp3");
-                    audioPlayer.playAudio();
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
+            if (bulletValidTimeCnt <= 0) {
+                bulletValidTimeCnt = 0;
+                heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() - 1);
+                if (heroAircraft.getBulletPropStage() > 0) {
+                    bulletValidTimeCnt = 200;
+                }
+            }
+            switch (heroAircraft.getBulletPropStage()) {
+                case 0 -> {
+                    heroAircraft.setShootNum(1);
+                    heroAircraft.setBulletSpeedUp(false);
+                }
+                case 1, 2 -> {
+                    heroAircraft.setBulletSpeedUp(false);
+                    heroAircraft.setShootNum(heroAircraft.getBulletPropStage() * 2);
+                }
+                case 3 -> {
+                    heroAircraft.setShootNum(5);
+                }
+                default -> {
+                    heroAircraft.setBulletPropStage(3);
                 }
             }
 
-        };
-        Runnable bullet = () -> {
-            if (bulletFlag) {
-                bulletFlag = false;
-                try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add_bullet.mp3");
-                    audioPlayer.playAudio();
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        Runnable blood = () -> {
-            if (bloodFlag) {
-                bloodFlag = false;
-                try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/healing.mp3");
-                    audioPlayer.playAudio();
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
+            System.out.print("Bullet State: " + heroAircraft.getBulletPropStage());
+            System.out.println("\tBullet Time Cnt: " + bulletValidTimeCnt);
+            if (gameOverFlag) {
+                executorService.shutdown();
             }
         };
 
+//        MusicThread bgmThread = new MusicThread("src/video/game_over.wav");
+//        MusicThread.repeat(bgmThread);
+        if (enableAudio && !gameOverFlag) {
+            Runnable bgm = () -> {
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException | JavaLayerException e) {
+                    e.printStackTrace();
+                }
+            };
+            Runnable bomb = () -> {
+                if (bombFlag) {
+                    bombFlag = false;
+                    try {
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb.mp3");
+                        audioPlayer.playAudio();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            Runnable bullet = () -> {
+                if (bulletFlag) {
+                    bulletFlag = false;
+                    try {
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add_bullet.mp3");
+                        audioPlayer.playAudio();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            Runnable blood = () -> {
+                if (bloodFlag) {
+                    bloodFlag = false;
+                    try {
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/healing.mp3");
+                        audioPlayer.playAudio();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+            executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        }
         /**
          * 以固定延迟时间进行执行
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
         executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+
     }
 
     //***********************
@@ -374,6 +406,9 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         if ("boss".equals(enemyAircraft.getType())) {
+                            props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX() + 10, enemyAircraft.getLocationY() + 30));
+                            props.add(bombPropFactory.createProp(enemyAircraft.getLocationX() + 50, enemyAircraft.getLocationY() + 20));
+                            props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX() + 90, enemyAircraft.getLocationY() + 60));
                             bossFlag = false;
                         }
                         crashFlag = true;
@@ -385,14 +420,15 @@ public class Game extends JPanel {
                             // 以 8/9 概率生成道具
                             double randNum = Math.random();
                             if (randNum < 0.3) {
-                                props.add(bloodPropFactory.createProp(
-                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+//                                props.add(bulletPropFactory.createProp(
+//                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                                props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } else if (randNum < 0.6) {
-                                props.add(bombPropFactory.createProp(
-                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+//                                props.add(bulletPropFactory.createProp(
+//                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                                props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } else if (randNum < 0.9) {
-                                props.add(bulletPropFactory.createProp(
-                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                                props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } // else do nothing
 
                         }
@@ -412,11 +448,13 @@ public class Game extends JPanel {
                 continue;
             }
             if (prop.crash(heroAircraft)) {
-                prop.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+                prop.activate(heroAircraft, enemyAircrafts, heroBullets, enemyBullets, time);
                 if ("bomb".equals(prop.getType())) {
                     bombFlag = true;
                 } else if ("bullet".equals(prop.getType())) {
                     bulletFlag = true;
+                    heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
+                    bulletValidTimeCnt = 200;
                 } else if ("blood".equals(prop.getType())) {
                     bloodFlag = true;
                 }
@@ -494,8 +532,7 @@ public class Game extends JPanel {
 
         paintImageWithPositionRevised(g, enemyAircrafts);
         paintImageWithPositionRevised(g, props);
-        g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
-                heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
+        g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2, heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
 
         //绘制得分和生命值
         paintScoreAndLife(g);
@@ -510,8 +547,7 @@ public class Game extends JPanel {
         for (AbstractFlyingObject object : objects) {
             BufferedImage image = object.getImage();
             assert image != null : objects.getClass().getName() + " has no image! ";
-            g.drawImage(image, object.getLocationX() - image.getWidth() / 2,
-                    object.getLocationY() - image.getHeight() / 2, null);
+            g.drawImage(image, object.getLocationX() - image.getWidth() / 2, object.getLocationY() - image.getHeight() / 2, null);
         }
     }
 
@@ -532,4 +568,5 @@ public class Game extends JPanel {
     public void setGameOverFlag(boolean gameOverFlag) {
         this.gameOverFlag = gameOverFlag;
     }
+
 }

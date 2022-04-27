@@ -67,7 +67,7 @@ class BulletPropTest {
         System.out.println("\tbulletProp: " + x);
         for (int i = 1; i <= x; i++) {
             System.out.print("\tactivate number: " + i + "\t");
-            bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+            bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets, enemyBullets, time);
         }
         int p = (int) pow(2, x);
         assertEquals(Math.min(p, 5), heroAircraft.getShootNum());

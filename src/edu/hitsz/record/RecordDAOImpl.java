@@ -26,14 +26,18 @@ import java.util.List;
 
 public class RecordDAOImpl implements RecordDAO {
     private final int TEST_RECORD_LENGTH = 5;
+    private final String[] header = {"rank", "name", "level", "score", "datetime"};
     boolean isSorted;
     private ArrayList<Record> recordList;
-//    private ArrayList<String>[] recordStringList;
+    //    private ArrayList<String>[] recordStringList;
     private String recordPath;
-    private final String[] header = {"rank", "name", "level", "score", "datetime"};
 
-    public RecordDAOImpl() {
-        recordPath = System.getProperty("user.dir") + "/src/record/record.json";
+    public RecordDAOImpl(int level) {
+        String levelTitle = level == 1 ? "simple" :
+                level >= 2 && level <= 3 ? "medium" :
+                        level >= 4 && level <= 5 ? "difficult" :
+                                "other";
+        recordPath = System.getProperty("user.dir") + "/src/record/" + levelTitle + "-record.json";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileReader reader = null;
         try {
@@ -45,7 +49,7 @@ public class RecordDAOImpl implements RecordDAO {
         }.getType());
     }
 
-//    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+    //    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 //        RecordDAOImpl recordDAO = new RecordDAOImpl();
 //        Record record;
 //        recordDAO.createTestRecords();

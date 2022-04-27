@@ -18,7 +18,7 @@ public class Context {
     }
 
     public List<BaseBullet> executeShootStrategy(AbstractAircraft aircraft) {
-        if (aircraft instanceof HeroAircraft && ((HeroAircraft) aircraft).isBulletSpeedUp()) {
+        if (aircraft instanceof HeroAircraft && ((HeroAircraft) aircraft).getBulletPropStage() > 0) {
             setShootStrategy(new ScatterShoot());
         } else if (aircraft instanceof BossEnemy) {
             setShootStrategy(new ScatterShoot());

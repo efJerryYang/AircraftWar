@@ -9,14 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Record {
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
     private int rank;
     private String username;
     private String level;
@@ -29,12 +21,17 @@ public class Record {
         this.score = (int) Math.round(Math.random() * 10000);
         this.level = "MEDIUM";
     }
-    public Record(String name,int score) throws NoSuchAlgorithmException {
+
+    public Record(String name, int score, int level) throws NoSuchAlgorithmException {
         this.datetime = Record.getDateTime();
         this.username = name;
         this.score = score;
-        this.level = "MEDIUM";
+        this.level = level == 1 ? "SIMPLE" :
+                level >= 2 && level <= 3 ? "MEDIUM" :
+                        level >= 4 && level <= 5 ? "DIFFICULT" :
+                                "OTHER";
     }
+
     public static String getDateTime() {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -50,6 +47,18 @@ public class Record {
         return username;
     }
 
+    public static String prettyPrintHeader(boolean printHeader) {
+        String header = String.format("%4s\t%8s\t%6s\t%6s\t%20s", "rank", "name", "level", "score", "datetime");
+        if (printHeader) {
+            System.out.println(header);
+        }
+        return header;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
 //    public static void main(String[] args) throws NoSuchAlgorithmException {
 //        String datetime = Record.getDateTime();
 //        String name = Record.generateUsername(datetime);
@@ -57,12 +66,8 @@ public class Record {
 //        System.out.println("username: " + name);
 //    }
 
-    public static String prettyPrintHeader(boolean printHeader) {
-        String header = String.format("%4s\t%8s\t%6s\t%6s\t%20s", "rank", "name", "level", "score", "datetime");
-        if (printHeader) {
-            System.out.println(header);
-        }
-        return header;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public String prettyPrintRecord(boolean printRecord) {
