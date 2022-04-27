@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +23,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
+import static edu.hitsz.application.Main.gameFrame;
 import static java.lang.System.exit;
 
 /**
@@ -93,15 +93,17 @@ public class Game extends JPanel {
     private boolean crashFlag = false;
     private Context heroContext;
     private Context enemyContext;
+    private int level = 0;
 
-    public Game() throws IOException, NoSuchAlgorithmException {
+    public Game(int gameLevel, boolean enableAudio) {
+        this.level = gameLevel;
         heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<BaseBullet>();
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(5);
+        executorService = new ScheduledThreadPoolExecutor(4);
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
@@ -144,10 +146,10 @@ public class Game extends JPanel {
     /**
      * 游戏启动入口，执行游戏逻辑
      */
-    public void action() throws FileNotFoundException, JavaLayerException {
+    public void action() {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-        Runnable task1 = () -> {
+        Runnable gameTask = () -> {
             time += timeInterval;
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
@@ -196,20 +198,23 @@ public class Game extends JPanel {
                 gameOverFlag = true;
                 Record record = null;
                 System.out.println("Game Over!");
-                try {
-                    record = new Record("TestUser", score);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                recordDAOImpl.addRecord(record);
-                recordDAOImpl.saveRecord();
-                System.out.println("======================= Rankings =======================");
-                recordDAOImpl.getAllRecords();
-                System.out.println("========================================================");
-                exit(0);
+                // Todo: ranking table
+                Config.setScore(score);
+                gameFrame.showRanking();
+//                try {
+//                    record = new Record("TestUser", score);
+//                } catch (NoSuchAlgorithmException e) {
+//                    e.printStackTrace();
+//                }
+//                recordDAOImpl.addRecord(record);
+//                recordDAOImpl.saveRecord();
+//                System.out.println("======================= Rankings =======================");
+//                recordDAOImpl.getAllRecords();
+//                System.out.println("========================================================");
+//                exit(0);
             }
         };
-        Runnable task2 = () -> {
+        Runnable bgm = () -> {
             try {
                 AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
                 audioPlayer.playAudio();
@@ -217,16 +222,30 @@ public class Game extends JPanel {
                 e.printStackTrace();
             }
         };
-        Runnable task3 = () -> {
+        Runnable bomb = () -> {
             if (bombFlag) {
                 bombFlag = false;
                 try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/boom2.mp3");
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb.mp3");
                     audioPlayer.playAudio();
                 } catch (FileNotFoundException | JavaLayerException e) {
                     e.printStackTrace();
                 }
             }
+
+        };
+        Runnable bullet = () -> {
+            if (bulletFlag) {
+                bulletFlag = false;
+                try {
+                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add_bullet.mp3");
+                    audioPlayer.playAudio();
+                } catch (FileNotFoundException | JavaLayerException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Runnable blood = () -> {
             if (bloodFlag) {
                 bloodFlag = false;
                 try {
@@ -236,23 +255,17 @@ public class Game extends JPanel {
                     e.printStackTrace();
                 }
             }
-            if (bulletFlag) {
-                bulletFlag = false;
-                try {
-                    AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add-bullet.mp3");
-                    audioPlayer.playAudio();
-                } catch (FileNotFoundException | JavaLayerException e) {
-                    e.printStackTrace();
-                }
-            }
         };
+
         /**
          * 以固定延迟时间进行执行
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
-        executorService.scheduleWithFixedDelay(task1, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(task2, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(task3, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
     }
 
     //***********************
@@ -447,10 +460,28 @@ public class Game extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
         // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null);
+        if (level == 1) {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
+        } else if (level == 2) {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop, null);
+        } else if (level == 3) {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop, null);
+
+        } else if (level == 4) {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
+
+        } else if (level == 5) {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop, null);
+        } else {
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
+        }
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
@@ -492,5 +523,13 @@ public class Game extends JPanel {
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+    }
+
+    public boolean isGameOverFlag() {
+        return gameOverFlag;
+    }
+
+    public void setGameOverFlag(boolean gameOverFlag) {
+        this.gameOverFlag = gameOverFlag;
     }
 }

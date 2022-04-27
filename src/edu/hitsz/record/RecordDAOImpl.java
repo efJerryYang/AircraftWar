@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,32 +28,38 @@ public class RecordDAOImpl implements RecordDAO {
     private final int TEST_RECORD_LENGTH = 5;
     boolean isSorted;
     private ArrayList<Record> recordList;
+//    private ArrayList<String>[] recordStringList;
     private String recordPath;
+    private final String[] header = {"rank", "name", "level", "score", "datetime"};
 
-    public RecordDAOImpl() throws IOException, NoSuchAlgorithmException {
+    public RecordDAOImpl() {
         recordPath = System.getProperty("user.dir") + "/src/record/record.json";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        FileReader reader = new FileReader(recordPath);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(recordPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         recordList = gson.fromJson(reader, new TypeToken<List<Record>>() {
         }.getType());
     }
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        RecordDAOImpl recordDAO = new RecordDAOImpl();
-        Record record;
-        recordDAO.createTestRecords();
-        System.out.println("==================== getAllRecords ====================");
-        recordDAO.getAllRecords();
-        System.out.println("==================== getByRank ========================");
-        recordDAO.getByRank(3).prettyPrintRecord(true);
-        System.out.println("==================== getByName ========================");
-        try {
-            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
-        } catch (NullPointerException e) {
-            System.out.println("Username not exists!");
-        }
-    }
-
+//    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+//        RecordDAOImpl recordDAO = new RecordDAOImpl();
+//        Record record;
+//        recordDAO.createTestRecords();
+//        System.out.println("==================== getAllRecords ====================");
+//        recordDAO.getAllRecords();
+//        System.out.println("==================== getByRank ========================");
+//        recordDAO.getByRank(3).prettyPrintRecord(true);
+//        System.out.println("==================== getByName ========================");
+//        try {
+//            recordDAO.getByName("8DFC00EB").prettyPrintRecord(true);
+//        } catch (NullPointerException e) {
+//            System.out.println("Username not exists!");
+//        }
+//    }
     public void sortByRank() {
         recordList.sort(Comparator.comparing(Record::getScore).reversed());
         for (int i = 0; i < recordList.size(); i++) {
@@ -186,6 +193,10 @@ public class RecordDAOImpl implements RecordDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String[] getHeader() {
+        return header;
     }
 }
 // reference:
