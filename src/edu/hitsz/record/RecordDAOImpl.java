@@ -28,7 +28,9 @@ public class RecordDAOImpl implements RecordDAO {
     private final int TEST_RECORD_LENGTH = 5;
     boolean isSorted;
     private ArrayList<Record> recordList;
+//    private ArrayList<String>[] recordStringList;
     private String recordPath;
+    private final String[] header = {"rank", "name", "level", "score", "datetime"};
 
     public RecordDAOImpl() {
         recordPath = System.getProperty("user.dir") + "/src/record/record.json";
@@ -58,7 +60,6 @@ public class RecordDAOImpl implements RecordDAO {
 //            System.out.println("Username not exists!");
 //        }
 //    }
-
     public void sortByRank() {
         recordList.sort(Comparator.comparing(Record::getScore).reversed());
         for (int i = 0; i < recordList.size(); i++) {
@@ -192,6 +193,10 @@ public class RecordDAOImpl implements RecordDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String[] getHeader() {
+        return header;
     }
 }
 // reference:

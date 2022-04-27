@@ -23,6 +23,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
+import static edu.hitsz.application.Main.gameFrame;
 import static java.lang.System.exit;
 
 /**
@@ -94,7 +95,7 @@ public class Game extends JPanel {
     private Context enemyContext;
     private int level = 0;
 
-    public Game(int gameLevel) {
+    public Game(int gameLevel, boolean enableAudio) {
         this.level = gameLevel;
         heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
@@ -197,17 +198,20 @@ public class Game extends JPanel {
                 gameOverFlag = true;
                 Record record = null;
                 System.out.println("Game Over!");
-                try {
-                    record = new Record("TestUser", score);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                recordDAOImpl.addRecord(record);
-                recordDAOImpl.saveRecord();
-                System.out.println("======================= Rankings =======================");
-                recordDAOImpl.getAllRecords();
-                System.out.println("========================================================");
-                exit(0);
+                // Todo: ranking table
+                Config.setScore(score);
+                gameFrame.showRanking();
+//                try {
+//                    record = new Record("TestUser", score);
+//                } catch (NoSuchAlgorithmException e) {
+//                    e.printStackTrace();
+//                }
+//                recordDAOImpl.addRecord(record);
+//                recordDAOImpl.saveRecord();
+//                System.out.println("======================= Rankings =======================");
+//                recordDAOImpl.getAllRecords();
+//                System.out.println("========================================================");
+//                exit(0);
             }
         };
         Runnable bgm = () -> {
@@ -519,5 +523,13 @@ public class Game extends JPanel {
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+    }
+
+    public boolean isGameOverFlag() {
+        return gameOverFlag;
+    }
+
+    public void setGameOverFlag(boolean gameOverFlag) {
+        this.gameOverFlag = gameOverFlag;
     }
 }
