@@ -63,12 +63,6 @@ public class Main {
 }
 
 class GameFrame extends JFrame {
-//    private final RecordDAOImpl recordDAOImpl;
-    private int gameLevel;
-    private boolean gameAudio = true;
-    private JPanel startup;
-    private Game game;
-    private JPanel ranking;
 
     public GameFrame() {
         super("Aircraft War");
@@ -77,8 +71,6 @@ class GameFrame extends JFrame {
         setResizable(false);
         setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        recordDAOImpl = new RecordDAOImpl(gameLevel);
-
     }
 
 }

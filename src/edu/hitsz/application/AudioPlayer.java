@@ -1,9 +1,12 @@
 package edu.hitsz.application;
 
+import javazoom.jl.converter.WaveFile;
+import javazoom.jl.converter.WaveFileObuffer;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -18,10 +21,10 @@ public class AudioPlayer {
         name = new BufferedInputStream((new FileInputStream(System.getProperty("user.dir") + path)));
     }
 
-//    public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
-//        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
-//        audioPlayer.playAudio();
-//    }
+    public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
+        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
+        audioPlayer.playAudio();
+    }
 
     public void playAudio() throws JavaLayerException {
         player = new Player(name);

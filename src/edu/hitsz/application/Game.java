@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -194,15 +195,24 @@ public class Game extends JPanel {
             // 游戏结束检查
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
-                executorService.shutdown();
+                executorService.shutdownNow();
                 gameOverFlag = true;
                 Record record = null;
                 System.out.println("Game Over!");
                 // Todo: ranking table
                 Config.setScore(score);
+                if (enableAudio) {
+                    try {
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/game_over.mp3");
+                        audioPlayer.playAudio();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        e.printStackTrace();
+                    }
+                }
                 synchronized (Main.class) {
                     (Main.class).notify();
                 }
+
             }
         };
         Runnable timeCounter = () -> {
@@ -241,10 +251,7 @@ public class Game extends JPanel {
                 executorService.shutdown();
             }
         };
-
-//        MusicThread bgmThread = new MusicThread("src/video/game_over.wav");
-//        MusicThread.repeat(bgmThread);
-        if (enableAudio && !gameOverFlag) {
+        if (enableAudio) {
             Runnable bgm = () -> {
                 try {
                     AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bgm.mp3");
@@ -257,7 +264,7 @@ public class Game extends JPanel {
                 if (bombFlag) {
                     bombFlag = false;
                     try {
-                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb.mp3");
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bomb_explosion.mp3");
                         audioPlayer.playAudio();
                     } catch (FileNotFoundException | JavaLayerException e) {
                         e.printStackTrace();
@@ -268,7 +275,7 @@ public class Game extends JPanel {
                 if (bulletFlag) {
                     bulletFlag = false;
                     try {
-                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/add_bullet.mp3");
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/bullet.mp3");
                         audioPlayer.playAudio();
                     } catch (FileNotFoundException | JavaLayerException e) {
                         e.printStackTrace();
@@ -279,26 +286,32 @@ public class Game extends JPanel {
                 if (bloodFlag) {
                     bloodFlag = false;
                     try {
-                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/healing.mp3");
+                        AudioPlayer audioPlayer = new AudioPlayer("/src/audio/get_supply.mp3");
                         audioPlayer.playAudio();
                     } catch (FileNotFoundException | JavaLayerException e) {
                         e.printStackTrace();
                     }
                 }
             };
+//            Future<?> submit = executorService.submit(bgm);
+//            submit.cancel(true);
+//            executorService.shutdownNow();
+//            System.out.println(executorService.isShutdown());
+            boolean state = Thread.interrupted();
+            System.out.println(state);
             executorService.scheduleWithFixedDelay(bgm, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
             executorService.scheduleWithFixedDelay(bomb, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
             executorService.scheduleWithFixedDelay(blood, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
             executorService.scheduleWithFixedDelay(bullet, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         }
-        /**
-         * 以固定延迟时间进行执行
-         * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
-         */
-        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+    /**
+     * 以固定延迟时间进行执行
+     * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
+     */
+        executorService.scheduleWithFixedDelay(gameTask,timeInterval,timeInterval,TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(timeCounter,timeInterval,timeInterval,TimeUnit.MILLISECONDS);
 
-    }
+}
 
     //***********************
     //      Action 各部分
