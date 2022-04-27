@@ -75,10 +75,8 @@ public class MusicThread extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
         dataLine.drain();
         dataLine.close();
-
     }
 
     @Override
