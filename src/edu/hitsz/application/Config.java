@@ -28,4 +28,8 @@ public class Config {
     public static void setScore(int score) {
         Config.score = score;
     }
+
+    public static boolean getEnableAudio() {
+        return Config.enableAudio;
+    }
 }

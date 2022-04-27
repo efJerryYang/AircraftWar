@@ -22,19 +22,12 @@
 
 ## Description
 
-本次实验任务完成如下：
-
-* 使用策略模式重新封装shoot方法
-  * boss机散射
-  * 英雄机初始时为直射，在三个火力道具补充后英雄机散射且子弹加速伤害*2
-  * 所有的操作由Context的实例决定，本例中为heroContext和enemyContext
-* 使用数据访问对象模式操作成绩表数据
-  * Record类为数据的一跳记录
-  * RecordDAO为数据访问对象接口
-  * RecordDAOImpl为数据访问对象的实现
-  * 使用`gson`包用于读写`json`数据
+- 完成通过难度来选择地图功能，提供音效设置选项
+- 循环播放BGM，boss机出场播放boss机专有音乐，实现了停止播放功能
+- 各要求的音效均已实现
+- 火力道具生效，英雄机散射，子弹增加，可以叠加，随时间叠加层数下降
+- 得分排行榜已实现，三个难度记录分别放在不同的json文件中，可以删除历史得分
 
 ## Note
 
-* 主程序执行，因为添加了背景音乐和音效，如果无法直接运行，需要添加AircraftWar目录下的lib和lib下的jar_files到Project Structure的依赖中
 * DAO模式，因为添加了gson作为数据操作的包，如果无法直接运行，需要添加lib/gson/目录下的jar包到Project Structure的依赖中

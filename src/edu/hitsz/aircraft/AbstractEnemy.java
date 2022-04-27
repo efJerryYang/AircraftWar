@@ -11,6 +11,7 @@ import java.util.List;
  * <p>
  * score用于记录击毁敌人所获得的分数，或者获取道具时获取的分数
  * type用于记录敌人种类
+ *
  * @author JerryYang
  */
 public abstract class AbstractEnemy extends AbstractAircraft {
@@ -26,6 +27,11 @@ public abstract class AbstractEnemy extends AbstractAircraft {
     @Override
     public void forward() {
         super.forward();
+        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
+            // 横向超出边界后反向
+            locationX = locationX <= 0 ? 1 : Main.WINDOW_WIDTH - 1;
+            speedX = -speedX;
+        }
         // 判定 y 轴向下飞行出界
         if (locationY >= Main.WINDOW_HEIGHT) {
             vanish();

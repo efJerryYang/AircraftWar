@@ -18,9 +18,10 @@ public class BulletProp extends AbstractProp {
 
 
     @Override
-    public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, int time) {
+    public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets, List<BaseBullet> enemyBullets, int time) {
         System.out.println("BulletSupply active!");
         if (heroAircraft.getShootNum() < SCATTERING_SHOOTNUM) {
+            heroAircraft.setBulletSpeedUp(false);
             heroAircraft.setShootNum(heroAircraft.getShootNum() * 2);
         } else if (heroAircraft.getShootNum() == SCATTERING_SHOOTNUM) {
             heroAircraft.setBulletSpeedUp(true);

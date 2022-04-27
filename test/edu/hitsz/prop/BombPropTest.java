@@ -78,7 +78,7 @@ class BombPropTest {
             enemyAircrafts.add(eliteFactory.createEnemy(difficulty));
             enemyAircrafts.add(bossFactory.createEnemy(difficulty));
         }
-        bombProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+        bombProp.activate(heroAircraft, enemyAircrafts, heroBullets,enemyBullets, time);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);  // boss enemy will not be removed
         assertEquals(x, enemyAircrafts.size());
     }

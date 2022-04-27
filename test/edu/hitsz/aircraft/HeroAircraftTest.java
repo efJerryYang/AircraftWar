@@ -95,7 +95,7 @@ class HeroAircraftTest {
         System.out.println("\tactivate times: " + x);
         for (int i = 0; i < x; i++) {
             System.out.print("\tactivate number: " + (i + 1) + "\t");
-            bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+            bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets,enemyBullets, time);
         }
 
         List<BaseBullet> res = heroAircraft.shoot();

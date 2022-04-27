@@ -89,11 +89,7 @@ public abstract class AbstractFlyingObject {
     public void forward() {
         locationX += speedX;
         locationY += speedY;
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
-            // 横向超出边界后反向
-            locationX = locationX <= 0 ? 1 : Main.WINDOW_WIDTH - 1;
-            speedX = -speedX;
-        }
+
         // 判定 y 轴出界
         if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT) {
             // 向下飞行出界

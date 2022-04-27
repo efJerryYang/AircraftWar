@@ -69,7 +69,7 @@ class BloodPropTest {
 
         heroAircraft.decreaseHp(heroAircraft.getMaxHp() - x);
         System.out.print("\t");
-        bloodProp.activate(heroAircraft, enemyAircrafts, heroBullets, time);
+        bloodProp.activate(heroAircraft, enemyAircrafts, heroBullets,enemyBullets, time);
         int expected = x <= 0 ? 0 :
                 Math.min(x + 100, 300);
         assertEquals(expected, heroAircraft.getHp());
