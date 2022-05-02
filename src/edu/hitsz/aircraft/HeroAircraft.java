@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-public class HeroAircraft extends AbstractAircraft {
+public class HeroAircraft extends AbstractAircraft{
     public static final int SCATTERING_SHOOTNUM = 4;
     public static final int BOSS_APPEAR_SCORE = 500;
     public static final int HERO_MAX_HP = 1000;
@@ -161,4 +161,5 @@ public class HeroAircraft extends AbstractAircraft {
     public void setBulletPropStage(int bulletPropStage) {
         this.bulletPropStage = Math.max(bulletPropStage, 0);
     }
+
 }

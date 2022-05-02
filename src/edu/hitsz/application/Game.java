@@ -1,11 +1,13 @@
 package edu.hitsz.application;
 
-import edu.hitsz.aircraft.AbstractEnemy;
-import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.aircraft.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BloodProp;
+import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.BulletProp;
 import edu.hitsz.record.Record;
 import edu.hitsz.record.RecordDAOImpl;
 import edu.hitsz.strategy.StraightShoot;
@@ -207,10 +209,8 @@ public class Game extends JPanel {
                 Record record = null;
                 System.out.println("Game Over!");
                 Config.setScore(score);
-                if (bgmThread != null && bgmThread.isAlive())
-                    bgmThread.setInterrupt(true);
-                if (bgmBossThread != null && bgmBossThread.isAlive())
-                    bgmBossThread.setInterrupt(true);
+                if (bgmThread != null && bgmThread.isAlive()) bgmThread.setInterrupt(true);
+                if (bgmBossThread != null && bgmBossThread.isAlive()) bgmBossThread.setInterrupt(true);
                 synchronized (Main.class) {
                     (Main.class).notify();
                 }
@@ -326,9 +326,9 @@ public class Game extends JPanel {
             boolean outOfBound = enemyAircraft.notValid();
             enemyAircraft.forward();
             if (enemyAircraft.notValid() != outOfBound) {
-                String type = enemyAircraft.getType();
                 double subNum = enemyAircraft.getHp() / 2.0;
-                subNum *= "mob".equals(type) ? 1 : "elite".equals(type) ? 1.5 : "boss".equals(type) ? 2.0 : 0;
+                var type = enemyAircraft.getClass();
+                subNum *= MobEnemy.class.equals(type) ? 1 : EliteEnemy.class.equals(type) ? 1.5 : BossEnemy.class.equals(type) ? 2.0 : 0;
                 score -= subNum;
                 scoreCnt += bossFlag ? 0 : subNum;
                 score = Math.max(score, 0);
@@ -369,7 +369,7 @@ public class Game extends JPanel {
                 if (enemyAircraft.notValid()) {
                     // 如果击毁的敌机是boss机，代表boss机在当前窗口消失
                     // 潜在的bug，如果boss机因为超过底线而消失，会不会导致之后boss机不出现？
-                    if ("boss".equals(enemyAircraft.getType())) {
+                    if (BossEnemy.class.equals(enemyAircraft.getClass())) {
                         bossFlag = false;
                     }
                     // 已被其他子弹击毁的敌机，不再检测
@@ -385,7 +385,7 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        if ("boss".equals(enemyAircraft.getType())) {
+                        if (BossEnemy.class.equals(enemyAircraft.getClass())) {
                             props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX() + 10, enemyAircraft.getLocationY() + 30));
                             props.add(bombPropFactory.createProp(enemyAircraft.getLocationX() + 50, enemyAircraft.getLocationY() + 20));
                             props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX() + 90, enemyAircraft.getLocationY() + 60));
@@ -395,7 +395,7 @@ public class Game extends JPanel {
                         int increment = enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
-                        if ("elite".equals(enemyAircraft.getType())) {
+                        if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
                             // [DONE] 获得分数，产生道具补给
                             // 以 8/9 概率生成道具
                             double randNum = Math.random();
@@ -429,17 +429,19 @@ public class Game extends JPanel {
             }
             if (prop.crash(heroAircraft)) {
                 prop.activate(heroAircraft, enemyAircrafts, heroBullets, enemyBullets, time);
-                if ("bomb".equals(prop.getType())) {
+                if (prop.getClass().equals(BombProp.class)) {
+                    ((BombProp) prop).notifyAllSubscribers();
                     bombFlag = true;
                     bombExplodeThread = new MusicThread("src/video/bomb_explosion.wav");
                     bombExplodeThread.start();
-                } else if ("bullet".equals(prop.getType())) {
+//                    System.exit(0);
+                } else if (prop.getClass().equals(BulletProp.class)) {
                     bulletFlag = true;
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = 200;
-                } else if ("blood".equals(prop.getType())) {
+                } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
                     bloodPropThread.start();

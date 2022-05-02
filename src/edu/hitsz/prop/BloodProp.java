@@ -29,4 +29,5 @@ public class BloodProp extends AbstractProp {
             heroAircraft.increaseHp(0);
         }
     }
+
 }

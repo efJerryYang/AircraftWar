@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.subscriber.BombSubscriber;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author JerryYang
  */
-public abstract class AbstractEnemy extends AbstractAircraft {
+public abstract class AbstractEnemy extends AbstractAircraft implements BombSubscriber {
     private int score;
     private String type;
 
@@ -51,11 +52,9 @@ public abstract class AbstractEnemy extends AbstractAircraft {
         this.score = score;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public void setType(String type) {
         this.type = type;
     }
+
+    public void explode() { }
 }
