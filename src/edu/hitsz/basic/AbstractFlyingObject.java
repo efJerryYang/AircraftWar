@@ -3,6 +3,7 @@ package edu.hitsz.basic;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
+import edu.hitsz.subscriber.BombSubscriber;
 
 import java.awt.image.BufferedImage;
 
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
  *
  * @author hitsz
  */
-public abstract class AbstractFlyingObject {
+public abstract class AbstractFlyingObject{
 
     //locationX、locationY为图片中心位置坐标
     /**
@@ -53,6 +54,7 @@ public abstract class AbstractFlyingObject {
      * 通常标记为 false的对象会再下次刷新时清除
      */
     protected boolean isValid = true;
+    private int score = 10;
 
     public AbstractFlyingObject() {
     }
@@ -125,10 +127,7 @@ public abstract class AbstractFlyingObject {
         int fWidth = abstractFlyingObject.getWidth();
         int fHeight = abstractFlyingObject.getHeight();
 
-        return x + (fWidth + this.getWidth()) / 2 > locationX
-                && x - (fWidth + this.getWidth()) / 2 < locationX
-                && y + (fHeight / fFactor + this.getHeight() / factor) / 2 > locationY
-                && y - (fHeight / fFactor + this.getHeight() / factor) / 2 < locationY;
+        return x + (fWidth + this.getWidth()) / 2 > locationX && x - (fWidth + this.getWidth()) / 2 < locationX && y + (fHeight / fFactor + this.getHeight() / factor) / 2 > locationY && y - (fHeight / fFactor + this.getHeight() / factor) / 2 < locationY;
     }
 
     public int getLocationX() {
@@ -212,5 +211,8 @@ public abstract class AbstractFlyingObject {
         // my Todo: load explode images (2-4) from other airwar repo
     }
 
+    public int getScore() {
+        return score;
+    }
 }
 
