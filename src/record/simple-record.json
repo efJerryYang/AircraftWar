@@ -8,94 +8,94 @@
   },
   {
     "rank": 2,
+    "username": "JerryYang",
+    "level": "SIMPLE",
+    "score": 8230,
+    "datetime": "2022-05-02 16:25:49"
+  },
+  {
+    "rank": 3,
     "username": "CA7D2973",
     "level": "SIMPLE",
     "score": 4974,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 3,
+    "rank": 4,
     "username": "6389688A",
     "level": "SIMPLE",
     "score": 4738,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 4,
+    "rank": 5,
     "username": "4771EFBA",
     "level": "SIMPLE",
     "score": 4030,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 5,
+    "rank": 6,
     "username": "Anonymous",
     "level": "SIMPLE",
     "score": 3477,
     "datetime": "2022-04-27 10:08:34"
   },
   {
-    "rank": 6,
+    "rank": 7,
     "username": "Anonymous",
     "level": "SIMPLE",
     "score": 3185,
     "datetime": "2022-04-27 10:01:15"
   },
   {
-    "rank": 7,
+    "rank": 8,
     "username": "22D8FF55",
     "level": "SIMPLE",
     "score": 2990,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 8,
+    "rank": 9,
     "username": "TestUser",
     "level": "SIMPLE",
     "score": 2610,
     "datetime": "2022-04-16 10:13:27"
   },
   {
-    "rank": 9,
+    "rank": 10,
     "username": "F9E84D8B",
     "level": "SIMPLE",
     "score": 2561,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 10,
+    "rank": 11,
     "username": "Anonymous",
     "level": "SIMPLE",
     "score": 2540,
     "datetime": "2022-04-27 15:06:04"
   },
   {
-    "rank": 11,
+    "rank": 12,
     "username": "TestUser",
     "level": "SIMPLE",
     "score": 2535,
     "datetime": "2022-04-15 23:28:46"
   },
   {
-    "rank": 12,
+    "rank": 13,
     "username": "Anonymous",
     "level": "SIMPLE",
     "score": 2305,
     "datetime": "2022-04-27 10:06:12"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "username": "user2022",
     "level": "SIMPLE",
     "score": 2169,
     "datetime": "2022-04-27 16:26:25"
-  },
-  {
-    "rank": 14,
-    "username": "JerryYanng",
-    "level": "SIMPLE",
-    "score": 1917,
-    "datetime": "2022-04-27 20:42:47"
   },
   {
     "rank": 15,
@@ -138,19 +138,5 @@
     "level": "SIMPLE",
     "score": 1227,
     "datetime": "2022-04-27 10:05:16"
-  },
-  {
-    "rank": 21,
-    "username": "user1524",
-    "level": "SIMPLE",
-    "score": 1185,
-    "datetime": "2022-04-27 15:24:17"
-  },
-  {
-    "rank": 22,
-    "username": "JerryYang",
-    "level": "SIMPLE",
-    "score": 710,
-    "datetime": "2022-04-27 18:27:46"
   }
 ]
