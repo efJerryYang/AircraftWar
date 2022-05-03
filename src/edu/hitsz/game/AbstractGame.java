@@ -43,7 +43,8 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
     protected boolean enableAudio;
-    protected int level = 0;
+    protected double level = 0;
+    protected int baseLevel = 0;
     protected int backGroundTop = 0;
     protected int bulletValidTimeCnt = 0;
     protected int enemyMaxNumber = 1;
@@ -140,7 +141,7 @@ public abstract class AbstractGame extends JPanel {
             bulletValidTimeCnt = 0;
             heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() - 1);
             if (heroAircraft.getBulletPropStage() > 0) {
-                bulletValidTimeCnt = (2000 / (5 + level));
+                bulletValidTimeCnt = (int)(2000 / (5 + level));
             }
         }
         switch (heroAircraft.getBulletPropStage()) {
@@ -160,8 +161,8 @@ public abstract class AbstractGame extends JPanel {
             }
         }
 
-        System.out.print("Bullet State: " + heroAircraft.getBulletPropStage());
-        System.out.println("\tBullet Time Cnt: " + bulletValidTimeCnt);
+//        System.out.print("Bullet State: " + heroAircraft.getBulletPropStage());
+//        System.out.println("\tBullet Time Cnt: " + bulletValidTimeCnt);
 
     }
     //***********************

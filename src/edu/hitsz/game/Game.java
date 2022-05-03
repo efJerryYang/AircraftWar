@@ -3,15 +3,12 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
-import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
-import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
-import edu.hitsz.record.Record;
 import edu.hitsz.strategy.StraightShoot;
 
 import java.awt.*;
@@ -47,17 +44,17 @@ public class Game extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(this.level));
+                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
                 mobCnt = 0;
             }
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy(this.level));
+            enemyAircrafts.add(bossFactory.createEnemy((int) this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
@@ -186,7 +183,7 @@ public class Game extends AbstractGame {
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
-                    bulletValidTimeCnt = (int) (2000 /(5+ level));
+                    bulletValidTimeCnt = (int) (2000 / (5 + level));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
@@ -217,21 +214,21 @@ public class Game extends AbstractGame {
     public void paint(Graphics g) {
         super.paint(g);
         // 绘制背景,图片滚动
-        if (level == 1) {
+        if (level >= 1 && level < 2) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        } else if (level == 2) {
+        } else if (level >= 2 && level < 3) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop, null);
-        } else if (level == 3) {
+        } else if (level >= 3 && level < 4) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop, null);
 
-        } else if (level == 4) {
+        } else if (level >= 4 && level < 5) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
 
-        } else if (level == 5) {
+        } else if (level >= 5) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop, null);
         } else {

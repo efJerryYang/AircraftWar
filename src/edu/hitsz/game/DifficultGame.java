@@ -23,6 +23,7 @@ public class DifficultGame extends AbstractGame {
     public DifficultGame(int gameLevel, boolean enableAudio) {
         super(4, enableAudio);
         gameLevel = 4;
+        this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
@@ -40,17 +41,17 @@ public class DifficultGame extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(this.level));
+                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
                 mobCnt = 0;
             }
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy(this.level));
+            enemyAircrafts.add(bossFactory.createEnemy((int) this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
@@ -210,11 +211,11 @@ public class DifficultGame extends AbstractGame {
     public void paint(Graphics g) {
         super.paint(g);
         // 绘制背景,图片滚动
-        if (level == 4) {
+        if (level >= 4 && level < 5) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
 
-        } else if (level == 5) {
+        } else if (level >= 5) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop, null);
         } else {
