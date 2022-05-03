@@ -1,6 +1,7 @@
-package edu.hitsz.application;
+package edu.hitsz.game;
 
 import edu.hitsz.aircraft.*;
+import edu.hitsz.application.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
@@ -26,7 +27,7 @@ import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
 /**
  * 游戏主面板，游戏启动
  *
- * @author hitsz
+ * @author JerryYang
  */
 public class Game extends JPanel {
 
@@ -110,6 +111,7 @@ public class Game extends JPanel {
         heroBullets = new LinkedList<BaseBullet>();
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
+
         //Scheduled 线程池，用于定时任务调度
         executorService = new ScheduledThreadPoolExecutor(4);
         bloodPropFactory = new BloodPropFactory();

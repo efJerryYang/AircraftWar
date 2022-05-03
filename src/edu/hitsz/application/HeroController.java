@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.game.Game;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,7 +10,7 @@ import java.awt.event.MouseEvent;
  * 英雄机控制类
  * 监听鼠标，控制英雄机的移动
  *
- * @author hitsz
+ * @author JerryYang
  */
 public class HeroController {
     private Game game;

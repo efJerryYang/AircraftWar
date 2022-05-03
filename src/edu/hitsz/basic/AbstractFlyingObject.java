@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 /**
  * 可飞行对象的父类
  *
- * @author hitsz
+ * @author JerryYang
  */
 public abstract class AbstractFlyingObject{
 

@@ -3,7 +3,7 @@ package edu.hitsz.bullet;
 import edu.hitsz.subscriber.BombSubscriber;
 
 /**
- * @Author hitsz
+ * @Author JerryYang
  */
 public class EnemyBullet extends BaseBullet implements BombSubscriber {
 
