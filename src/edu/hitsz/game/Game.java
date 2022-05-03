@@ -49,7 +49,7 @@ public class Game extends AbstractGame {
             bulletValidTimeCnt = 0;
             heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() - 1);
             if (heroAircraft.getBulletPropStage() > 0) {
-                bulletValidTimeCnt = 200;
+                bulletValidTimeCnt = 300;
             }
         }
         switch (heroAircraft.getBulletPropStage()) {
@@ -294,7 +294,7 @@ public class Game extends AbstractGame {
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
-                    bulletValidTimeCnt = 200;
+                    bulletValidTimeCnt = 300;
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
@@ -384,47 +384,28 @@ public class Game extends AbstractGame {
 
     }
 
-    public void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects) {
-        if (objects.size() == 0) {
-            return;
-        }
-
-        for (AbstractFlyingObject object : objects) {
-            BufferedImage image = object.getImage();
-            assert image != null : objects.getClass().getName() + " has no image! ";
-            g.drawImage(image, object.getLocationX() - image.getWidth() / 2, object.getLocationY() - image.getHeight() / 2, null);
-        }
-    }
-
-    public void paintScoreAndLife(Graphics g) {
-        int x = 10;
-        int y = 25;
-        g.setColor(new Color(16711680));
-        g.setFont(new Font("SansSerif", Font.BOLD, 22));
-        g.drawString("SCORE:" + this.score, x, y);
-        y = y + 20;
-        g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
-    }
-
     public void paintEnemyLife(Graphics g) {
         for (AbstractEnemy enemy : enemyAircrafts) {
             if (enemy.getClass().equals(EliteEnemy.class)) {
                 int x = enemy.getLocationX() - 50;
                 int y = enemy.getLocationY() - 50;
-//                g.setColor(Color.RED);
-//                g.drawRect(x, y, 120, 10);
+                g.setColor(Color.GRAY);
+                g.drawRect(x,y,100, 10);
+                g.fillRect(x, y, 100, 10);
                 g.setColor(Color.RED);
-                g.draw3DRect(x, y, 100, 10, true);
                 g.fill3DRect(x, y, (int) (100 * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
-            }else if(enemy.getClass().equals(BossEnemy.class)){
-                int x = 50;
-                int y = 200;
-//                g.setColor(Color.RED);
-//                g.drawRect(x, y, 120, 10);
+                g.setColor(Color.BLACK);
+                g.draw3DRect(x, y, 100, 10, true);
+            } else if (enemy.getClass().equals(BossEnemy.class)) {
+                int x = (int) Math.floor(0.1 * Main.WINDOW_WIDTH);
+                int y = 150;
+                g.setColor(Color.GRAY);
+                g.drawRect(x,y,(int) (0.8 * Main.WINDOW_WIDTH), 10);
+                g.fillRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH), 10);
                 g.setColor(Color.RED);
-                g.draw3DRect(x, y, 300, 10, true);
-                g.fill3DRect(x, y, (int) (300 * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
-
+                g.fill3DRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
+                g.setColor(Color.BLACK);
+                g.draw3DRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH), 10, true);
             }
         }
 
