@@ -1,6 +1,9 @@
 package edu.hitsz.game;
 
-import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraft.AbstractEnemy;
+import edu.hitsz.aircraft.BossEnemy;
+import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Config;
 import edu.hitsz.application.Main;
 import edu.hitsz.application.MusicThread;
@@ -190,6 +193,7 @@ public abstract class AbstractGame extends JPanel {
             bullet.forward();
         }
     }
+
     abstract public void aircraftsMoveAction();
 
     public void propMoveAction() {
@@ -261,15 +265,16 @@ public abstract class AbstractGame extends JPanel {
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+
         x = heroAircraft.getLocationX() - 50;
-        y = heroAircraft.getLocationY() - 60;
+        y = heroAircraft.getLocationY() - 50;
         g.setColor(Color.GRAY);
-        g.drawRect(x, y, 100, 10);
-        g.fillRect(x, y, 100, 10);
+        g.drawRect(x, y, 100, 5);
+        g.fillRect(x, y, 100, 5);
         g.setColor(Color.RED);
-        g.fill3DRect(x, y, (int) (100 * ((heroAircraft.getHp()) / (double) heroAircraft.getMaxHp())), 10, true);
+        g.fill3DRect(x, y, (int) (100 * ((heroAircraft.getHp()) / (double) heroAircraft.getMaxHp())), 5, true);
         g.setColor(Color.BLACK);
-        g.draw3DRect(x, y, 100, 10, true);
+        g.draw3DRect(x, y, 100, 5, true);
     }
 
     public void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects) {
@@ -319,4 +324,37 @@ public abstract class AbstractGame extends JPanel {
         }
 
     }
+
+    public void paintHeroAttributes(Graphics g) {
+
+
+        int x = heroAircraft.getLocationX() - 50;
+        int y = heroAircraft.getLocationY() - 50;
+//        x = x ;
+        y = y - 8;
+        int currentBulletPropStage = heroAircraft.getBulletPropStage();
+        int currentBulletValidTime = bulletValidTimeCnt;
+        int currentBulletValidMaxTime = (int) (2000 / (5 + level));
+        //
+        if (currentBulletPropStage == 0 || currentBulletPropStage == 1) {
+            g.setColor(Color.GRAY);
+        } else if (currentBulletPropStage == 2) {
+            g.setColor(Color.BLUE);
+        } else if (currentBulletPropStage == 3) {
+            g.setColor(Color.CYAN);
+        }
+        g.drawRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5);
+        g.fillRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5);
+        if (currentBulletPropStage == 0 || currentBulletPropStage == 1) {
+            g.setColor(Color.BLUE);
+        } else if (currentBulletPropStage == 2) {
+            g.setColor(Color.CYAN);
+        } else if (currentBulletPropStage == 3) {
+            g.setColor(Color.MAGENTA);
+        }
+        g.fill3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH * (currentBulletValidTime / (double) currentBulletValidMaxTime)), 5, true);
+        g.setColor(Color.BLACK);
+        g.draw3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5, true);
+    }
+
 }

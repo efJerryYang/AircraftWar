@@ -202,6 +202,8 @@ public class SimpleGame extends AbstractGame {
 
         // 绘制得分和生命值
         paintScoreAndLife(g);
+        // 绘制道具时间条
+        paintHeroAttributes(g);
         // 绘制敌机生命条
         paintEnemyLife(g);
 

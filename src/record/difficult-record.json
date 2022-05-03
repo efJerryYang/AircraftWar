@@ -1,146 +1,181 @@
 [
   {
     "rank": 1,
+    "username": "efJerryYang",
+    "level": "DIFFICULT",
+    "score": 24499,
+    "datetime": "2022-05-03 21:18:40"
+  },
+  {
+    "rank": 2,
+    "username": "JerryYang",
+    "level": "DIFFICULT",
+    "score": 13564,
+    "datetime": "2022-05-03 21:00:21"
+  },
+  {
+    "rank": 3,
+    "username": "JerryYang",
+    "level": "DIFFICULT",
+    "score": 9425,
+    "datetime": "2022-05-03 21:04:02"
+  },
+  {
+    "rank": 4,
+    "username": "JerryYang",
+    "level": "DIFFICULT",
+    "score": 7290,
+    "datetime": "2022-05-03 20:57:02"
+  },
+  {
+    "rank": 5,
+    "username": "JerryYang",
+    "level": "DIFFICULT",
+    "score": 5270,
+    "datetime": "2022-05-03 21:12:00"
+  },
+  {
+    "rank": 6,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 3050,
     "datetime": "2022-05-03 15:52:20"
   },
   {
-    "rank": 2,
+    "rank": 7,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 2270,
     "datetime": "2022-05-03 15:53:39"
   },
   {
-    "rank": 3,
+    "rank": 8,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 1775,
     "datetime": "2022-05-03 13:11:45"
   },
   {
-    "rank": 4,
+    "rank": 9,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 1645,
     "datetime": "2022-05-03 13:17:14"
   },
   {
-    "rank": 5,
+    "rank": 10,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 1630,
     "datetime": "2022-05-03 10:20:58"
   },
   {
-    "rank": 6,
+    "rank": 11,
     "username": "testUser",
     "level": "DIFFICULT",
     "score": 1450,
     "datetime": "2022-04-27 23:35:56"
   },
   {
-    "rank": 7,
+    "rank": 12,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 1415,
     "datetime": "2022-05-03 13:09:11"
   },
   {
-    "rank": 8,
+    "rank": 13,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 1250,
     "datetime": "2022-05-03 15:16:04"
   },
   {
-    "rank": 9,
+    "rank": 14,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 890,
     "datetime": "2022-05-03 13:16:16"
   },
   {
-    "rank": 10,
+    "rank": 15,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 879,
     "datetime": "2022-05-03 13:05:19"
   },
   {
-    "rank": 11,
+    "rank": 16,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 845,
     "datetime": "2022-05-03 15:18:51"
   },
   {
-    "rank": 12,
+    "rank": 17,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 730,
     "datetime": "2022-05-03 13:20:59"
   },
   {
-    "rank": 13,
+    "rank": 18,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 710,
     "datetime": "2022-05-03 16:06:53"
   },
   {
-    "rank": 14,
+    "rank": 19,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 613,
     "datetime": "2022-05-03 15:21:46"
   },
   {
-    "rank": 15,
+    "rank": 20,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 405,
     "datetime": "2022-05-03 15:50:31"
   },
   {
-    "rank": 16,
+    "rank": 21,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 390,
     "datetime": "2022-05-03 15:40:51"
   },
   {
-    "rank": 17,
+    "rank": 22,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 354,
     "datetime": "2022-05-03 15:07:40"
   },
   {
-    "rank": 18,
+    "rank": 23,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 335,
     "datetime": "2022-05-03 15:08:56"
   },
   {
-    "rank": 19,
+    "rank": 24,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 140,
     "datetime": "2022-05-03 15:08:18"
   },
   {
-    "rank": 20,
+    "rank": 25,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 139,
     "datetime": "2022-05-03 15:11:26"
   },
   {
-    "rank": 21,
+    "rank": 26,
     "username": "JerryYang",
     "level": "DIFFICULT",
     "score": 65,
