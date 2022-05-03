@@ -30,6 +30,7 @@ public class HeroAircraft extends AbstractAircraft{
      */
     private int shootNum = 1;
     private int bulletPropStage = 0;
+    private int bloodPropStage = 0;
     /**
      * power        英雄机子弹的伤害
      */
@@ -65,6 +66,7 @@ public class HeroAircraft extends AbstractAircraft{
         heroAircraft.setMaxHp(HERO_MAX_HP);
         heroAircraft.setHp(HERO_MAX_HP);
         heroAircraft.setBulletPropStage(0);
+        heroAircraft.setBloodPropStage(0);
         heroAircraft.setDirection(-1);
         heroAircraft.setPower(30);
         heroAircraft.setBulletValid(false);
@@ -161,4 +163,11 @@ public class HeroAircraft extends AbstractAircraft{
         this.bulletPropStage = Math.max(bulletPropStage, 0);
     }
 
+    public int getBloodPropStage() {
+        return bloodPropStage;
+    }
+
+    public void setBloodPropStage(int bloodPropStage) {
+        this.bloodPropStage = bloodPropStage;
+    }
 }
