@@ -3,12 +3,15 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.MusicThread;
+import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.record.RecordDAOImpl;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -86,41 +89,6 @@ public abstract class AbstractGame extends JPanel {
         recordDAOImpl = new RecordDAOImpl(gameLevel);
     }
 
-    //    public final void action() {
-//        Runnable gameTask = () -> {
-//            if (timeCountAndNewCycleJudge()) {
-//                generateEnemyAircrafts();
-//                // 飞机按固定周期射出子弹
-//                shootAction();
-//            }
-//            // playBGM
-//            playBGM();
-//            // 子弹移动
-//            bulletsMoveAction();
-//            // 飞机移动
-//            aircraftsMoveAction();
-//            // 道具移动
-//            propMoveAction();
-//            // 撞击检测
-//            crashCheckAction();
-//            // 后处理
-//            postProcessAction();
-//            //每个时刻重绘界面
-//            repaint();
-//            // 游戏结束检查
-//            gameOverCheck();
-//        };
-//        Runnable timeCounter = () -> {
-//            time += timeInterval;
-//            bulletPropStageCount();
-//            if (gameOverFlag) {
-//                executorService.shutdown();
-//            }
-//        };
-//        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-//        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-//
-//    }
     public final void action() {
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
@@ -161,7 +129,7 @@ public abstract class AbstractGame extends JPanel {
 
     }
 
-    public abstract void bulletPropStageCount();
+    abstract public void bulletPropStageCount();
 
     abstract public void generateEnemyAircrafts();
 
@@ -183,7 +151,23 @@ public abstract class AbstractGame extends JPanel {
 
     abstract public void postProcessAction();
 
-//    abstract public void paint(Graphics g);
-//    abstract public void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects);
-//    abstract public void paintScoreAndLife(Graphics g);
+    public void paintScoreAndLife(Graphics g){
+        int x = 10;
+        int y = 25;
+        g.setColor(Color.RED);
+        g.setFont(new Font("SansSerif", Font.BOLD, 22));
+        g.drawString("SCORE:" + this.score, x, y);
+        y = y + 20;
+        g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
+    }
+    public void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects){
+        if (objects.size() == 0) {
+            return;
+        }
+        for (AbstractFlyingObject object : objects) {
+            BufferedImage image = object.getImage();
+            assert image != null : objects.getClass().getName() + " has no image! ";
+            g.drawImage(image, object.getLocationX() - image.getWidth() / 2, object.getLocationY() - image.getHeight() / 2, null);
+        }
+    }
 }
