@@ -38,8 +38,8 @@ public class BossEnemy extends EliteEnemy implements BombSubscriber {
     }
 
     public void bombExplode() {
-        if (this.hp > 400) {
-            this.decreaseHp(400);
+        if (this.hp > 500) {
+            this.decreaseHp(500);
         } else {
             this.setHp(1);
         }
