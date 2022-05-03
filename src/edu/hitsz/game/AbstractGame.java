@@ -276,7 +276,7 @@ public abstract class AbstractGame extends JPanel {
 
     public void paintScoreAndLife(Graphics g) {
         int x = 10;
-        int y = Main.WINDOW_HEIGHT-70;
+        int y = Main.WINDOW_HEIGHT - 70;
         g.setColor(Color.RED);
         g.setFont(new Font("SansSerif", Font.BOLD, 22));
         g.drawString("SCORE:" + this.score, x, y);
@@ -319,13 +319,23 @@ public abstract class AbstractGame extends JPanel {
             } else if (enemy.getClass().equals(BossEnemy.class)) {
                 int x = (int) Math.floor(0.1 * Main.WINDOW_WIDTH);
                 int y = 15;
+                int curHp = enemy.getHp();
+                int maxHp = enemy.getMaxHp();
                 g.setColor(Color.GRAY);
                 g.drawRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH), 10);
                 g.fillRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH), 10);
                 g.setColor(Color.RED);
-                g.fill3DRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
+                g.fill3DRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH * (curHp / (double) maxHp)), 10, true);
                 g.setColor(Color.BLACK);
                 g.draw3DRect(x, y, (int) (0.8 * Main.WINDOW_WIDTH), 10, true);
+
+                x = (int) (0.55 * Main.WINDOW_WIDTH);
+                y = y + 25;
+                g.setColor(Color.RED);
+                g.setFont(new Font("SansSerif", Font.BOLD, 15));
+                String strDisplay = String.format("BOSS HP: %4d / %4d",curHp,maxHp);
+                g.drawString(strDisplay, x, y);
+
             }
         }
 
