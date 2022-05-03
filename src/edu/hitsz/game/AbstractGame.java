@@ -126,8 +126,6 @@ public abstract class AbstractGame extends JPanel {
             time += timeInterval;
             // 难度控制
             level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
-
-            System.out.printf("Current Level: %9.4f\n", level);
             bulletPropStageCount();
             if (gameOverFlag) {
                 executorService.shutdown();

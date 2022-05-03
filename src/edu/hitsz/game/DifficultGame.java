@@ -37,7 +37,7 @@ public class DifficultGame extends AbstractGame {
 
 
     public void generateEnemyAircrafts() {
-        System.out.println(time);
+        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, level, Math.min((int) (5 * Math.sqrt(level)), 15), (int) (60 * Math.sqrt(this.level)), (int) (2000 / (5 + level)));
         // 新敌机产生
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
@@ -51,7 +51,7 @@ public class DifficultGame extends AbstractGame {
             }
         }
         // 控制生成boss敌机
-        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
+//        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
