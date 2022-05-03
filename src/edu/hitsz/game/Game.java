@@ -284,6 +284,8 @@ public class Game extends AbstractGame {
             System.out.println(executorService.shutdownNow());
             gameOverFlag = true;
             Record record = null;
+            gameOverThread = new MusicThread("src/video/game_over.wav");
+            gameOverThread.start();
             System.out.println("Game Over!");
             Config.setScore(score);
             if (bgmThread != null && bgmThread.isAlive()) bgmThread.setInterrupt(true);
