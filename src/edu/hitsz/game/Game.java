@@ -3,6 +3,7 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
@@ -89,6 +90,20 @@ public class Game extends AbstractGame {
         }
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
+    }
+    public void aircraftsMoveAction(){
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            boolean outOfBound = enemyAircraft.notValid();
+            enemyAircraft.forward();
+            if (enemyAircraft.notValid() != outOfBound) {
+                double subNum = enemyAircraft.getHp() / 2.0;
+                var type = enemyAircraft.getClass();
+                subNum *= MobEnemy.class.equals(type) ? 1.5 : EliteEnemy.class.equals(type) ? 1.75 : BossEnemy.class.equals(type) ? 2 : 0;
+                score -= subNum;
+                scoreCnt += bossFlag ? 0 : subNum;
+                score = Math.max(score, 0);
+            }
+        }
     }
 
     /**

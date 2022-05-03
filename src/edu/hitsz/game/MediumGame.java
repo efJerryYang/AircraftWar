@@ -3,6 +3,7 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
@@ -23,6 +24,8 @@ public class MediumGame extends AbstractGame {
     public MediumGame(int gameLevel, boolean enableAudio) {
         super(2, enableAudio);
         gameLevel = 2;
+        enemyMaxNumber = 2; // actually is 3
+        enemyMaxNumberUpperBound = 4; // actually is 5 
         this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
@@ -36,10 +39,9 @@ public class MediumGame extends AbstractGame {
     public void generateEnemyAircrafts() {
         System.out.println(time);
         // 新敌机产生
-        boolean moveRight = Math.random() * 2 < 1;
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
-            boolean createElite = Math.random() * 3 < 1;
+            boolean createElite = Math.random() < 0.5;
             if (mobCnt < mobCntMax && !createElite) {
                 enemyAircrafts.add(mobFactory.createEnemy(this.level));
                 mobCnt++;
@@ -50,9 +52,9 @@ public class MediumGame extends AbstractGame {
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
-        if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
+        if (score > (BOSS_APPEAR_SCORE * 2) && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.baseLevel)); // 不改变boss血量
-            scoreCnt = BOSS_APPEAR_SCORE;
+            scoreCnt = (BOSS_APPEAR_SCORE * 2);
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
                 enemyMaxNumber++;
@@ -86,6 +88,21 @@ public class MediumGame extends AbstractGame {
         }
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
+    }
+
+    public void aircraftsMoveAction() {
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            boolean outOfBound = enemyAircraft.notValid();
+            enemyAircraft.forward();
+            if (enemyAircraft.notValid() != outOfBound) {
+                double subNum = enemyAircraft.getHp() / 2.0;
+                var type = enemyAircraft.getClass();
+                subNum *= MobEnemy.class.equals(type) ? 1 : EliteEnemy.class.equals(type) ? 1.5 : BossEnemy.class.equals(type) ? 2.0 : 0;
+                score -= subNum;
+                scoreCnt += bossFlag ? 0 : subNum;
+                score = Math.max(score, 0);
+            }
+        }
     }
 
     /**
@@ -131,18 +148,9 @@ public class MediumGame extends AbstractGame {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         if (BossEnemy.class.equals(enemyAircraft.getClass())) {
-                            props.add(bloodPropFactory.createProp(
-                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
-                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
-                            ));
-                            props.add(bombPropFactory.createProp(
-                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
-                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
-                            ));
-                            props.add(bulletPropFactory.createProp(
-                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
-                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
-                            ));
+                            props.add(bloodPropFactory.createProp((int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2), (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)));
+                            props.add(bombPropFactory.createProp((int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2), (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)));
+                            props.add(bulletPropFactory.createProp((int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2), (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)));
                             bossFlag = false;
                             bossCnt += 1;
                             levelScalar += 1;
@@ -153,7 +161,7 @@ public class MediumGame extends AbstractGame {
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
                             // [DONE] 获得分数，产生道具补给
-                            // 以 8/9 概率生成道具
+                            // 以 90% 概率生成道具
                             double randNum = Math.random();
                             if (randNum < 0.3) {
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));

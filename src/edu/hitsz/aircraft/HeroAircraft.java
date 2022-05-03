@@ -105,9 +105,9 @@ public class HeroAircraft extends AbstractAircraft{
         return res;
     }
 
-    /* Todo: 这里可以使英雄机不掉血
-       public void decreaseHp(int decrease) { }
-     */
+    /* Todo: 这里可以使英雄机不掉血     */
+
+    public void decreaseHp(int decrease) { }
 
 
     @Override

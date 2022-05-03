@@ -14,7 +14,7 @@ public class BossFactory implements EnemyFactory {
     private int speedX;
     private int hp = 2000;
     private int speedY = 0;
-    private int score = 50;
+    private int score = 500;
     private String type = "boss";
 
     @Override

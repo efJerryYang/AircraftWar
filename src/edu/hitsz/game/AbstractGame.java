@@ -166,10 +166,6 @@ public abstract class AbstractGame extends JPanel {
                 heroAircraft.setBulletPropStage(3);
             }
         }
-
-//        System.out.print("Bullet State: " + heroAircraft.getBulletPropStage());
-//        System.out.println("\tBullet Time Cnt: " + bulletValidTimeCnt);
-
     }
     //***********************
     //      Action 各部分
@@ -196,29 +192,7 @@ public abstract class AbstractGame extends JPanel {
             bullet.forward();
         }
     }
-
-    public void aircraftsMoveAction() {
-        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            // [feature]:
-            // 如果敌机失效是超出下边界导致，按照特定规则扣除一定的积分，表示敌军越过了本方防线
-            // subNum 相当于是代表敌军的威胁程度，若扣除后分数低于0，则归零处理
-            // subNum 计算原则:
-            // [if] enemy type is "mob",  then subNum = enemy's HP / 2.0
-            // [else if] type is "elite", then subNum = enemy's HP / 2.0 * 1.5
-            // [else if] type is "boss",  then subNum = enemy's HP / 2.0 * 2.0
-            // [else] type is the others (not exist), subNum = 0
-            boolean outOfBound = enemyAircraft.notValid();
-            enemyAircraft.forward();
-            if (enemyAircraft.notValid() != outOfBound) {
-                double subNum = enemyAircraft.getHp() / 2.0;
-                var type = enemyAircraft.getClass();
-                subNum *= MobEnemy.class.equals(type) ? 1 : EliteEnemy.class.equals(type) ? 1.5 : BossEnemy.class.equals(type) ? 2.0 : 0;
-                score -= subNum;
-                scoreCnt += bossFlag ? 0 : subNum;
-                score = Math.max(score, 0);
-            }
-        }
-    }
+    abstract public void aircraftsMoveAction();
 
     public void propMoveAction() {
         // 道具移动
