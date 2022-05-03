@@ -156,7 +156,7 @@ public class MediumGame extends AbstractGame {
                             levelScalar += 1;
                         }
                         crashFlag = true;
-                        int increment = enemyAircraft.getClass().equals(BossEnemy.class)? 50: enemyAircraft.getScore();
+                        int increment = enemyAircraft.getClass().equals(BossEnemy.class) ? 50 : enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
@@ -177,8 +177,24 @@ public class MediumGame extends AbstractGame {
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
-                    heroAircraft.decreaseHp(Integer.MAX_VALUE);
-                    // my Todo: 添加爆炸特效
+                    // 护盾道具开启时
+                    if (heroAircraft.getBulletPropStage() == 1) {
+                        if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
+                            // [DONE] 获得分数，产生道具补给
+                            // 以 99% 概率生成道具
+                            double randNum = Math.random();
+                            if (randNum < 0.3) {
+                                props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                            } else if (randNum < 0.6) {
+                                props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                            } else if (randNum < 0.9) {
+                                props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
+                            }
+                        }
+                    } else {
+                        heroAircraft.decreaseHp(Integer.MAX_VALUE);
+                        // my Todo: 添加爆炸特效
+                    }
                 }
             }
         }
@@ -204,6 +220,7 @@ public class MediumGame extends AbstractGame {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
                     bloodPropThread.start();
+                    bloodValidTimeCnt = (int) (2000 / (5 + level));
                 }
                 int increment = prop.getScore();
                 score += increment;

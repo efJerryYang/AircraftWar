@@ -51,6 +51,7 @@ public abstract class AbstractGame extends JPanel {
     protected double levelScalar = 1.0;
     protected int backGroundTop = 0;
     protected int bulletValidTimeCnt = 0;
+    protected int bloodValidTimeCnt = 0;
     protected int enemyMaxNumber = 1;
     protected int enemyMaxNumberUpperBound = 10;
     protected int score = 0;
@@ -130,6 +131,7 @@ public abstract class AbstractGame extends JPanel {
             // 难度控制
             level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
             bulletPropStageCount();
+            bloodPropStageCount();
             if (gameOverFlag) {
                 executorService.shutdown();
             }
@@ -137,6 +139,31 @@ public abstract class AbstractGame extends JPanel {
         executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
+    }
+
+    public void bloodPropStageCount() {
+        if (heroAircraft.getBloodPropStage() == 1) {
+            bloodValidTimeCnt -= 1;
+            bloodValidTimeCnt = Math.max(bloodValidTimeCnt, 0);
+            heroAircraft.increaseHp(heroAircraft.getMaxHp());
+        }
+        if (bloodValidTimeCnt <= 0) {
+            bloodValidTimeCnt = 0;
+            heroAircraft.setBloodPropStage(Math.max(heroAircraft.getBloodPropStage() - 1, 0));
+            if (heroAircraft.getBloodPropStage() > 0) {
+                bloodValidTimeCnt = (int) (2000 / (5 + level));
+            }
+        }
+        switch (heroAircraft.getBloodPropStage()) {
+            case 0 -> {
+            }
+            case 1 -> {
+                heroAircraft.setHp(heroAircraft.getMaxHp());
+            }
+            default -> {
+                heroAircraft.setBloodPropStage(1);
+            }
+        }
     }
 
     public void bulletPropStageCount() {
@@ -266,15 +293,6 @@ public abstract class AbstractGame extends JPanel {
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
 
-        x = heroAircraft.getLocationX() - 50;
-        y = heroAircraft.getLocationY() - 50;
-        g.setColor(Color.GRAY);
-        g.drawRect(x, y, 100, 5);
-        g.fillRect(x, y, 100, 5);
-        g.setColor(Color.RED);
-        g.fill3DRect(x, y, (int) (100 * ((heroAircraft.getHp()) / (double) heroAircraft.getMaxHp())), 5, true);
-        g.setColor(Color.BLACK);
-        g.draw3DRect(x, y, 100, 5, true);
     }
 
     public void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects) {
@@ -326,16 +344,35 @@ public abstract class AbstractGame extends JPanel {
     }
 
     public void paintHeroAttributes(Graphics g) {
-
-
         int x = heroAircraft.getLocationX() - 50;
         int y = heroAircraft.getLocationY() - 50;
-//        x = x ;
+        int currentPropValidMaxTime = (int) (2000 / (5 + level));
+        // draw hp and blood prop
+        int currentBloodPropStage = heroAircraft.getBloodPropStage();
+        System.out.println(currentBloodPropStage);
+        int currentBloodValidTime = bloodValidTimeCnt;
+        if (currentBloodPropStage == 0) {
+            g.setColor(Color.GRAY);
+            g.drawRect(x, y, 100, 5);
+            g.fillRect(x, y, 100, 5);
+            g.setColor(Color.RED);
+            g.fill3DRect(x, y, (int) (100 * ((heroAircraft.getHp()) / (double) heroAircraft.getMaxHp())), 5, true);
+            g.setColor(Color.BLACK);
+            g.draw3DRect(x, y, 100, 5, true);
+        } else if (currentBloodPropStage == 1) {
+            g.setColor(Color.RED);
+            g.drawRect(x, y, 100, 5);
+            g.fillRect(x, y, 100, 5);
+            g.setColor(Color.YELLOW);
+            g.fill3DRect(x, y, (int) (100 * (bloodValidTimeCnt / (double) currentPropValidMaxTime)), 5, true);
+            g.setColor(Color.BLACK);
+            g.draw3DRect(x, y, 100, 5, true);
+        }
+
+        // draw bullet prop
         y = y - 8;
         int currentBulletPropStage = heroAircraft.getBulletPropStage();
         int currentBulletValidTime = bulletValidTimeCnt;
-        int currentBulletValidMaxTime = (int) (2000 / (5 + level));
-        //
         if (currentBulletPropStage == 0 || currentBulletPropStage == 1) {
             g.setColor(Color.GRAY);
         } else if (currentBulletPropStage == 2) {
@@ -352,7 +389,7 @@ public abstract class AbstractGame extends JPanel {
         } else if (currentBulletPropStage == 3) {
             g.setColor(Color.MAGENTA);
         }
-        g.fill3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH * (currentBulletValidTime / (double) currentBulletValidMaxTime)), 5, true);
+        g.fill3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH * (currentBulletValidTime / (double) currentPropValidMaxTime)), 5, true);
         g.setColor(Color.BLACK);
         g.draw3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5, true);
     }
