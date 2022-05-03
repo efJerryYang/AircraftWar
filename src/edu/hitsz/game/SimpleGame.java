@@ -111,6 +111,8 @@ public class SimpleGame extends AbstractGame {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
+                        crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                        crashWithShieldThread.start();
                         crashFlag = true;
                         int increment = enemyAircraft.getScore();
                         score += increment;
@@ -131,10 +133,13 @@ public class SimpleGame extends AbstractGame {
                 }
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
-                    enemyAircraft.vanish();
+//                    System.out.println(bloodValidTimeCnt);
                     // 护盾道具开启时
-                    if (heroAircraft.getBulletPropStage() == 1) {
+                    crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                    crashWithShieldThread.start();
+                    if (bloodValidTimeCnt > 0) {
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
+                            enemyAircraft.vanish();
                             // [DONE] 获得分数，产生道具补给
                             // 以 99% 概率生成道具
                             double randNum = Math.random();
@@ -145,9 +150,12 @@ public class SimpleGame extends AbstractGame {
                             } else if (randNum < 0.99) {
                                 props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             }
+                        } else{
+                            enemyAircraft.vanish();
                         }
                     } else {
-                        heroAircraft.decreaseHp(Integer.MAX_VALUE);
+                        heroAircraft.decreaseHp(heroAircraft.getMaxHp());
+                        enemyAircraft.vanish();
                     }
                     // my Todo: 添加爆炸特效
                 }
@@ -172,10 +180,10 @@ public class SimpleGame extends AbstractGame {
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = (int) (2000 / (5 + baseLevel));
                 } else if (prop.getClass().equals(BloodProp.class)) {
+                    bloodValidTimeCnt = (int) (2000 / (5 + baseLevel));
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
                     bloodPropThread.start();
-                    bloodValidTimeCnt = (int) (2000 / (5 + baseLevel));
 
                 }
                 int increment = prop.getScore();

@@ -42,6 +42,7 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bulletPropThread = null;
     protected MusicThread bombExplodeThread = null;
     protected MusicThread bloodPropThread = null;
+    protected MusicThread crashWithShieldThread = null;
     protected MusicThread bgmThread = null;
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
@@ -86,7 +87,7 @@ public abstract class AbstractGame extends JPanel {
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
         //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(2);
+        executorService = new ScheduledThreadPoolExecutor(3);
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
@@ -132,37 +133,33 @@ public abstract class AbstractGame extends JPanel {
             level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
             bulletPropStageCount();
             bloodPropStageCount();
+//            bloodPropStageCount();
             if (gameOverFlag) {
                 executorService.shutdown();
             }
         };
+//        Runnable timeCounter2 = () -> {
+////            time += timeInterval;
+////             难度控制
+////            level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
+////            bulletPropStageCount();
+//            if (gameOverFlag) {
+//                executorService.shutdown();
+//            }
+//        };
         executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
         executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+//        executorService.scheduleWithFixedDelay(timeCounter2, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
     }
 
     public void bloodPropStageCount() {
-        if (heroAircraft.getBloodPropStage() == 1) {
-            bloodValidTimeCnt -= 1;
-            bloodValidTimeCnt = Math.max(bloodValidTimeCnt, 0);
-            heroAircraft.increaseHp(heroAircraft.getMaxHp());
-        }
+        System.out.println("bloodPropValidTimeCnt: " + this.bloodValidTimeCnt + "\t" + System.identityHashCode(this.bloodValidTimeCnt));
         if (bloodValidTimeCnt <= 0) {
-            bloodValidTimeCnt = 0;
-            heroAircraft.setBloodPropStage(Math.max(heroAircraft.getBloodPropStage() - 1, 0));
-            if (heroAircraft.getBloodPropStage() > 0) {
-                bloodValidTimeCnt = (int) (2000 / (5 + level));
-            }
-        }
-        switch (heroAircraft.getBloodPropStage()) {
-            case 0 -> {
-            }
-            case 1 -> {
-                heroAircraft.setHp(heroAircraft.getMaxHp());
-            }
-            default -> {
-                heroAircraft.setBloodPropStage(1);
-            }
+            this.bloodValidTimeCnt = 0;
+        } else {
+            heroAircraft.setHp(heroAircraft.getMaxHp());
+            this.bloodValidTimeCnt -= 1;
         }
     }
 
@@ -349,9 +346,9 @@ public abstract class AbstractGame extends JPanel {
         int currentPropValidMaxTime = (int) (2000 / (5 + level));
         // draw hp and blood prop
         int currentBloodPropStage = heroAircraft.getBloodPropStage();
-        System.out.println(currentBloodPropStage);
+//        System.out.println(currentBloodPropStage);
         int currentBloodValidTime = bloodValidTimeCnt;
-        if (currentBloodPropStage == 0) {
+        if (currentBloodValidTime <= 0) {
             g.setColor(Color.GRAY);
             g.drawRect(x, y, 100, 5);
             g.fillRect(x, y, 100, 5);
@@ -359,12 +356,12 @@ public abstract class AbstractGame extends JPanel {
             g.fill3DRect(x, y, (int) (100 * ((heroAircraft.getHp()) / (double) heroAircraft.getMaxHp())), 5, true);
             g.setColor(Color.BLACK);
             g.draw3DRect(x, y, 100, 5, true);
-        } else if (currentBloodPropStage == 1) {
+        } else {
             g.setColor(Color.RED);
             g.drawRect(x, y, 100, 5);
             g.fillRect(x, y, 100, 5);
             g.setColor(Color.YELLOW);
-            g.fill3DRect(x, y, (int) (100 * (bloodValidTimeCnt / (double) currentPropValidMaxTime)), 5, true);
+            g.fill3DRect(x, y, (int) (100 * (currentBloodValidTime / (double) currentPropValidMaxTime)), 5, true);
             g.setColor(Color.BLACK);
             g.draw3DRect(x, y, 100, 5, true);
         }

@@ -13,10 +13,10 @@ import java.util.List;
  *
  * @author JerryYang
  */
-public class HeroAircraft extends AbstractAircraft{
+public class HeroAircraft extends AbstractAircraft {
     public static final int SCATTERING_SHOOTNUM = 4;
     public static final int BOSS_APPEAR_SCORE = 500;
-    public static final int HERO_MAX_HP = 3000;
+    public static final int HERO_MAX_HP = 2000;
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -168,6 +168,6 @@ public class HeroAircraft extends AbstractAircraft{
     }
 
     public void setBloodPropStage(int bloodPropStage) {
-        this.bloodPropStage = bloodPropStage;
+        this.bloodPropStage = Math.max(bloodPropStage, 0);
     }
 }
