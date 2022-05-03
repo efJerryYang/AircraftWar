@@ -34,7 +34,9 @@ public class SimpleGame extends AbstractGame {
 
 
     public void generateEnemyAircrafts() {
-        System.out.println(time);
+        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, (double) baseLevel, Math.min((int) (5 * Math.sqrt(baseLevel)),15), (int) (60 * Math.sqrt(this.baseLevel)), (int) (2000 / (5 + baseLevel)))
+        ;
+
         // 新敌机产生
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
