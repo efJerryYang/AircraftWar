@@ -2,13 +2,11 @@ package edu.hitsz.game;
 
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.application.Context;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.record.RecordDAOImpl;
-import edu.hitsz.strategy.StraightShoot;
 
 import javax.swing.*;
 import java.util.LinkedList;
@@ -51,8 +49,8 @@ public abstract class AbstractGame extends JPanel {
         heroBullets = new LinkedList<BaseBullet>();
         enemyBullets = new LinkedList<BaseBullet>();
         props = new LinkedList<>();
-//Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(4);
+        //Scheduled 线程池，用于定时任务调度
+        executorService = new ScheduledThreadPoolExecutor(2);
         bloodPropFactory = new BloodPropFactory();
         bulletPropFactory = new BulletPropFactory();
         bombPropFactory = new BombPropFactory();
@@ -99,45 +97,46 @@ public abstract class AbstractGame extends JPanel {
 //        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 //
 //    }
-public final void action() {
+    public final void action() {
 
-    // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
-    Runnable gameTask = () -> {
-        // 周期性执行（控制频率）
-        if (timeCountAndNewCycleJudge()) {
-            // 按周期生成敌机
-            generateEnemyAircrafts();
-            // 飞机按固定周期射出子弹
-            shootAction();
-        }
-        // playBGM
-        playBGM();
-        // 子弹移动
-        bulletsMoveAction();
-        // 飞机移动
-        aircraftsMoveAction();
-        // 道具移动
-        propMoveAction();
-        // 撞击检测
-        crashCheckAction();
-        // 后处理
-        postProcessAction();
-        //每个时刻重绘界面
-        repaint();
-        // 游戏结束检查
-        gameOverCheck();
-    };
-    Runnable timeCounter = () -> {
-        time += timeInterval;
-        bulletPropStageCount();
-        if (gameOverFlag) {
-            executorService.shutdown();
-        }
-    };
-    executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-    executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
+        Runnable gameTask = () -> {
+            // 周期性执行（控制频率）
+            if (timeCountAndNewCycleJudge()) {
+                // 按周期生成敌机
+                generateEnemyAircrafts();
+                // 飞机按固定周期射出子弹
+                shootAction();
+            }
+            // playBGM
+            playBGM();
+            // 子弹移动
+            bulletsMoveAction();
+            // 飞机移动
+            aircraftsMoveAction();
+            // 道具移动
+            propMoveAction();
+            // 撞击检测
+            crashCheckAction();
+            // 后处理
+            postProcessAction();
+            //每个时刻重绘界面
+            repaint();
+            // 游戏结束检查
+            gameOverCheck();
+        };
+        Runnable timeCounter = () -> {
+            time += timeInterval;
+            bulletPropStageCount();
+            if (gameOverFlag) {
+                executorService.shutdown();
+            }
+        };
+        executorService.scheduleWithFixedDelay(gameTask, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(timeCounter, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
 
-}
+    }
+
     public abstract void bulletPropStageCount();
 
     abstract public void generateEnemyAircrafts();
