@@ -2,15 +2,12 @@ package edu.hitsz.game;
 
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
-import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
-import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
-import edu.hitsz.record.Record;
 import edu.hitsz.strategy.StraightShoot;
 
 import java.awt.*;
@@ -24,6 +21,7 @@ public class SimpleGame extends AbstractGame {
     public SimpleGame(int gameLevel, boolean enableAudio) {
         super(1, enableAudio);
         gameLevel = 1;
+        this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
@@ -41,10 +39,10 @@ public class SimpleGame extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(this.level));
+                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
                 mobCnt = 0;
             }
         }
@@ -147,7 +145,7 @@ public class SimpleGame extends AbstractGame {
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
-                    bulletValidTimeCnt = (int) (2000 /(5+ level));
+                    bulletValidTimeCnt = (int) (2000 / (5 + level));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
@@ -177,13 +175,8 @@ public class SimpleGame extends AbstractGame {
     public void paint(Graphics g) {
         super.paint(g);
         // 绘制背景,图片滚动
-        if (level == 1) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        } else {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        }
+        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
