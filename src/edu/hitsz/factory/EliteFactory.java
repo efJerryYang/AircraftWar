@@ -23,6 +23,6 @@ public class EliteFactory implements EnemyFactory {
         locationY = (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2);
         boolean moveRight = Math.random() < 0.5;
         speedX = moveRight ? 10 : -10;
-        return new EliteEnemy(locationX, locationY, speedX, speedY, hp*level, score, type);
+        return new EliteEnemy(locationX, locationY, speedX, speedY, (int) (hp * Math.sqrt(level)), score, type);
     }
 }
