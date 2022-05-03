@@ -18,7 +18,7 @@ public class EliteFactory implements EnemyFactory {
     private String type = "elite";
 
     @Override
-    public AbstractEnemy createEnemy(int level) {
+    public AbstractEnemy createEnemy(double level) {
         locationX = (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()));
         locationY = (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2);
         boolean moveRight = Math.random() < 0.5;

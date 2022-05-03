@@ -39,10 +39,10 @@ public class SimpleGame extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(mobFactory.createEnemy(this.baseLevel));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy(this.baseLevel));
                 mobCnt = 0;
             }
         }
@@ -145,7 +145,7 @@ public class SimpleGame extends AbstractGame {
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
-                    bulletValidTimeCnt = (int) (2000 / (5 + level));
+                    bulletValidTimeCnt = (int) (2000 / (5 + baseLevel));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");

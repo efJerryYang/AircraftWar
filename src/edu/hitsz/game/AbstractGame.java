@@ -43,8 +43,9 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
     protected boolean enableAudio;
-    protected double level = 0;
     protected int baseLevel = 0;
+    protected double level = 0;
+    protected double levelScalar = 1.0;
     protected int backGroundTop = 0;
     protected int bulletValidTimeCnt = 0;
     protected int enemyMaxNumber = 1;
@@ -66,6 +67,7 @@ public abstract class AbstractGame extends JPanel {
      * scoreCnt -= bossFlag ? 0 : increment;
      */
     protected int scoreCnt = 0;
+    protected int bossCnt = 0;
     protected boolean bossFlag = false;
     protected boolean bombFlag = false;
     protected boolean bloodFlag = false;
@@ -122,6 +124,10 @@ public abstract class AbstractGame extends JPanel {
         };
         Runnable timeCounter = () -> {
             time += timeInterval;
+            // 难度控制
+            level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
+
+            System.out.printf("Current Level: %9.4f\n", level);
             bulletPropStageCount();
             if (gameOverFlag) {
                 executorService.shutdown();
@@ -141,7 +147,7 @@ public abstract class AbstractGame extends JPanel {
             bulletValidTimeCnt = 0;
             heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() - 1);
             if (heroAircraft.getBulletPropStage() > 0) {
-                bulletValidTimeCnt = (int)(2000 / (5 + level));
+                bulletValidTimeCnt = (int) (2000 / (5 + level));
             }
         }
         switch (heroAircraft.getBulletPropStage()) {
@@ -334,7 +340,7 @@ public abstract class AbstractGame extends JPanel {
                 y = y + 25;
                 g.setColor(Color.RED);
                 g.setFont(new Font("SansSerif", Font.BOLD, 15));
-                String strDisplay = String.format("BOSS HP: %4d / %4d",curHp,maxHp);
+                String strDisplay = String.format("BOSS HP: %4d / %4d", curHp, maxHp);
                 g.drawString(strDisplay, x, y);
 
             }
