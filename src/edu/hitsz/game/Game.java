@@ -1,26 +1,22 @@
 package edu.hitsz.game;
 
-import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraft.AbstractEnemy;
+import edu.hitsz.aircraft.BossEnemy;
+import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
 import edu.hitsz.record.Record;
-import edu.hitsz.record.RecordDAOImpl;
 import edu.hitsz.strategy.StraightShoot;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
 
@@ -30,21 +26,6 @@ import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
  * @author JerryYang
  */
 public class Game extends AbstractGame {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private int backGroundTop = 0;
@@ -86,57 +67,16 @@ public class Game extends AbstractGame {
 
 
     public Game(int gameLevel, boolean enableAudio) {
-        super(gameLevel,enableAudio);
+        super(gameLevel, enableAudio);
         this.level = gameLevel;
         this.enableAudio = enableAudio;
-//        heroAircraft = HeroAircraft.getHeroAircraft();
-//        enemyAircrafts = new LinkedList<>();
-//        heroBullets = new LinkedList<BaseBullet>();
-//        enemyBullets = new LinkedList<BaseBullet>();
-//        props = new LinkedList<>();
-//
-//        //Scheduled 线程池，用于定时任务调度
-//        executorService = new ScheduledThreadPoolExecutor(4);
-//        bloodPropFactory = new BloodPropFactory();
-//        bulletPropFactory = new BulletPropFactory();
-//        bombPropFactory = new BombPropFactory();
-//        mobFactory = new MobFactory();
-//        eliteFactory = new EliteFactory();
-//        bossFactory = new BossFactory();
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-//        recordDAOImpl = new RecordDAOImpl(level);
-
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
-
     }
 
-    public boolean isBombFlag() {
-        return bombFlag;
-    }
-
-    public void setBombFlag(boolean bombFlag) {
-        this.bombFlag = bombFlag;
-    }
-
-    public boolean isBloodFlag() {
-        return bloodFlag;
-    }
-
-    public void setBloodFlag(boolean bloodFlag) {
-        this.bloodFlag = bloodFlag;
-    }
-
-    public boolean isBulletFlag() {
-        return bulletFlag;
-    }
-
-    public void setBulletFlag(boolean bulletFlag) {
-        this.bulletFlag = bulletFlag;
-    }
-
-    public void bulletPropStageCount(){
+    public void bulletPropStageCount() {
         if (heroAircraft.getBulletPropStage() > 0) {
             bulletValidTimeCnt -= 1;
             bulletValidTimeCnt = Math.max(bulletValidTimeCnt, 0);
@@ -169,7 +109,8 @@ public class Game extends AbstractGame {
         System.out.println("\tBullet Time Cnt: " + bulletValidTimeCnt);
 
     }
-    public void generateEnemyAircrafts(){
+
+    public void generateEnemyAircrafts() {
         System.out.println(time);
         // 新敌机产生
         boolean moveRight = Math.random() * 2 < 1;
@@ -196,6 +137,7 @@ public class Game extends AbstractGame {
         }
 
     }
+
     public void playBGM() {
         if (!bossFlag && (bgmThread == null || !bgmThread.isAlive())) {
             if (bgmBossThread != null) {
@@ -231,7 +173,6 @@ public class Game extends AbstractGame {
     public void shootAction() {
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-//            enemyBullets.addAll(enemyAircraft.shoot());
             enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
         }
         // 英雄射击
@@ -278,7 +219,7 @@ public class Game extends AbstractGame {
         }
     }
 
-    public void gameOverCheck(){
+    public void gameOverCheck() {
         if (heroAircraft.getHp() <= 0) {
             // 游戏结束
             System.out.println(executorService.shutdownNow());
@@ -296,6 +237,7 @@ public class Game extends AbstractGame {
             }
         }
     }
+
     /**
      * 碰撞检测：
      * 1. 敌机攻击英雄
@@ -353,12 +295,8 @@ public class Game extends AbstractGame {
                             // 以 8/9 概率生成道具
                             double randNum = Math.random();
                             if (randNum < 0.3) {
-//                                props.add(bulletPropFactory.createProp(
-//                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } else if (randNum < 0.6) {
-//                                props.add(bulletPropFactory.createProp(
-//                                        enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                                 props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } else if (randNum < 0.9) {
                                 props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
@@ -387,7 +325,6 @@ public class Game extends AbstractGame {
                     bombFlag = true;
                     bombExplodeThread = new MusicThread("src/video/bomb_explosion.wav");
                     bombExplodeThread.start();
-//                    System.exit(0);
                 } else if (prop.getClass().equals(BulletProp.class)) {
                     bulletFlag = true;
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
@@ -502,4 +439,29 @@ public class Game extends AbstractGame {
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
+
+    public boolean isBombFlag() {
+        return bombFlag;
+    }
+
+    public void setBombFlag(boolean bombFlag) {
+        this.bombFlag = bombFlag;
+    }
+
+    public boolean isBloodFlag() {
+        return bloodFlag;
+    }
+
+    public void setBloodFlag(boolean bloodFlag) {
+        this.bloodFlag = bloodFlag;
+    }
+
+    public boolean isBulletFlag() {
+        return bulletFlag;
+    }
+
+    public void setBulletFlag(boolean bulletFlag) {
+        this.bulletFlag = bulletFlag;
+    }
+
 }
