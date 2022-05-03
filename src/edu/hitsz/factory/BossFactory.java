@@ -19,7 +19,7 @@ public class BossFactory implements EnemyFactory {
 
     @Override
     public AbstractEnemy createEnemy(double level) {
-        locationX = (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()));
+        locationX = (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.BOSS_ENEMY_IMAGE.getWidth()));
         locationY = (int) (Math.random() * Main.WINDOW_HEIGHT * 0.1);
         boolean moveRight = Math.random() < 0.5;
         speedX = moveRight ? 10 : -10;
