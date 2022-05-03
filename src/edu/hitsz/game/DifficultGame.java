@@ -3,6 +3,7 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
@@ -23,6 +24,8 @@ public class DifficultGame extends AbstractGame {
     public DifficultGame(int gameLevel, boolean enableAudio) {
         super(4, enableAudio);
         gameLevel = 4;
+        enemyMaxNumber = 2; // actually is 3
+        enemyMaxNumberUpperBound = 6; // actually is 7
         this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
@@ -36,10 +39,9 @@ public class DifficultGame extends AbstractGame {
     public void generateEnemyAircrafts() {
         System.out.println(time);
         // 新敌机产生
-        boolean moveRight = Math.random() * 2 < 1;
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
-            boolean createElite = Math.random() * 3 < 1;
+            boolean createElite = Math.random() < 0.7;
             if (mobCnt < mobCntMax && !createElite) {
                 enemyAircrafts.add(mobFactory.createEnemy(this.level));
                 mobCnt++;
@@ -86,6 +88,22 @@ public class DifficultGame extends AbstractGame {
         }
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
+    }
+
+
+    public void aircraftsMoveAction() {
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            boolean outOfBound = enemyAircraft.notValid();
+            enemyAircraft.forward();
+            if (enemyAircraft.notValid() != outOfBound) {
+                double subNum = enemyAircraft.getHp() / 2.0;
+                var type = enemyAircraft.getClass();
+                subNum *= MobEnemy.class.equals(type) ? 1.5 : EliteEnemy.class.equals(type) ? 1.75 : BossEnemy.class.equals(type) ? 2 : 0;
+                score -= subNum;
+                scoreCnt += bossFlag ? 0 : subNum;
+                score = Math.max(score, 0);
+            }
+        }
     }
 
     /**
@@ -153,13 +171,13 @@ public class DifficultGame extends AbstractGame {
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
                             // [DONE] 获得分数，产生道具补给
-                            // 以 8/9 概率生成道具
+                            // 以 70% 概率生成道具
                             double randNum = Math.random();
-                            if (randNum < 0.3) {
+                            if (randNum < 0.2) {
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
-                            } else if (randNum < 0.6) {
+                            } else if (randNum < 0.4) {
                                 props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
-                            } else if (randNum < 0.9) {
+                            } else if (randNum < 0.7) {
                                 props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } // else do nothing
 

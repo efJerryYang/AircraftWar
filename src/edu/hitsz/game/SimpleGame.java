@@ -21,6 +21,8 @@ public class SimpleGame extends AbstractGame {
     public SimpleGame(int gameLevel, boolean enableAudio) {
         super(1, enableAudio);
         gameLevel = 1;
+        enemyMaxNumber = 2; // actually is 3
+        enemyMaxNumberUpperBound = 2; // actually is 3
         this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
@@ -34,10 +36,9 @@ public class SimpleGame extends AbstractGame {
     public void generateEnemyAircrafts() {
         System.out.println(time);
         // 新敌机产生
-        boolean moveRight = Math.random() * 2 < 1;
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
-            boolean createElite = Math.random() * 3 < 1;
+            boolean createElite = Math.random() < (1 / 3.0);
             if (mobCnt < mobCntMax && !createElite) {
                 enemyAircrafts.add(mobFactory.createEnemy(this.baseLevel));
                 mobCnt++;
@@ -63,6 +64,12 @@ public class SimpleGame extends AbstractGame {
         }
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
+    }
+
+    public void aircraftsMoveAction() {
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            enemyAircraft.forward();
+        }
     }
 
     /**
@@ -107,13 +114,13 @@ public class SimpleGame extends AbstractGame {
                         score += increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
                             // [DONE] 获得分数，产生道具补给
-                            // 以 8/9 概率生成道具
+                            // 以 99% 概率生成道具
                             double randNum = Math.random();
-                            if (randNum < 0.3) {
+                            if (randNum < 0.33) {
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
-                            } else if (randNum < 0.6) {
+                            } else if (randNum < 0.66) {
                                 props.add(bombPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
-                            } else if (randNum < 0.9) {
+                            } else if (randNum < 0.99) {
                                 props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             } // else do nothing
 
