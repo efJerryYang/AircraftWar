@@ -16,7 +16,7 @@ import java.util.List;
 public class HeroAircraft extends AbstractAircraft{
     public static final int SCATTERING_SHOOTNUM = 4;
     public static final int BOSS_APPEAR_SCORE = 500;
-    public static final int HERO_MAX_HP = 1000;
+    public static final int HERO_MAX_HP = 3000;
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -106,8 +106,7 @@ public class HeroAircraft extends AbstractAircraft{
     }
 
     /* Todo: 这里可以使英雄机不掉血     */
-
-    public void decreaseHp(int decrease) { }
+//    public void decreaseHp(int decrease) { }
 
 
     @Override

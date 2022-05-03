@@ -37,7 +37,7 @@ public class MediumGame extends AbstractGame {
 
 
     public void generateEnemyAircrafts() {
-        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, level,Math.min((int) (5 * Math.sqrt(level)),15), (int) (60 * Math.sqrt(this.level)), (int) (2000 / (5 + level)));
+        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, level, Math.min((int) (5 * Math.sqrt(level)), 15), (int) (60 * Math.sqrt(this.level)), (int) (2000 / (5 + level)));
         // 新敌机产生
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
@@ -156,7 +156,7 @@ public class MediumGame extends AbstractGame {
                             levelScalar += 1;
                         }
                         crashFlag = true;
-                        int increment = enemyAircraft.getScore();
+                        int increment = enemyAircraft.getClass().equals(BossEnemy.class)? 50: enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
@@ -256,6 +256,8 @@ public class MediumGame extends AbstractGame {
 
         // 绘制得分和生命值
         paintScoreAndLife(g);
+        // 绘制道具作用时间条
+        paintHeroAttributes(g);
         // 绘制敌机生命条
         paintEnemyLife(g);
 

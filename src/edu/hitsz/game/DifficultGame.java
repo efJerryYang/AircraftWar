@@ -51,7 +51,7 @@ public class DifficultGame extends AbstractGame {
             }
         }
         // 控制生成boss敌机
-//        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
+        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
@@ -166,7 +166,7 @@ public class DifficultGame extends AbstractGame {
                             levelScalar += 1;
                         }
                         crashFlag = true;
-                        int increment = enemyAircraft.getScore();
+                        int increment = enemyAircraft.getClass().equals(BossEnemy.class)? 50: enemyAircraft.getScore();
                         score += increment;
                         scoreCnt -= bossFlag ? 0 : increment;
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
@@ -267,6 +267,9 @@ public class DifficultGame extends AbstractGame {
 
         // 绘制得分和生命值
         paintScoreAndLife(g);
+
+        // 绘制道具作用时间条
+        paintHeroAttributes(g);
         // 绘制敌机生命条
         paintEnemyLife(g);
 
