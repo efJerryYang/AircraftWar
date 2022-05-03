@@ -41,17 +41,17 @@ public class DifficultGame extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(mobFactory.createEnemy(this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
                 mobCnt = 0;
             }
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy((int) this.level));
+            enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
@@ -135,6 +135,8 @@ public class DifficultGame extends AbstractGame {
                             props.add(bombPropFactory.createProp(enemyAircraft.getLocationX() + 50, enemyAircraft.getLocationY() + 20));
                             props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX() + 90, enemyAircraft.getLocationY() + 60));
                             bossFlag = false;
+                            bossCnt += 1;
+                            levelScalar += 1;
                         }
                         crashFlag = true;
                         int increment = enemyAircraft.getScore();

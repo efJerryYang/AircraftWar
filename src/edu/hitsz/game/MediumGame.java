@@ -22,7 +22,7 @@ public class MediumGame extends AbstractGame {
 
     public MediumGame(int gameLevel, boolean enableAudio) {
         super(2, enableAudio);
-        gameLevel=2;
+        gameLevel = 2;
         this.baseLevel = gameLevel;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
@@ -41,17 +41,17 @@ public class MediumGame extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(mobFactory.createEnemy(this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy((int) this.level));
+                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
                 mobCnt = 0;
             }
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy((int) this.level));
+            enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
@@ -135,6 +135,8 @@ public class MediumGame extends AbstractGame {
                             props.add(bombPropFactory.createProp(enemyAircraft.getLocationX() + 50, enemyAircraft.getLocationY() + 20));
                             props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX() + 90, enemyAircraft.getLocationY() + 60));
                             bossFlag = false;
+                            bossCnt += 1;
+                            levelScalar += 1;
                         }
                         crashFlag = true;
                         int increment = enemyAircraft.getScore();
@@ -180,7 +182,7 @@ public class MediumGame extends AbstractGame {
                     bulletPropThread = new MusicThread("src/video/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
-                    bulletValidTimeCnt = (int) (2000 /(5+ level));
+                    bulletValidTimeCnt = (int) (2000 / (5 + level));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
