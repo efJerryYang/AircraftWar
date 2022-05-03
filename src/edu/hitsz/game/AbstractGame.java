@@ -28,13 +28,8 @@ public abstract class AbstractGame extends JPanel {
     protected final EliteFactory eliteFactory;
     protected final BossFactory bossFactory;
     protected final RecordDAOImpl recordDAOImpl;
-    protected boolean enableAudio;
-    protected int time = 0;
-    protected int timeInterval = 40;
-    protected boolean gameOverFlag = false;
     //Scheduled 线程池，用于定时任务调度
     protected ScheduledExecutorService executorService;
-
     protected MusicThread bulletHitThread = null;
     protected MusicThread bulletPropThread = null;
     protected MusicThread bombExplodeThread = null;
@@ -42,6 +37,35 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bgmThread = null;
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
+    protected boolean enableAudio;
+    protected int level = 0;
+    protected int backGroundTop = 0;
+    protected int bulletValidTimeCnt = 0;
+    protected int enemyMaxNumber = 1;
+    protected int enemyMaxNumberUpperBound = 10;
+    protected int score = 0;
+    protected int cycleDuration = 500;
+    protected int cycleTime = 0;
+    protected int mobCnt = 0;
+    protected int mobCntMax = 5;
+    protected int time = 0;
+    protected int timeInterval = 40;
+    protected boolean gameOverFlag = false;
+    /**
+     * boss机生成控制
+     * 当scoreCnt == 0，并且score > 500时，产生boss敌机，bossFlag = true
+     * 当boos机存在时，bossFlag = true，初始化scoreCnt = 500
+     * 当boss机失效后，bossFlag = false, scoreCnt -= increment
+     * 其中，increment是每次score变化的增量，通用控制语句如下
+     * scoreCnt -= bossFlag ? 0 : increment;
+     */
+    protected int scoreCnt = 0;
+    protected boolean bossFlag = false;
+    protected boolean bombFlag = false;
+    protected boolean bloodFlag = false;
+    protected boolean bulletFlag = false;
+    protected boolean bulletCrash = false;
+    protected boolean crashFlag = false;
 
     protected AbstractGame(int gameLevel, boolean enableAudio) {
         heroAircraft = HeroAircraft.getHeroAircraft();

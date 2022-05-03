@@ -33,8 +33,7 @@ public class ScatterShoot implements ShootStrategy {
             int yloc = isHeroInstance ? y + center * center * 2 - 5 : y - center * center + 10;
             baseBullet = bulletFactory.createBullet(
                     aircraft, xloc, yloc,
-                    center != 0 ? speedX * center : 0, isHeroInstance ? speedY * 2 : speedY,
-                    isHeroInstance ? Math.max(power, shootNum * power / 2) : aircraft.getPower());
+                    center != 0 ? speedX * center : 0, isHeroInstance ? speedY * 2 : speedY, power);
             res.add(baseBullet);
         }
         return res;

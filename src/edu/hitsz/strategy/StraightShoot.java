@@ -29,8 +29,7 @@ public class StraightShoot implements ShootStrategy {
             int xloc = x + center * 13;
             int yloc = aircraft instanceof HeroAircraft ? y + center * center * 3 : y;
             baseBullet = bulletFactory.createBullet(
-                    aircraft, xloc, yloc,
-                    speedX, speedY, power);
+                    aircraft, xloc, yloc, speedX, speedY, power);
             res.add(baseBullet);
         }
         return res;

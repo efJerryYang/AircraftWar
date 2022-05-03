@@ -27,44 +27,8 @@ import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
  */
 public class Game extends AbstractGame {
 
-
-    private int backGroundTop = 0;
-    private int bulletValidTimeCnt = 0;
-    private int enemyMaxNumber = 3;
-    private int enemyMaxNumberUpperBound = 10;
-    private int score = 0;
-    /**
-     * 周期（ms)
-     * 指示子弹的发射、敌机的产生频率
-     */
-    private int cycleDuration = 600;
-    private int cycleTime = 0;
-    /**
-     * 普通敌机计数器
-     * 控制每出现 mobCntMax 个普通敌机，至少产生一个精英机
-     * 用于控制产生频率的底线，避免随机巧合导致一直没有精英机产生
-     */
-    private int mobCnt = 0;
-    private int mobCntMax = 5;
-    /**
-     * boss机生成控制
-     * 当scoreCnt == 0，并且score > 500时，产生boss敌机，bossFlag = true
-     * 当boos机存在时，bossFlag = true，初始化scoreCnt = 500
-     * 当boss机失效后，bossFlag = false, scoreCnt -= increment
-     * 其中，increment是每次score变化的增量，通用控制语句如下
-     * scoreCnt -= bossFlag ? 0 : increment;
-     */
-    private int scoreCnt = 0;
-    private boolean bossFlag = false;
-    private boolean bombFlag = false;
-    private boolean bloodFlag = false;
-    private boolean bulletFlag = false;
-    private boolean bulletCrash = false;
-    private boolean crashFlag = false;
     private Context heroContext;
     private Context enemyContext;
-    private int level = 0;
-
 
     public Game(int gameLevel, boolean enableAudio) {
         super(gameLevel, enableAudio);
@@ -118,17 +82,17 @@ public class Game extends AbstractGame {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() * 3 < 1;
             if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(heroAircraft.getShootNum()));
+                enemyAircrafts.add(mobFactory.createEnemy(this.level));
                 mobCnt++;
             } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(heroAircraft.getShootNum()));
+                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
                 mobCnt = 0;
             }
         }
         // 控制生成boss敌机
         System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy(heroAircraft.getShootNum()));
+            enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
@@ -413,8 +377,10 @@ public class Game extends AbstractGame {
         paintImageWithPositionRevised(g, props);
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2, heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
 
-        //绘制得分和生命值
+        // 绘制得分和生命值
         paintScoreAndLife(g);
+        // 绘制敌机生命条
+        paintEnemyLife(g);
 
     }
 
@@ -439,6 +405,31 @@ public class Game extends AbstractGame {
         y = y + 20;
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
+
+    public void paintEnemyLife(Graphics g) {
+        for (AbstractEnemy enemy : enemyAircrafts) {
+            if (enemy.getClass().equals(EliteEnemy.class)) {
+                int x = enemy.getLocationX() - 50;
+                int y = enemy.getLocationY() - 50;
+//                g.setColor(Color.RED);
+//                g.drawRect(x, y, 120, 10);
+                g.setColor(Color.RED);
+                g.draw3DRect(x, y, 100, 10, true);
+                g.fill3DRect(x, y, (int) (100 * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
+            }else if(enemy.getClass().equals(BossEnemy.class)){
+                int x = 50;
+                int y = 200;
+//                g.setColor(Color.RED);
+//                g.drawRect(x, y, 120, 10);
+                g.setColor(Color.RED);
+                g.draw3DRect(x, y, 300, 10, true);
+                g.fill3DRect(x, y, (int) (300 * ((enemy.getHp()) / (double) enemy.getMaxHp())), 10, true);
+
+            }
+        }
+
+    }
+
 
     public boolean isBombFlag() {
         return bombFlag;
