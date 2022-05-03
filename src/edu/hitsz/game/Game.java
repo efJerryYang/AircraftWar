@@ -31,21 +31,21 @@ import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
  */
 public class Game extends AbstractGame {
 
-    private final HeroAircraft heroAircraft;
-    private final List<AbstractEnemy> enemyAircrafts;
-    private final List<BaseBullet> heroBullets;
-    private final List<BaseBullet> enemyBullets;
-    private final List<AbstractProp> props;
 
-    private final BloodPropFactory bloodPropFactory;
-    private final BulletPropFactory bulletPropFactory;
-    private final BombPropFactory bombPropFactory;
 
-    private final MobFactory mobFactory;
-    private final EliteFactory eliteFactory;
-    private final BossFactory bossFactory;
-    private final RecordDAOImpl recordDAOImpl;
-    private final boolean enableAudio;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private int backGroundTop = 0;
     private int bulletValidTimeCnt = 0;
@@ -86,25 +86,26 @@ public class Game extends AbstractGame {
 
 
     public Game(int gameLevel, boolean enableAudio) {
+        super(gameLevel,enableAudio);
         this.level = gameLevel;
         this.enableAudio = enableAudio;
-        heroAircraft = HeroAircraft.getHeroAircraft();
-        enemyAircrafts = new LinkedList<>();
-        heroBullets = new LinkedList<BaseBullet>();
-        enemyBullets = new LinkedList<BaseBullet>();
-        props = new LinkedList<>();
-
-        //Scheduled 线程池，用于定时任务调度
-        executorService = new ScheduledThreadPoolExecutor(4);
-        bloodPropFactory = new BloodPropFactory();
-        bulletPropFactory = new BulletPropFactory();
-        bombPropFactory = new BombPropFactory();
-        mobFactory = new MobFactory();
-        eliteFactory = new EliteFactory();
-        bossFactory = new BossFactory();
+//        heroAircraft = HeroAircraft.getHeroAircraft();
+//        enemyAircrafts = new LinkedList<>();
+//        heroBullets = new LinkedList<BaseBullet>();
+//        enemyBullets = new LinkedList<BaseBullet>();
+//        props = new LinkedList<>();
+//
+//        //Scheduled 线程池，用于定时任务调度
+//        executorService = new ScheduledThreadPoolExecutor(4);
+//        bloodPropFactory = new BloodPropFactory();
+//        bulletPropFactory = new BulletPropFactory();
+//        bombPropFactory = new BombPropFactory();
+//        mobFactory = new MobFactory();
+//        eliteFactory = new EliteFactory();
+//        bossFactory = new BossFactory();
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-        recordDAOImpl = new RecordDAOImpl(level);
+//        recordDAOImpl = new RecordDAOImpl(level);
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);

@@ -1,13 +1,36 @@
 package edu.hitsz.game;
 
+import edu.hitsz.aircraft.AbstractEnemy;
+import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.application.Context;
 import edu.hitsz.application.MusicThread;
+import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.factory.*;
+import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.record.RecordDAOImpl;
+import edu.hitsz.strategy.StraightShoot;
 
 import javax.swing.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractGame extends JPanel {
+    protected final HeroAircraft heroAircraft;
+    protected final List<AbstractEnemy> enemyAircrafts;
+    protected final List<BaseBullet> heroBullets;
+    protected final List<BaseBullet> enemyBullets;
+    protected final List<AbstractProp> props;
+    protected final BloodPropFactory bloodPropFactory;
+    protected final BulletPropFactory bulletPropFactory;
+    protected final BombPropFactory bombPropFactory;
+    protected final MobFactory mobFactory;
+    protected final EliteFactory eliteFactory;
+    protected final BossFactory bossFactory;
+    protected final RecordDAOImpl recordDAOImpl;
+    protected boolean enableAudio;
     protected int time = 0;
     protected int timeInterval = 40;
     protected boolean gameOverFlag = false;
@@ -21,7 +44,27 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bgmThread = null;
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
-//    public final void action() {
+
+    protected AbstractGame(int gameLevel, boolean enableAudio) {
+        heroAircraft = HeroAircraft.getHeroAircraft();
+        enemyAircrafts = new LinkedList<>();
+        heroBullets = new LinkedList<BaseBullet>();
+        enemyBullets = new LinkedList<BaseBullet>();
+        props = new LinkedList<>();
+//Scheduled 线程池，用于定时任务调度
+        executorService = new ScheduledThreadPoolExecutor(4);
+        bloodPropFactory = new BloodPropFactory();
+        bulletPropFactory = new BulletPropFactory();
+        bombPropFactory = new BombPropFactory();
+        mobFactory = new MobFactory();
+        eliteFactory = new EliteFactory();
+        bossFactory = new BossFactory();
+//        heroContext = new Context(new StraightShoot());
+//        enemyContext = new Context(new StraightShoot());
+        recordDAOImpl = new RecordDAOImpl(gameLevel);
+    }
+
+    //    public final void action() {
 //        Runnable gameTask = () -> {
 //            if (timeCountAndNewCycleJudge()) {
 //                generateEnemyAircrafts();
