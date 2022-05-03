@@ -131,9 +131,18 @@ public class DifficultGame extends AbstractGame {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         if (BossEnemy.class.equals(enemyAircraft.getClass())) {
-                            props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX() + 10, enemyAircraft.getLocationY() + 30));
-                            props.add(bombPropFactory.createProp(enemyAircraft.getLocationX() + 50, enemyAircraft.getLocationY() + 20));
-                            props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX() + 90, enemyAircraft.getLocationY() + 60));
+                            props.add(bloodPropFactory.createProp(
+                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
+                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
+                            ));
+                            props.add(bombPropFactory.createProp(
+                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
+                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
+                            ));
+                            props.add(bulletPropFactory.createProp(
+                                    (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
+                                    (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
+                            ));
                             bossFlag = false;
                             bossCnt += 1;
                             levelScalar += 1;
