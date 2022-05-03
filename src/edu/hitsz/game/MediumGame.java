@@ -3,33 +3,26 @@ package edu.hitsz.game;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
-import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.*;
-import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.BulletProp;
-import edu.hitsz.record.Record;
 import edu.hitsz.strategy.StraightShoot;
 
 import java.awt.*;
 
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
 
-/**
- * 游戏主面板，游戏启动
- *
- * @author JerryYang
- */
-public class Game extends AbstractGame {
+public class MediumGame extends AbstractGame {
 
     private Context heroContext;
     private Context enemyContext;
 
-    public Game(int gameLevel, boolean enableAudio) {
-        super(gameLevel, enableAudio);
+    public MediumGame(int gameLevel, boolean enableAudio) {
+        super(2, enableAudio);
+        gameLevel=2;
         this.level = gameLevel;
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
@@ -217,23 +210,12 @@ public class Game extends AbstractGame {
     public void paint(Graphics g) {
         super.paint(g);
         // 绘制背景,图片滚动
-        if (level == 1) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        } else if (level == 2) {
+        if (level == 2) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop, null);
         } else if (level == 3) {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL3, 0, this.backGroundTop, null);
-
-        } else if (level == 4) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
-
-        } else if (level == 5) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop, null);
         } else {
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
             g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);

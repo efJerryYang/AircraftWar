@@ -1,6 +1,6 @@
 package edu.hitsz.application;
 
-import edu.hitsz.game.Game;
+import edu.hitsz.game.*;
 import edu.hitsz.gui.RankingPanel;
 import edu.hitsz.gui.WelcomePanel;
 
@@ -35,7 +35,16 @@ public class Main {
             }
         }
         System.out.println(Config.getGameLevel());
-        Game game = new Game(Config.getGameLevel(), Config.getEnableAudio());
+        AbstractGame game;
+        if (Config.getGameLevel() == 1) {
+            game = new SimpleGame(Config.getGameLevel(), Config.getEnableAudio());
+        } else if (Config.getGameLevel() == 2) {
+            game = new MediumGame(Config.getGameLevel(), Config.getEnableAudio());
+        } else if (Config.getGameLevel() == 4) {
+            game = new DifficultGame(Config.getGameLevel(), Config.getEnableAudio());
+        } else {
+            game = new Game(Config.getGameLevel(), Config.getEnableAudio());
+        }
         gameFrame.remove(welcomePanel.getWelcomePanel());
         gameFrame.setContentPane(game);
         gameFrame.setVisible(true);
