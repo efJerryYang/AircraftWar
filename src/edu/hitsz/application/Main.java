@@ -1,8 +1,8 @@
 package edu.hitsz.application;
 
+import edu.hitsz.game.Game;
 import edu.hitsz.gui.RankingPanel;
 import edu.hitsz.gui.WelcomePanel;
-import edu.hitsz.record.RecordDAOImpl;
 
 import javax.swing.*;
 import java.awt.*;

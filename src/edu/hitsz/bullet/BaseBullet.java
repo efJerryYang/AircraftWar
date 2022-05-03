@@ -8,9 +8,9 @@ import edu.hitsz.subscriber.BombSubscriber;
  * 子弹类。
  * 也可以考虑不同类型的子弹
  *
- * @author hitsz
+ * @author JerryYang
  */
-public class BaseBullet extends AbstractFlyingObject  implements BombSubscriber {
+public class BaseBullet extends AbstractFlyingObject implements BombSubscriber {
 
     private int power = 10;
 

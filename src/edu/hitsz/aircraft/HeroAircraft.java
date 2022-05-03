@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 英雄飞机，游戏玩家操控
  *
- * @author hitsz
+ * @author JerryYang
  */
 public class HeroAircraft extends AbstractAircraft{
     public static final int SCATTERING_SHOOTNUM = 4;
