@@ -23,7 +23,7 @@ public class BloodProp extends AbstractProp {
     public void activate(HeroAircraft heroAircraft, List<AbstractEnemy> abstractEnemyList, List<BaseBullet> heroBullets,List<BaseBullet> enemyBullets, int time) {
         System.out.println("BloodSupply active!");
         if (heroAircraft.getHp() > 0) {
-            heroAircraft.increaseHp(100);
+            heroAircraft.increaseHp(200);
         } else {
             //  my Todo: add shield(blood sup)
             heroAircraft.increaseHp(0);

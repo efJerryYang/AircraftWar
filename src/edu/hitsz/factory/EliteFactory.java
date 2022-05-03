@@ -12,7 +12,7 @@ public class EliteFactory implements EnemyFactory {
     private int locationX;
     private int locationY;
     private int speedX;
-    private int speedY = 5;
+    private int speedY = 3;
     private int hp = 60;
     private int score = 50;
     private String type = "elite";
