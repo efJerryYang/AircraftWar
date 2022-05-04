@@ -5,6 +5,7 @@ import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Config;
+import edu.hitsz.application.HeroController;
 import edu.hitsz.application.Main;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -97,6 +98,9 @@ public abstract class AbstractGame extends JPanel {
 //        heroContext = new Context(new StraightShoot());
 //        enemyContext = new Context(new StraightShoot());
         recordDAOImpl = new RecordDAOImpl(gameLevel);
+        //启动英雄机鼠标监听
+        new HeroController(this, heroAircraft);
+
     }
 
     public final void action() {
@@ -154,7 +158,7 @@ public abstract class AbstractGame extends JPanel {
     }
 
     public void bloodPropStageCount() {
-        System.out.println("bloodPropValidTimeCnt: " + this.bloodValidTimeCnt + "\t" + System.identityHashCode(this.bloodValidTimeCnt));
+//        System.out.println("bloodPropValidTimeCnt: " + this.bloodValidTimeCnt + "\t" + System.identityHashCode(this.bloodValidTimeCnt));
         if (bloodValidTimeCnt <= 0) {
             this.bloodValidTimeCnt = 0;
         } else {

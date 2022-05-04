@@ -31,8 +31,6 @@ public class MediumGame extends AbstractGame {
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-        //启动英雄机鼠标监听
-        new HeroController(this, heroAircraft);
     }
 
 
@@ -178,7 +176,7 @@ public class MediumGame extends AbstractGame {
                 }
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
-                    System.out.println(bloodValidTimeCnt);
+//                    System.out.println(bloodValidTimeCnt);
                     // 护盾道具开启时
                     crashWithShieldThread = new MusicThread("src/video/crash.wav");
                     crashWithShieldThread.start();
@@ -188,6 +186,9 @@ public class MediumGame extends AbstractGame {
                             enemyAircraft.vanish();
                             // [DONE] 获得分数，产生道具补给
                             // 以 90% 概率生成道具
+                            int increment = enemyAircraft.getScore();
+                            score += increment;
+                            scoreCnt -= bossFlag ? 0 : increment;
                             double randNum = Math.random();
                             if (randNum < 0.3) {
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
@@ -199,9 +200,13 @@ public class MediumGame extends AbstractGame {
                         }if (BossEnemy.class.equals(enemyAircraft.getClass())) {
                             bloodValidTimeCnt = Math.max(bloodValidTimeCnt - enemyAircraft.getHp()/2, 3);
                             enemyAircraft.decreaseHp(bloodValidTimeCnt * 2);
+                            // 撞毁boss不加分
                         } else{
                             bloodValidTimeCnt = Math.max(bloodValidTimeCnt - enemyAircraft.getHp()/2, 3);
                             enemyAircraft.vanish();
+                            int increment = enemyAircraft.getScore();
+                            score += increment;
+                            scoreCnt -= bossFlag ? 0 : increment;
                         }
                     } else {
                         heroAircraft.decreaseHp(heroAircraft.getMaxHp());

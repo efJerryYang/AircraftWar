@@ -4,7 +4,10 @@ import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.MobEnemy;
-import edu.hitsz.application.*;
+import edu.hitsz.application.Context;
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
@@ -31,8 +34,6 @@ public class DifficultGame extends AbstractGame {
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-        //启动英雄机鼠标监听
-        new HeroController(this, heroAircraft);
     }
 
 
@@ -51,7 +52,7 @@ public class DifficultGame extends AbstractGame {
             }
         }
         // 控制生成boss敌机
-        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
+//        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.level));
             scoreCnt = BOSS_APPEAR_SCORE;
@@ -199,6 +200,9 @@ public class DifficultGame extends AbstractGame {
                             // [DONE] 获得分数，产生道具补给
                             // 以 70% 概率生成道具
                             if (enemyAircraft.notValid()) {
+                                int increment = enemyAircraft.getScore();
+                                score += increment;
+                                scoreCnt -= bossFlag ? 0 : increment;
                                 double randNum = Math.random();
                                 if (randNum < 0.2) {
                                     props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
@@ -211,10 +215,15 @@ public class DifficultGame extends AbstractGame {
                         } else if (BossEnemy.class.equals(enemyAircraft.getClass())) {
                             bloodValidTimeCnt = Math.max(bloodValidTimeCnt - enemyAircraft.getHp() / 2, 3);
                             enemyAircraft.decreaseHp(bloodValidTimeCnt * 2);
+                            // 撞毁boss不加分
                         } else {
                             bloodValidTimeCnt = Math.max(bloodValidTimeCnt - enemyAircraft.getHp() / 2, 3);
                             enemyAircraft.decreaseHp(bloodValidTimeCnt * 2);
-//                            enemyAircraft.vanish();
+                            if (enemyAircraft.notValid()) {
+                                int increment = enemyAircraft.getScore();
+                                score += increment;
+                                scoreCnt -= bossFlag ? 0 : increment;
+                            }
                         }
                     } else {
                         heroAircraft.decreaseHp(heroAircraft.getMaxHp());
