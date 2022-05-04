@@ -17,12 +17,10 @@ import java.util.List;
  */
 public abstract class AbstractEnemy extends AbstractAircraft implements BombSubscriber {
     private int score;
-    private String type;
 
-    public AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type) {
+    public AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score) {
         super(locationX, locationY, speedX, speedY, hp);
         this.score = score;
-        this.type = type;
     }
 
     @Override
@@ -50,10 +48,6 @@ public abstract class AbstractEnemy extends AbstractAircraft implements BombSubs
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void explode() { }

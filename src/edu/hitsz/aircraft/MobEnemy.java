@@ -9,12 +9,24 @@ import edu.hitsz.subscriber.BombSubscriber;
  * @author Jerry Yang
  */
 public class MobEnemy extends AbstractEnemy implements BombSubscriber {
-    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type) {
-        super(locationX, locationY, speedX, speedY, hp, score, type);
+    private int direction=1;
+
+    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score) {
+        super(locationX, locationY, speedX, speedY, hp, score);
     }
 
     @Override
     public void bombExplode() {
         this.decreaseHp(this.getMaxHp());
+    }
+
+    @Override
+    public int getDirection() {
+        return direction;
+    }
+
+    @Override
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 }
