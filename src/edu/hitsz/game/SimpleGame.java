@@ -28,8 +28,6 @@ public class SimpleGame extends AbstractGame {
         this.enableAudio = enableAudio;
         heroContext = new Context(new StraightShoot());
         enemyContext = new Context(new StraightShoot());
-        //启动英雄机鼠标监听
-        new HeroController(this, heroAircraft);
     }
 
 
@@ -142,6 +140,9 @@ public class SimpleGame extends AbstractGame {
                             enemyAircraft.vanish();
                             // [DONE] 获得分数，产生道具补给
                             // 以 99% 概率生成道具
+                            int increment = enemyAircraft.getScore();
+                            score += increment;
+                            scoreCnt -= bossFlag ? 0 : increment;
                             double randNum = Math.random();
                             if (randNum < 0.33) {
                                 props.add(bloodPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
@@ -152,6 +153,9 @@ public class SimpleGame extends AbstractGame {
                             }
                         } else{
                             enemyAircraft.vanish();
+                            int increment = enemyAircraft.getScore();
+                            score += increment;
+                            scoreCnt -= bossFlag ? 0 : increment;
                         }
                     } else {
                         heroAircraft.decreaseHp(heroAircraft.getMaxHp());

@@ -43,7 +43,7 @@ public class Main {
         } else if (Config.getGameLevel() == 4) {
             game = new DifficultGame(Config.getGameLevel(), Config.getEnableAudio());
         } else {
-            game = new Game(Config.getGameLevel(), Config.getEnableAudio());
+            game = new DifficultGame(Config.getGameLevel(), Config.getEnableAudio());
         }
         gameFrame.remove(welcomePanel.getWelcomePanel());
         gameFrame.setContentPane(game);
