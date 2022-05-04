@@ -53,9 +53,9 @@ public class DifficultGame extends AbstractGame {
         }
         // 控制生成boss敌机
 //        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
-        if (score > BOSS_APPEAR_SCORE && scoreCnt <= 0) {
+        if (score > (BOSS_APPEAR_SCORE * level / 3) && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.level));
-            scoreCnt = BOSS_APPEAR_SCORE;
+            scoreCnt = (int) (BOSS_APPEAR_SCORE * level / 3);
             bossFlag = true;
             if (enemyMaxNumber < enemyMaxNumberUpperBound) {
                 enemyMaxNumber++;
