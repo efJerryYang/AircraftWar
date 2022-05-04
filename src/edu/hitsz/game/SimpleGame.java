@@ -2,7 +2,10 @@ package edu.hitsz.game;
 
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
-import edu.hitsz.application.*;
+import edu.hitsz.application.Context;
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
@@ -32,9 +35,7 @@ public class SimpleGame extends AbstractGame {
 
 
     public void generateEnemyAircrafts() {
-        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, (double) baseLevel, Math.min((int) (5 * Math.sqrt(baseLevel)), 15), (int) (60 * Math.sqrt(this.baseLevel)), (int) (2000 / (5 + baseLevel)))
-        ;
-
+        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, (double) baseLevel, Math.min((int) (5 * Math.sqrt(baseLevel)), 15), (int) (60 * Math.sqrt(this.baseLevel)), (int) (2000 / (5 + baseLevel)));
         // 新敌机产生
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
@@ -151,7 +152,7 @@ public class SimpleGame extends AbstractGame {
                             } else if (randNum < 0.99) {
                                 props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
                             }
-                        } else{
+                        } else {
                             enemyAircraft.vanish();
                             int increment = enemyAircraft.getScore();
                             score += increment;
@@ -184,11 +185,12 @@ public class SimpleGame extends AbstractGame {
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = (int) (2000 / (5 + baseLevel));
                 } else if (prop.getClass().equals(BloodProp.class)) {
-                    bloodValidTimeCnt = (int) (2000 / (5 + baseLevel));
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
                     bloodPropThread.start();
-
+                    if (heroAircraft.getHp() == heroAircraft.getMaxHp()) {
+                        bloodValidTimeCnt = (int) (2000 / (5 + baseLevel));
+                    }
                 }
                 int increment = prop.getScore();
                 score += increment;

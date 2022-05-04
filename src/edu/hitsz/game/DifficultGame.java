@@ -252,10 +252,12 @@ public class DifficultGame extends AbstractGame {
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = (int) (2000 / (5 + level));
                 } else if (prop.getClass().equals(BloodProp.class)) {
-                    bloodValidTimeCnt = (int) (2000 / (5 + level));
                     bloodFlag = true;
                     bloodPropThread = new MusicThread("src/video/get_supply.wav");
                     bloodPropThread.start();
+                    if (heroAircraft.getHp() == heroAircraft.getMaxHp()) {
+                        bloodValidTimeCnt = (int) (2000 / (5 + level));
+                    }
                 }
                 int increment = prop.getScore();
                 score += increment;
