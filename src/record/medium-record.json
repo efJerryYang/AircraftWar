@@ -22,433 +22,440 @@
   },
   {
     "rank": 4,
+    "username": "Demo",
+    "level": "MEDIUM",
+    "score": 5555,
+    "datetime": "2022-05-04 14:22:29"
+  },
+  {
+    "rank": 5,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 5475,
     "datetime": "2022-05-03 16:37:06"
   },
   {
-    "rank": 5,
+    "rank": 6,
     "username": "TestUserDemo2",
     "level": "MEDIUM",
     "score": 5445,
     "datetime": "2022-05-04 12:12:00"
   },
   {
-    "rank": 6,
+    "rank": 7,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 4485,
     "datetime": "2022-05-03 09:21:43"
   },
   {
-    "rank": 7,
+    "rank": 8,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 4080,
     "datetime": "2022-05-03 14:41:40"
   },
   {
-    "rank": 8,
+    "rank": 9,
     "username": "4771EFBA",
     "level": "MEDIUM",
     "score": 4030,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 9,
+    "rank": 10,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 4005,
     "datetime": "2022-05-03 16:03:08"
   },
   {
-    "rank": 10,
+    "rank": 11,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 3850,
     "datetime": "2022-05-03 17:02:27"
   },
   {
-    "rank": 11,
+    "rank": 12,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 3477,
     "datetime": "2022-04-27 10:08:34"
   },
   {
-    "rank": 12,
+    "rank": 13,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 3185,
     "datetime": "2022-04-27 10:01:15"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "username": "TestUserDemo",
     "level": "MEDIUM",
     "score": 3060,
     "datetime": "2022-05-04 12:08:56"
   },
   {
-    "rank": 14,
+    "rank": 15,
     "username": "22D8FF55",
     "level": "MEDIUM",
     "score": 2990,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 15,
+    "rank": 16,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2910,
     "datetime": "2022-05-03 13:52:37"
   },
   {
-    "rank": 16,
+    "rank": 17,
     "username": "TestUser",
     "level": "MEDIUM",
     "score": 2610,
     "datetime": "2022-04-16 10:13:27"
   },
   {
-    "rank": 17,
+    "rank": 18,
     "username": "F9E84D8B",
     "level": "MEDIUM",
     "score": 2561,
     "datetime": "2022-04-15 23:26:45"
   },
   {
-    "rank": 18,
+    "rank": 19,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 2540,
     "datetime": "2022-04-27 15:06:04"
   },
   {
-    "rank": 19,
+    "rank": 20,
     "username": "TestUser",
     "level": "MEDIUM",
     "score": 2535,
     "datetime": "2022-04-15 23:28:46"
   },
   {
-    "rank": 20,
+    "rank": 21,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2400,
     "datetime": "2022-05-03 16:12:26"
   },
   {
-    "rank": 21,
+    "rank": 22,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2392,
     "datetime": "2022-05-03 14:47:38"
   },
   {
-    "rank": 22,
+    "rank": 23,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 2305,
     "datetime": "2022-04-27 10:06:12"
   },
   {
-    "rank": 23,
+    "rank": 24,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2180,
     "datetime": "2022-05-03 13:22:02"
   },
   {
-    "rank": 24,
+    "rank": 25,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2117,
     "datetime": "2022-05-03 11:29:05"
   },
   {
-    "rank": 25,
+    "rank": 26,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 2085,
     "datetime": "2022-05-03 16:59:21"
   },
   {
-    "rank": 26,
+    "rank": 27,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1965,
     "datetime": "2022-05-03 15:27:13"
   },
   {
-    "rank": 27,
+    "rank": 28,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1795,
     "datetime": "2022-04-27 12:01:58"
   },
   {
-    "rank": 28,
+    "rank": 29,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1734,
     "datetime": "2022-04-27 11:00:06"
   },
   {
-    "rank": 29,
+    "rank": 30,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1655,
     "datetime": "2022-05-03 13:50:27"
   },
   {
-    "rank": 30,
+    "rank": 31,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1640,
     "datetime": "2022-05-03 14:49:02"
   },
   {
-    "rank": 31,
+    "rank": 32,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1630,
     "datetime": "2022-05-03 16:50:42"
   },
   {
-    "rank": 32,
+    "rank": 33,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1472,
     "datetime": "2022-05-03 15:01:54"
   },
   {
-    "rank": 33,
+    "rank": 34,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1370,
     "datetime": "2022-05-03 16:47:09"
   },
   {
-    "rank": 34,
+    "rank": 35,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1367,
     "datetime": "2022-04-27 10:42:50"
   },
   {
-    "rank": 35,
+    "rank": 36,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1330,
     "datetime": "2022-05-03 15:00:47"
   },
   {
-    "rank": 36,
+    "rank": 37,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1315,
     "datetime": "2022-05-03 12:58:21"
   },
   {
-    "rank": 37,
+    "rank": 38,
     "username": "Jerry",
     "level": "MEDIUM",
     "score": 1290,
     "datetime": "2022-05-03 16:00:02"
   },
   {
-    "rank": 38,
+    "rank": 39,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1285,
     "datetime": "2022-05-03 19:17:03"
   },
   {
-    "rank": 39,
+    "rank": 40,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1270,
     "datetime": "2022-04-27 10:04:28"
   },
   {
-    "rank": 40,
+    "rank": 41,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1227,
     "datetime": "2022-04-27 10:05:16"
   },
   {
-    "rank": 41,
+    "rank": 42,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1205,
     "datetime": "2022-05-03 16:54:14"
   },
   {
-    "rank": 42,
+    "rank": 43,
     "username": "user1524",
     "level": "MEDIUM",
     "score": 1185,
     "datetime": "2022-04-27 15:24:17"
   },
   {
-    "rank": 43,
+    "rank": 44,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1180,
     "datetime": "2022-05-03 16:05:27"
   },
   {
-    "rank": 44,
+    "rank": 45,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1122,
     "datetime": "2022-05-03 12:53:31"
   },
   {
-    "rank": 45,
+    "rank": 46,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 1065,
     "datetime": "2022-05-03 12:59:35"
   },
   {
-    "rank": 46,
+    "rank": 47,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 1062,
     "datetime": "2022-04-27 09:54:21"
   },
   {
-    "rank": 47,
+    "rank": 48,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 950,
     "datetime": "2022-04-27 15:10:51"
   },
   {
-    "rank": 48,
+    "rank": 49,
     "username": "user1510",
     "level": "MEDIUM",
     "score": 950,
     "datetime": "2022-04-27 15:10:57"
   },
   {
-    "rank": 49,
+    "rank": 50,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 775,
     "datetime": "2022-05-03 15:55:01"
   },
   {
-    "rank": 50,
+    "rank": 51,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 630,
     "datetime": "2022-05-03 12:57:06"
   },
   {
-    "rank": 51,
+    "rank": 52,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 620,
     "datetime": "2022-04-27 10:44:39"
   },
   {
-    "rank": 52,
+    "rank": 53,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 597,
     "datetime": "2022-04-27 10:58:51"
   },
   {
-    "rank": 53,
+    "rank": 54,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 514,
     "datetime": "2022-04-27 10:43:44"
   },
   {
-    "rank": 54,
+    "rank": 55,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 504,
     "datetime": "2022-05-03 16:01:18"
   },
   {
-    "rank": 55,
+    "rank": 56,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 470,
     "datetime": "2022-04-27 10:34:07"
   },
   {
-    "rank": 56,
+    "rank": 57,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 385,
     "datetime": "2022-04-27 10:40:14"
   },
   {
-    "rank": 57,
+    "rank": 58,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 370,
     "datetime": "2022-04-27 14:57:41"
   },
   {
-    "rank": 58,
+    "rank": 59,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 360,
     "datetime": "2022-04-27 10:45:53"
   },
   {
-    "rank": 59,
+    "rank": 60,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 350,
     "datetime": "2022-04-27 10:39:21"
   },
   {
-    "rank": 60,
+    "rank": 61,
     "username": "JerryYang",
     "level": "MEDIUM",
     "score": 240,
     "datetime": "2022-05-03 13:50:52"
   },
   {
-    "rank": 61,
+    "rank": 62,
     "username": "user1427",
     "level": "MEDIUM",
     "score": 200,
     "datetime": "2022-04-27 15:27:29"
   },
   {
-    "rank": 62,
+    "rank": 63,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 160,
     "datetime": "2022-04-27 12:10:04"
   },
   {
-    "rank": 63,
+    "rank": 64,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 10,
     "datetime": "2022-05-03 14:50:45"
   },
   {
-    "rank": 64,
+    "rank": 65,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 0,
     "datetime": "2022-05-03 13:51:08"
   },
   {
-    "rank": 65,
+    "rank": 66,
     "username": "Anonymous",
     "level": "MEDIUM",
     "score": 0,
