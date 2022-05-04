@@ -23,6 +23,6 @@ public class BossFactory implements EnemyFactory {
         locationY = (int) (Math.random() * Main.WINDOW_HEIGHT * 0.1);
         boolean moveRight = Math.random() < 0.5;
         speedX = moveRight ? 10 : -10;
-        return new BossEnemy(locationX, locationY, speedX, speedY, (int)(hp * level), score, type);
+        return new BossEnemy(locationX, locationY, speedX, speedY, (int)(hp * level), score);
     }
 }

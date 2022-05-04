@@ -10,15 +10,15 @@ import java.util.List;
 /**
  * @author JerryYang
  */
-public class EliteEnemy extends MobEnemy implements BombSubscriber {
+public class EliteEnemy extends AbstractEnemy implements BombSubscriber {
 
 
     private int shootNum = 1;
     private int power = 30;
-    private int direction;
+    private int direction=1;
 
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score, String type) {
-        super(locationX, locationY, speedX, speedY, hp, score, type);
+    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int score) {
+        super(locationX, locationY, speedX, speedY, hp, score);
         this.setDirection(1);
     }
 

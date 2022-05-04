@@ -23,6 +23,6 @@ public class MobFactory implements EnemyFactory {
         locationX = (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()));
         locationY = (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2);
         int val =(int ) (speedY * Math.sqrt(level));
-        return new MobEnemy(locationX, locationY, speedX, Math.min(val, 15), hp, score, type);
+        return new MobEnemy(locationX, locationY, speedX, Math.min(val, 15), hp, score);
     }
 }
