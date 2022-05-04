@@ -381,8 +381,8 @@ public abstract class AbstractGame extends JPanel {
         } else if (currentBulletPropStage == 3) {
             g.setColor(Color.CYAN);
         }
-        g.drawRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5);
-        g.fillRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5);
+        g.drawRect(x, y, 100, 5);
+        g.fillRect(x, y, 100, 5);
         if (currentBulletPropStage == 0 || currentBulletPropStage == 1) {
             g.setColor(Color.BLUE);
         } else if (currentBulletPropStage == 2) {
@@ -390,9 +390,9 @@ public abstract class AbstractGame extends JPanel {
         } else if (currentBulletPropStage == 3) {
             g.setColor(Color.MAGENTA);
         }
-        g.fill3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH * (currentBulletValidTime / (double) currentPropValidMaxTime)), 5, true);
+        g.fill3DRect(x, y, (int) (100 * (currentBulletValidTime / (double) currentPropValidMaxTime)), 5, true);
         g.setColor(Color.BLACK);
-        g.draw3DRect(x, y, (int) (0.2 * Main.WINDOW_WIDTH), 5, true);
+        g.draw3DRect(x, y, 100, 5, true);
     }
 
 }
