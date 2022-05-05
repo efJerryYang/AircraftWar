@@ -1,0 +1,1 @@
+主程序执行，因为添加了背景音乐和音效，如果无法直接运行，需要添加AircraftWar目录下的lib和lib下的jar_files到Project Structure的依赖中

@@ -105,7 +105,6 @@ class SimpleGame {
 + void paint(Graphics)
 }
 
-
 Main ..> AbstractGame
 AbstractGame <|-- MediumGame
 AbstractGame <|-- DifficultGame
