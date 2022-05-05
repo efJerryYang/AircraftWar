@@ -1,0 +1,112 @@
+@startuml
+abstract class AbstractGame {
+# HeroAircraft heroAircraft
+# List<AbstractEnemy> enemyAircrafts
+# List<BaseBullet> heroBullets
+# List<BaseBullet> enemyBullets
+# List<AbstractProp> props
+# BloodPropFactory bloodPropFactory
+# BulletPropFactory bulletPropFactory
+# BombPropFactory bombPropFactory
+# MobFactory mobFactory
+# EliteFactory eliteFactory
+# BossFactory bossFactory
+# RecordDAOImpl recordDAOImpl
+# ScheduledExecutorService executorService
+# MusicThread bulletHitThread
+# MusicThread bulletPropThread
+# MusicThread bombExplodeThread
+# MusicThread bloodPropThread
+# MusicThread crashWithShieldThread
+# MusicThread bgmThread
+# MusicThread bgmBossThread
+# MusicThread gameOverThread
+# boolean enableAudio
+# int baseLevel
+# double level
+# double levelScalar
+# int backGroundTop
+# int bulletValidTimeCnt
+# int bloodValidTimeCnt
+# int enemyMaxNumber
+# int enemyMaxNumberUpperBound
+# int score
+# int cycleDuration
+# int cycleTime
+# int mobCnt
+# int mobCntMax
+# int time
+# int timeInterval
+# boolean gameOverFlag
+# int scoreCnt
+# int bossCnt
+# boolean bossFlag
+# boolean bombFlag
+# boolean bloodFlag
+# boolean bulletFlag
+# boolean bulletCrash
+# boolean crashFlag
+# <<Create>> AbstractGame(int,boolean)
++ void action()
++ void bloodPropStageCount()
++ void bulletPropStageCount()
++ boolean timeCountAndNewCycleJudge()
++ void bulletsMoveAction()
++ {abstract}void aircraftsMoveAction()
++ void propMoveAction()
++ void gameOverCheck()
++ void postProcessAction()
++ {abstract}void generateEnemyAircrafts()
++ {abstract}void playBGM()
++ {abstract}void shootAction()
++ {abstract}void crashCheckAction()
++ void paintScoreAndLife(Graphics)
++ void paintImageWithPositionRevised(Graphics,List<? extends AbstractFlyingObject>)
++ void paintEnemyLife(Graphics)
++ void paintHeroAttributes(Graphics)
+}
+class MediumGame {
+- Context heroContext
+- Context enemyContext
++ <<Create>> MediumGame(int,boolean)
++ void generateEnemyAircrafts()
++ void playBGM()
++ void shootAction()
++ void aircraftsMoveAction()
++ void crashCheckAction()
++ void paint(Graphics)
+}
+class Main {
++ {static} int WINDOW_WIDTH
++ {static} int WINDOW_HEIGHT
++ {static} GameFrame gameFrame
++ {static} void main(String[])
+}
+class DifficultGame {
+- Context heroContext
+- Context enemyContext
++ <<Create>> DifficultGame(int,boolean)
++ void generateEnemyAircrafts()
++ void playBGM()
++ void shootAction()
++ void aircraftsMoveAction()
++ void crashCheckAction()
++ void paint(Graphics)
+}
+class SimpleGame {
+- Context heroContext
+- Context enemyContext
++ <<Create>> SimpleGame(int,boolean)
++ void generateEnemyAircrafts()
++ void playBGM()
++ void shootAction()
++ void aircraftsMoveAction()
++ void crashCheckAction()
++ void paint(Graphics)
+}
+
+Main ..> AbstractGame
+AbstractGame <|-- MediumGame
+AbstractGame <|-- DifficultGame
+AbstractGame <|-- SimpleGame
+@enduml

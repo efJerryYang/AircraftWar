@@ -1,0 +1,68 @@
+@startuml
+class BombProp {
++ List<BombSubscriber> subscribers
++ <<Create>> BombProp(int,int,int,int,int,String)
++ void activate(HeroAircraft,List<AbstractEnemy>,List<BaseBullet>,List<BaseBullet>,int)
++ void subscribe(BombSubscriber)
++ void unsubscribe(BombSubscriber)
++ void unsubscribe(List<BombSubscriber>)
++ void notifyAllSubscribers()
+}
+class EnemyBullet {
+- int score
++ <<Create>> EnemyBullet(int,int,int,int,int)
++ void bombExplode()
+}
+class MobEnemy {
+- int direction
++ <<Create>> MobEnemy(int,int,int,int,int,int)
++ void bombExplode()
++ int getDirection()
++ void setDirection(int)
+}
+class EliteEnemy {
+- int shootNum
+- int power
+- int direction
++ <<Create>> EliteEnemy(int,int,int,int,int,int)
++ int getDirection()
++ void setDirection(int)
++ void forward()
++ List<BaseBullet> shoot()
++ int getShootNum()
++ void setShootNum(int)
++ int getPower()
++ void setPower(int)
++ void bombExplode()
+}
+interface BombSubscriber {
+~ void bombExplode()
+}
+class BossEnemy {
+- int shootNum
+- int power
+- int direction
++ <<Create>> BossEnemy(int,int,int,int,int,int)
++ List<BaseBullet> shoot()
++ void forward()
++ void bombExplode()
++ int getShootNum()
++ void setShootNum(int)
++ int getPower()
++ void setPower(int)
++ int getDirection()
++ void setDirection(int)
+}
+
+
+SimpleGame ..> BombProp
+MediumGame ..> BombProp
+DifficultGame ..> BombProp
+
+BombProp  o--> BombSubscriber
+
+BombSubscriber <|.. EnemyBullet
+BombSubscriber <|.. MobEnemy
+BombSubscriber <|.. EliteEnemy
+BombSubscriber <|.. BossEnemy
+@enduml
