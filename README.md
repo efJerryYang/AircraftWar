@@ -55,3 +55,4 @@
 ## Note
 
 * DAO模式，因为添加了gson作为数据操作的包，如果无法直接运行，需要添加lib/gson/目录下的jar包到Project Structure的依赖中
+* 运行游戏，可以双击`AircraftWar.jar`或者使用命令行`java -jar AircraftWar.jar`运行
