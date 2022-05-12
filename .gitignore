@@ -1,6 +1,6 @@
 # IDEA dir
 # .idea/*
-# out/*
+out/*
 
 # db dir
 ranklist_db

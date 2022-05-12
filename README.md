@@ -18,8 +18,6 @@
 
 - `lib`
 
-- `out`
-
 - `src`
 
 - `test`
