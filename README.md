@@ -2,19 +2,21 @@
 
 ## Content
 
-- archive
+- `docs`
 
-  存档实验作业和课件，以及部分未完成`Todo`
+  - `archive`
 
-  - `lab-handout`
+    存档实验作业和课件，以及部分未完成`Todo`
 
-  - `lab-submit`
+  - `assets`
 
-    本目录涵盖了各次实验上传的文档，即除了工程代码以外的检查内容会包含在本目录下
+  - `handout`
 
-- `handout`
+    实践阶段（安卓开发）的课件
 
-  实践阶段（安卓开发）的课件
+  - `submit`
+
+    实践阶段（安卓开发）需要上传的任务
 
 - `lib`
 
