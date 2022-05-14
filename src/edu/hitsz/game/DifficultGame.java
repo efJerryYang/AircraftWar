@@ -69,7 +69,7 @@ public class DifficultGame extends AbstractGame {
             if (bgmBossThread != null) {
                 bgmBossThread.setInterrupt(true);
             }
-            bgmThread = new MusicThread("src/video/bgm.wav");
+            bgmThread = new MusicThread("src/audios/bgm.wav");
             bgmThread.start();
         }
 
@@ -77,7 +77,7 @@ public class DifficultGame extends AbstractGame {
             if (bgmThread != null) {
                 bgmThread.setInterrupt(true);
             }
-            bgmBossThread = new MusicThread("src/video/bgm_vsboss.wav");
+            bgmBossThread = new MusicThread("src/audios/bgm_vsboss.wav");
             bgmBossThread.start();
         }
     }
@@ -142,14 +142,14 @@ public class DifficultGame extends AbstractGame {
                 }
                 if (enemyAircraft.crash(bullet)) {
                     bulletCrash = true;
-                    bulletHitThread = new MusicThread("src/video/bullet_hit.wav");
+                    bulletHitThread = new MusicThread("src/audios/bullet_hit.wav");
                     bulletHitThread.start();
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                        crashWithShieldThread = new MusicThread("src/audios/crash.wav");
                         crashWithShieldThread.start();
                         if (BossEnemy.class.equals(enemyAircraft.getClass())) {
                             props.add(bloodPropFactory.createProp(
@@ -191,7 +191,7 @@ public class DifficultGame extends AbstractGame {
 //                System.out.println("bloodValidTimeCntCrash: " + this.bloodValidTimeCnt);
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     // 护盾道具开启时
-                    crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                    crashWithShieldThread = new MusicThread("src/audios/crash.wav");
                     crashWithShieldThread.start();
                     if (bloodValidTimeCnt > 0) {
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
@@ -243,17 +243,17 @@ public class DifficultGame extends AbstractGame {
                 if (prop.getClass().equals(BombProp.class)) {
                     ((BombProp) prop).notifyAllSubscribers();
                     bombFlag = true;
-                    bombExplodeThread = new MusicThread("src/video/bomb_explosion.wav");
+                    bombExplodeThread = new MusicThread("src/audios/bomb_explosion.wav");
                     bombExplodeThread.start();
                 } else if (prop.getClass().equals(BulletProp.class)) {
                     bulletFlag = true;
-                    bulletPropThread = new MusicThread("src/video/bullet.wav");
+                    bulletPropThread = new MusicThread("src/audios/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = (int) (2000 / (5 + level));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
-                    bloodPropThread = new MusicThread("src/video/get_supply.wav");
+                    bloodPropThread = new MusicThread("src/audios/get_supply.wav");
                     bloodPropThread.start();
                     if (heroAircraft.getHp() == heroAircraft.getMaxHp()) {
                         bloodValidTimeCnt = (int) (2000 / (5 + level));

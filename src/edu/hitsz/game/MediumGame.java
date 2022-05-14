@@ -69,7 +69,7 @@ public class MediumGame extends AbstractGame {
             if (bgmBossThread != null) {
                 bgmBossThread.setInterrupt(true);
             }
-            bgmThread = new MusicThread("src/video/bgm.wav");
+            bgmThread = new MusicThread("src/audios/bgm.wav");
             bgmThread.start();
         }
 
@@ -77,7 +77,7 @@ public class MediumGame extends AbstractGame {
             if (bgmThread != null) {
                 bgmThread.setInterrupt(true);
             }
-            bgmBossThread = new MusicThread("src/video/bgm_vsboss.wav");
+            bgmBossThread = new MusicThread("src/audios/bgm_vsboss.wav");
             bgmBossThread.start();
         }
     }

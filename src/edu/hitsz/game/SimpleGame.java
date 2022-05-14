@@ -53,8 +53,8 @@ public class SimpleGame extends AbstractGame {
 
     public void playBGM() {
         if ((bgmThread == null || !bgmThread.isAlive())) {
-            bgmThread = new MusicThread("src/video/bgm.wav");
-            bgmThread.start();
+            bgmBossThread = new MusicThread("src/audios/bgm.wav");
+            bgmBossThread.start();
         }
     }
 
