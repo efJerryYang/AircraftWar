@@ -1,6 +1,15 @@
 package edu.hitsz.application;
 
 public class Config {
+    public final static double BOMB_PROP_GENERATION_SIMPLE = 0.33;
+    public final static double BLOOD_PROP_GENERATION_SIMPLE = 0.33;
+    public final static double BULLET_PROP_GENERATION_SIMPLE = 0.33;
+    public final static double BOMB_PROP_GENERATION_MEDIUM = 0.3;
+    public final static double BLOOD_PROP_GENERATION_MEDIUM = 0.3;
+    public final static double BULLET_PROP_GENERATION_MEDIUM = 0.3;
+    public final static double BOMB_PROP_GENERATION_DIFFICULT = 0.2;
+    public final static double BLOOD_PROP_GENERATION_DIFFICULT = 0.2;
+    public final static double BULLET_PROP_GENERATION_DIFFICULT = 0.3;
     private static int gameLevel = 1;
     private static boolean enableAudio = true;
     private static int score = 0;
@@ -17,10 +26,6 @@ public class Config {
         return enableAudio;
     }
 
-    public static void setEnableAudio(boolean enableAudio) {
-        Config.enableAudio = enableAudio;
-    }
-
     public static int getScore() {
         return score;
     }
@@ -31,5 +36,9 @@ public class Config {
 
     public static boolean getEnableAudio() {
         return Config.enableAudio;
+    }
+
+    public static void setEnableAudio(boolean enableAudio) {
+        Config.enableAudio = enableAudio;
     }
 }

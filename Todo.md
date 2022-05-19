@@ -29,7 +29,7 @@
 
     - [ ] `strategy.*`
 
-  - [ ] `refactor: crashCheckAction()`
+  - [x] `refactor: crashCheckAction()`
 
 - [ ] 原始功能移植
   - [ ] 开始界面
