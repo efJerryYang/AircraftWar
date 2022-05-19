@@ -1,14 +1,10 @@
 package edu.hitsz.game;
 
 import edu.hitsz.aircraft.AbstractEnemy;
-import edu.hitsz.aircraft.EliteEnemy;
-import edu.hitsz.application.*;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
-import edu.hitsz.strategy.StraightShoot;
+import edu.hitsz.application.Config;
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicThread;
 
 import java.awt.*;
 
@@ -29,27 +25,30 @@ public class SimpleGame extends AbstractGame {
 
     public void playBGM() {
         if (bgmThread == null || !bgmThread.isAlive()) {
-                bgmThread = new MusicThread("src/audios/bgm.wav");
-                bgmThread.start();
+            bgmThread = new MusicThread("src/audios/bgm.wav");
+            bgmThread.start();
         }
     }
-    public void enemyShootAction(){
+
+    public void enemyShootAction() {
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
         }
     }
+
     public void heroShootAction() {
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
     }
+
     public void aircraftsMoveAction() {
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
         }
     }
 
-    public void paintBackground(Graphics g){
+    public void paintBackground(Graphics g) {
         g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
         g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
         this.backGroundTop += 1;

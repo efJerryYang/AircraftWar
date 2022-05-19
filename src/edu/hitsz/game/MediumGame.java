@@ -1,17 +1,10 @@
 package edu.hitsz.game;
 
 import edu.hitsz.aircraft.AbstractEnemy;
-import edu.hitsz.aircraft.BossEnemy;
-import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.application.Config;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.application.MusicThread;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
 
 import java.awt.*;
 

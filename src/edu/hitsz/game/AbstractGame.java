@@ -37,6 +37,9 @@ public abstract class AbstractGame extends JPanel {
     protected final EliteFactory eliteFactory;
     protected final BossFactory bossFactory;
     protected final RecordDAOImpl recordDAOImpl;
+    public double bombPropGeneration;
+    public double bloodPropGeneration;
+    public double bulletPropGeneration;
     //Scheduled 线程池，用于定时任务调度
     protected ScheduledExecutorService executorService;
     protected MusicThread bulletHitThread = null;
@@ -85,9 +88,6 @@ public abstract class AbstractGame extends JPanel {
     protected boolean bulletFlag = false;
     protected boolean bulletCrash = false;
     protected boolean crashFlag = false;
-    public double bombPropGeneration;
-    public double bloodPropGeneration;
-    public double bulletPropGeneration;
 
     protected AbstractGame(int gameLevel, boolean enableAudio) {
         this.baseLevel = gameLevel;
@@ -153,7 +153,6 @@ public abstract class AbstractGame extends JPanel {
             level = Math.min(bossCnt + 0.9999 + baseLevel, baseLevel * ((double) time / 1e5 + levelScalar));
             bulletPropStageCount();
             bloodPropStageCount();
-//            bloodPropStageCount();
             if (gameOverFlag) {
                 executorService.shutdown();
             }
@@ -201,9 +200,6 @@ public abstract class AbstractGame extends JPanel {
             }
         }
     }
-    //***********************
-    //      Action 各部分
-    //***********************
 
     public boolean timeCountAndNewCycleJudge() {
         cycleTime += timeInterval;
@@ -293,7 +289,7 @@ public abstract class AbstractGame extends JPanel {
         props.removeIf(AbstractFlyingObject::notValid);
     }
 
-    public void generateEnemyAircraft(){
+    public void generateEnemyAircraft() {
         if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
             // 随机数控制产生精英敌机
             boolean createElite = Math.random() < 0.5;
@@ -307,7 +303,8 @@ public abstract class AbstractGame extends JPanel {
         }
 
     }
-    public void generateBoss(){
+
+    public void generateBoss() {
         // System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
         if (score > (BOSS_APPEAR_SCORE * level) && scoreCnt <= 0) {
             enemyAircrafts.add(bossFactory.createEnemy(this.level)); // 不改变boss血量
@@ -318,6 +315,7 @@ public abstract class AbstractGame extends JPanel {
             }
         }
     }
+
     public void generateAllEnemy() {
         System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, level, Math.min((int) (5 * Math.sqrt(level)), 15), (int) (60 * Math.sqrt(this.level)), (int) (2000 / (5 + level)));
         // 新敌机产生
@@ -325,21 +323,6 @@ public abstract class AbstractGame extends JPanel {
         // 控制生成boss敌机
         generateBoss();
     }
-
-//    abstract public void gameOverCheck();
-
-    abstract public void playBGM();
-
-//    abstract public boolean timeCountAndNewCycleJudge();
-
-    abstract public void enemyShootAction();
-
-    abstract public void heroShootAction();
-//    abstract public void bulletsMoveAction();
-
-//    abstract public void aircraftsMoveAction();
-
-//    abstract public void propMoveAction();
 
     public void generateProp(AbstractEnemy enemyAircraft) {
         double randNum = Math.random();
@@ -354,7 +337,8 @@ public abstract class AbstractGame extends JPanel {
             props.add(bulletPropFactory.createProp(enemyAircraft.getLocationX(), enemyAircraft.getLocationY()));
         } // else do nothing
     }
-    public void generateBossProp(BossEnemy enemyAircraft){
+
+    public void generateBossProp(BossEnemy enemyAircraft) {
         props.add(bloodPropFactory.createProp(
                 (int) (Math.random() * enemyAircraft.getLocationX() + ImageManager.BOSS_ENEMY_IMAGE.getWidth() / 2),
                 (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
@@ -368,7 +352,8 @@ public abstract class AbstractGame extends JPanel {
                 (int) (Math.random() * enemyAircraft.getLocationY() + ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2)
         ));
     }
-    public void enemyShootHero(){
+
+    public void enemyShootHero() {
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -379,7 +364,8 @@ public abstract class AbstractGame extends JPanel {
             }
         }
     }
-    public void aircraftCrashJudge(AbstractEnemy enemyAircraft){
+
+    public void aircraftCrashJudge(AbstractEnemy enemyAircraft) {
         if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
             // 护盾道具开启时
             crashWithShieldThread = new MusicThread("src/audios/crash.wav");
@@ -415,7 +401,8 @@ public abstract class AbstractGame extends JPanel {
         }
 
     }
-    public void heroShootEnemy(){
+
+    public void heroShootEnemy() {
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -464,7 +451,7 @@ public abstract class AbstractGame extends JPanel {
         }
     }
 
-    public void heroActivateProp(){
+    public void heroActivateProp() {
         for (AbstractProp prop : props) {
             if (prop.notValid()) {
                 continue;
@@ -497,6 +484,7 @@ public abstract class AbstractGame extends JPanel {
             }
         }
     }
+
     /**
      * 碰撞检测：
      * 1. 敌机攻击英雄
@@ -511,8 +499,6 @@ public abstract class AbstractGame extends JPanel {
         // (DONE) 我方获得道具，道具生效
         heroActivateProp();
     }
-
-//    abstract public void postProcessAction();
 
     public void paintScoreAndLife(Graphics g) {
         int x = 10;
@@ -573,8 +559,6 @@ public abstract class AbstractGame extends JPanel {
 
     }
 
-    abstract public void paintBackground(Graphics g);
-
     public void paintHeroAttributes(Graphics g) {
         int x = heroAircraft.getLocationX() - 50;
         int y = heroAircraft.getLocationY() - 50;
@@ -625,9 +609,6 @@ public abstract class AbstractGame extends JPanel {
         g.setColor(Color.BLACK);
         g.draw3DRect(x, y, 100, 5, true);
     }
-    //***********************
-    //      Paint 各部分
-    //***********************
 
     /**
      * 重写paint方法
@@ -656,4 +637,13 @@ public abstract class AbstractGame extends JPanel {
         // 绘制敌机生命条
         paintEnemyLife(g);
     }
+
+    abstract public void paintBackground(Graphics g);
+
+    abstract public void playBGM();
+
+    abstract public void enemyShootAction();
+
+    abstract public void heroShootAction();
+
 }
