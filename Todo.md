@@ -13,23 +13,28 @@
     - [x] `MediumGame.java`
     - [x] `SimpleGame.java`
 
+  - [x] `refactor: crashCheckAction()`
+
   - [ ] 策略模式相关代码重构
 
     - [ ] `AbstractAircraft.java`
 
+
     - [ ] `HeroAircraft.java`
 
+
     - [ ] `AbstractGame.java`
+
 
     - [ ] `Context.java` 
 
       > may be removed later
 
+
     - [ ] `BulletProp.java`
 
-    - [ ] `strategy.*`
 
-  - [x] `refactor: crashCheckAction()`
+    - [ ] `strategy.*`
 
 - [ ] 原始功能移植
   - [ ] 开始界面
