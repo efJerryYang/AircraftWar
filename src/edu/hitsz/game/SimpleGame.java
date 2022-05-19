@@ -18,55 +18,31 @@ import java.awt.*;
 
 public class SimpleGame extends AbstractGame {
 
-    private Context heroContext;
-    private Context enemyContext;
-
     public SimpleGame(int gameLevel, boolean enableAudio) {
-        super(1, enableAudio);
-        gameLevel = 1;
-        enemyMaxNumber = 2; // actually is 3
-        enemyMaxNumberUpperBound = 2; // actually is 3
-        this.baseLevel = gameLevel;
-        this.level = gameLevel;
-        this.enableAudio = enableAudio;
-        heroContext = new Context(new StraightShoot());
-        enemyContext = new Context(new StraightShoot());
+        super(gameLevel, enableAudio);
     }
 
-
-    public void generateEnemyAircrafts() {
-        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, (double) baseLevel, Math.min((int) (5 * Math.sqrt(baseLevel)), 15), (int) (60 * Math.sqrt(this.baseLevel)), (int) (2000 / (5 + baseLevel)));
-        // 新敌机产生
-        if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
-            // 随机数控制产生精英敌机
-            boolean createElite = Math.random() < (1 / 3.0);
-            if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(this.baseLevel));
-                mobCnt++;
-            } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(this.baseLevel));
-                mobCnt = 0;
-            }
-        }
-        // 不生成boss敌机
+    @Override
+    public void generateBoss() {
+        // do not generate boss
     }
 
     public void playBGM() {
-        if ((bgmThread == null || !bgmThread.isAlive())) {
-            bgmBossThread = new MusicThread("src/audios/bgm.wav");
-            bgmBossThread.start();
+        if (bgmThread == null || !bgmThread.isAlive()) {
+                bgmThread = new MusicThread("src/audios/bgm.wav");
+                bgmThread.start();
         }
     }
-
-    public void shootAction() {
+    public void enemyShootAction(){
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
         }
+    }
+    public void heroShootAction() {
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
     }
-
     public void aircraftsMoveAction() {
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
@@ -103,14 +79,14 @@ public class SimpleGame extends AbstractGame {
                 }
                 if (enemyAircraft.crash(bullet)) {
                     bulletCrash = true;
-                    bulletHitThread = new MusicThread("src/video/bullet_hit.wav");
+                    bulletHitThread = new MusicThread("src/audios/bullet_hit.wav");
                     bulletHitThread.start();
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                        crashWithShieldThread = new MusicThread("src/audios/crash.wav");
                         crashWithShieldThread.start();
                         crashFlag = true;
                         int increment = enemyAircraft.getScore();
@@ -134,7 +110,7 @@ public class SimpleGame extends AbstractGame {
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
 //                    System.out.println(bloodValidTimeCnt);
                     // 护盾道具开启时
-                    crashWithShieldThread = new MusicThread("src/video/crash.wav");
+                    crashWithShieldThread = new MusicThread("src/audios/crash.wav");
                     crashWithShieldThread.start();
                     if (bloodValidTimeCnt > 0) {
                         if (EliteEnemy.class.equals(enemyAircraft.getClass())) {
@@ -176,17 +152,17 @@ public class SimpleGame extends AbstractGame {
                 if (prop.getClass().equals(BombProp.class)) {
                     ((BombProp) prop).notifyAllSubscribers();
                     bombFlag = true;
-                    bombExplodeThread = new MusicThread("src/video/bomb_explosion.wav");
+                    bombExplodeThread = new MusicThread("src/audios/bomb_explosion.wav");
                     bombExplodeThread.start();
                 } else if (prop.getClass().equals(BulletProp.class)) {
                     bulletFlag = true;
-                    bulletPropThread = new MusicThread("src/video/bullet.wav");
+                    bulletPropThread = new MusicThread("src/audios/bullet.wav");
                     bulletPropThread.start();
                     heroAircraft.setBulletPropStage(heroAircraft.getBulletPropStage() + 1);
                     bulletValidTimeCnt = (int) (2000 / (5 + baseLevel));
                 } else if (prop.getClass().equals(BloodProp.class)) {
                     bloodFlag = true;
-                    bloodPropThread = new MusicThread("src/video/get_supply.wav");
+                    bloodPropThread = new MusicThread("src/audios/get_supply.wav");
                     bloodPropThread.start();
                     if (heroAircraft.getHp() == heroAircraft.getMaxHp()) {
                         bloodValidTimeCnt = (int) (2000 / (5 + baseLevel));
@@ -201,43 +177,13 @@ public class SimpleGame extends AbstractGame {
         }
 
     }
-
-    //***********************
-    //      Paint 各部分
-    //***********************
-
-    /**
-     * 重写paint方法
-     * 通过重复调用paint方法，实现游戏动画
-     *
-     * @param g
-     */
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        // 绘制背景,图片滚动
+    public void paintBackground(Graphics g){
         g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
         g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
         }
-
-        // 先绘制子弹，后绘制飞机
-        // 这样子弹显示在飞机的下层
-        paintImageWithPositionRevised(g, enemyBullets);
-        paintImageWithPositionRevised(g, heroBullets);
-
-        paintImageWithPositionRevised(g, enemyAircrafts);
-        paintImageWithPositionRevised(g, props);
-        g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2, heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
-
-        // 绘制得分和生命值
-        paintScoreAndLife(g);
-        // 绘制道具时间条
-        paintHeroAttributes(g);
-        // 绘制敌机生命条
-        paintEnemyLife(g);
-
     }
+
 }

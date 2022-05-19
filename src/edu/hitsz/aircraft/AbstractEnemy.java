@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 抽象敌人类
  * <p>
- * score用于记录击毁敌人所获得的分数，或者获取道具时获取的分数
+ * score用于记录击毁敌人所获得的分数
  * type用于记录敌人种类
  *
  * @author JerryYang

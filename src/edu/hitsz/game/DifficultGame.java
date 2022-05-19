@@ -20,48 +20,8 @@ import java.awt.*;
 import static edu.hitsz.aircraft.HeroAircraft.BOSS_APPEAR_SCORE;
 
 public class DifficultGame extends AbstractGame {
-
-    private Context heroContext;
-    private Context enemyContext;
-
     public DifficultGame(int gameLevel, boolean enableAudio) {
-        super(4, enableAudio);
-        gameLevel = 4;
-        enemyMaxNumber = 2; // actually is 3
-        enemyMaxNumberUpperBound = 6; // actually is 7
-        this.baseLevel = gameLevel;
-        this.level = gameLevel;
-        this.enableAudio = enableAudio;
-        heroContext = new Context(new StraightShoot());
-        enemyContext = new Context(new StraightShoot());
-    }
-
-
-    public void generateEnemyAircrafts() {
-        System.out.printf("Time: %7d    Level:%7.4f    MobSpeed:%4d    EliteHp:%4d    PropValidMaxTime:%4d\n", time, level, Math.min((int) (5 * Math.sqrt(level)), 15), (int) (60 * Math.sqrt(this.level)), (int) (2000 / (5 + level)));
-        // 新敌机产生
-        if (enemyAircrafts.size() <= enemyMaxNumber && enemyMaxNumber <= enemyMaxNumberUpperBound) {
-            // 随机数控制产生精英敌机
-            boolean createElite = Math.random() < 0.7;
-            if (mobCnt < mobCntMax && !createElite) {
-                enemyAircrafts.add(mobFactory.createEnemy(this.level));
-                mobCnt++;
-            } else {
-                enemyAircrafts.add(eliteFactory.createEnemy(this.level));
-                mobCnt = 0;
-            }
-        }
-        // 控制生成boss敌机
-//        System.out.println("score: " + score + " scoreCnt: " + scoreCnt + " bossFlag: " + bossFlag);
-        if (score > (BOSS_APPEAR_SCORE * level / 3) && scoreCnt <= 0) {
-            enemyAircrafts.add(bossFactory.createEnemy(this.level));
-            scoreCnt = (int) (BOSS_APPEAR_SCORE * level / 3);
-            bossFlag = true;
-            if (enemyMaxNumber < enemyMaxNumberUpperBound) {
-                enemyMaxNumber++;
-            }
-        }
-
+        super(gameLevel, enableAudio);
     }
 
     public void playBGM() {
@@ -81,31 +41,17 @@ public class DifficultGame extends AbstractGame {
             bgmBossThread.start();
         }
     }
-
-    public void shootAction() {
+    public void enemyShootAction(){
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
         }
+    }
+    public void heroShootAction() {
         // 英雄射击
         heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
     }
 
-
-    public void aircraftsMoveAction() {
-        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            boolean outOfBound = enemyAircraft.notValid();
-            enemyAircraft.forward();
-            if (enemyAircraft.notValid() != outOfBound) {
-                double subNum = enemyAircraft.getHp() / 2.0;
-                var type = enemyAircraft.getClass();
-                subNum *= MobEnemy.class.equals(type) ? 1.5 : EliteEnemy.class.equals(type) ? 1.75 : BossEnemy.class.equals(type) ? 2 : 0;
-                score -= subNum;
-                scoreCnt += bossFlag ? 0 : subNum;
-                score = Math.max(score, 0);
-            }
-        }
-    }
 
     /**
      * 碰撞检测：
@@ -263,59 +209,18 @@ public class DifficultGame extends AbstractGame {
                 score += increment;
                 scoreCnt -= bossFlag ? 0 : increment;
                 prop.vanish();
-                // my Todo: 添加加血特效
-                // my Todo: 添加爆炸特效
             }
         }
 
     }
-
-    //***********************
-    //      Paint 各部分
-    //***********************
-
-    /**
-     * 重写paint方法
-     * 通过重复调用paint方法，实现游戏动画
-     *
-     * @param g
-     */
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintBackground(Graphics g){
         // 绘制背景,图片滚动
-        if (level >= 4 && level < 5) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
-
-        } else if (level >= 5) {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL5, 0, this.backGroundTop, null);
-        } else {
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-            g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        }
+        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL4, 0, this.backGroundTop, null);
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
         }
-
-        // 先绘制子弹，后绘制飞机
-        // 这样子弹显示在飞机的下层
-        paintImageWithPositionRevised(g, enemyBullets);
-        paintImageWithPositionRevised(g, heroBullets);
-
-        paintImageWithPositionRevised(g, enemyAircrafts);
-        paintImageWithPositionRevised(g, props);
-        g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2, heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
-
-        // 绘制得分和生命值
-        paintScoreAndLife(g);
-
-        // 绘制道具作用时间条
-        paintHeroAttributes(g);
-        // 绘制敌机生命条
-        paintEnemyLife(g);
-
     }
+
 }

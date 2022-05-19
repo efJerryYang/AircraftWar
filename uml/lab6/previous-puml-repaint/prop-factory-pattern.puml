@@ -12,7 +12,7 @@ class MediumGame {
 '- Context heroContext
 '- Context enemyContext
 '+ <<Create>> MediumGame(int,boolean)
-'+ void generateEnemyAircrafts()
+'+ void generateAllEnemy()
 '+ void playBGM()
 '+ void shootAction()
 '+ void aircraftsMoveAction()
@@ -42,7 +42,7 @@ class DifficultGame {
 '- Context heroContext
 '- Context enemyContext
 '+ <<Create>> DifficultGame(int,boolean)
-'+ void generateEnemyAircrafts()
+'+ void generateAllEnemy()
 '+ void playBGM()
 '+ void shootAction()
 '+ void aircraftsMoveAction()
@@ -67,7 +67,7 @@ class SimpleGame {
 '- Context heroContext
 '- Context enemyContext
 '+ <<Create>> SimpleGame(int,boolean)
-'+ void generateEnemyAircrafts()
+'+ void generateAllEnemy()
 '+ void playBGM()
 '+ void shootAction()
 '+ void aircraftsMoveAction()
