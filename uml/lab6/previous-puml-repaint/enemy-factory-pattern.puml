@@ -1,7 +1,7 @@
 @startuml
 class MediumGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> MediumGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()
@@ -56,8 +56,8 @@ class EliteFactory {
 + AbstractEnemy createEnemy(double)
 }
 class DifficultGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> DifficultGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()
@@ -76,8 +76,8 @@ abstract class AbstractEnemy {
 + void explode()
 }
 class SimpleGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> SimpleGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()

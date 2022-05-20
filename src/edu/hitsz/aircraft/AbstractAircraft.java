@@ -81,8 +81,6 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         this.hp = hp;
     }
 
-//    public abstract List<BaseBullet> shoot();
-
 }
 
 

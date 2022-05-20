@@ -1,7 +1,9 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ShootContext;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
+import edu.hitsz.strategy.ScatterShoot;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,7 +69,8 @@ class BossEnemyTest {
             int difficulty = Math.max(1, i);
             System.out.println("\tDifficulty: " + difficulty);
             BossEnemy boss = (BossEnemy) bossFactory.createEnemy(difficulty);
-            List<BaseBullet> res = boss.shoot();
+            ShootContext shootContext = new ShootContext(new ScatterShoot());
+            List<BaseBullet> res = shootContext.executeShootStrategy(boss);
             int sumX = 0;
             for (int j = 0; j < boss.getShootNum(); j++) {
                 BaseBullet bullet = res.get(j);

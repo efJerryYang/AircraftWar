@@ -1,7 +1,9 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ShootContext;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
+import edu.hitsz.strategy.StraightShoot;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -101,7 +103,8 @@ class EliteEnemyTest {
                 break;
             }
             EliteEnemy elite = (EliteEnemy) eliteFactory.createEnemy(i);
-            List<BaseBullet> res = elite.shoot();
+            ShootContext shootContext = new ShootContext(new StraightShoot());
+            List<BaseBullet> res = shootContext.executeShootStrategy(elite);
             for (int j = 0; j < elite.getShootNum(); j++) {
                 BaseBullet bullet = res.get(j);
                 int center = j * 2 - elite.getShootNum() + 1;

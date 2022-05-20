@@ -37,13 +37,13 @@ public class DifficultGame extends AbstractGame {
     public void enemyShootAction() {
         // [DONE] 敌机射击
         for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyContext.executeShootStrategy(enemyAircraft));
+            enemyBullets.addAll(enemyShootContext.executeShootStrategy(enemyAircraft));
         }
     }
 
     public void heroShootAction() {
         // 英雄射击
-        heroBullets.addAll(heroContext.executeShootStrategy(heroAircraft));
+        heroBullets.addAll(heroShootContext.executeShootStrategy(heroAircraft));
     }
 
 

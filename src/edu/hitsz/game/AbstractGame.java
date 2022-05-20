@@ -50,8 +50,8 @@ public abstract class AbstractGame extends JPanel {
     protected MusicThread bgmThread = null;
     protected MusicThread bgmBossThread = null;
     protected MusicThread gameOverThread = null;
-    protected Context heroContext;
-    protected Context enemyContext;
+    protected ShootContext heroShootContext;
+    protected ShootContext enemyShootContext;
     protected boolean enableAudio;
     protected int baseLevel = 0;
     protected double level = 0;
@@ -108,8 +108,8 @@ public abstract class AbstractGame extends JPanel {
         mobFactory = new MobFactory();
         eliteFactory = new EliteFactory();
         bossFactory = new BossFactory();
-        heroContext = new Context(new StraightShoot());
-        enemyContext = new Context(new StraightShoot());
+        heroShootContext = new ShootContext(new StraightShoot());
+        enemyShootContext = new ShootContext(new StraightShoot());
         recordDAOImpl = new RecordDAOImpl(gameLevel);
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -261,7 +261,7 @@ public abstract class AbstractGame extends JPanel {
             System.out.println(executorService.shutdownNow());
             gameOverFlag = true;
             Record record = null;
-            gameOverThread = new MusicThread("src/video/game_over.wav");
+            gameOverThread = new MusicThread("src/audios/game_over.wav");
             gameOverThread.start();
             System.out.println("Game Over!");
             Config.setScore(score);

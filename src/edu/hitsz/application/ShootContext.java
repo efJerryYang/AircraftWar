@@ -1,6 +1,5 @@
 package edu.hitsz.application;
 
-import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
@@ -11,10 +10,10 @@ import edu.hitsz.strategy.StraightShoot;
 
 import java.util.List;
 
-public class Context {
+public class ShootContext {
     private ShootStrategy shootStrategy;
 
-    public Context(ShootStrategy shootStrategy) {
+    public ShootContext(ShootStrategy shootStrategy) {
         this.shootStrategy = shootStrategy;
     }
 

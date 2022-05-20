@@ -1,8 +1,10 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ShootContext;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.strategy.StraightShoot;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -98,7 +100,8 @@ class HeroAircraftTest {
             bulletProp.activate(heroAircraft, enemyAircrafts, heroBullets,enemyBullets, time);
         }
 
-        List<BaseBullet> res = heroAircraft.shoot();
+        ShootContext shootContext = new ShootContext(new StraightShoot());
+        List<BaseBullet> res = shootContext.executeShootStrategy(heroAircraft);
         int sumX = 0;
         for (int i = 0; i < heroAircraft.getShootNum(); i++) {
             BaseBullet bullet = res.get(i);

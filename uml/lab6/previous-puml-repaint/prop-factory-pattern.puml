@@ -9,8 +9,8 @@ class BombProp {
 + void notifyAllSubscribers()
 }
 class MediumGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> MediumGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()
@@ -39,8 +39,8 @@ interface PropFactory {
 ~ AbstractProp createProp(int,int)
 }
 class DifficultGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> DifficultGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()
@@ -64,8 +64,8 @@ abstract class AbstractProp {
 + void setScore(int)
 }
 class SimpleGame {
-'- Context heroContext
-'- Context enemyContext
+'- ShootContext heroShootContext
+'- ShootContext enemyShootContext
 '+ <<Create>> SimpleGame(int,boolean)
 '+ void generateAllEnemy()
 '+ void playBGM()
