@@ -37,10 +37,10 @@ public abstract class AbstractEnemy extends AbstractAircraft implements BombSubs
         }
     }
 
-    @Override
-    public List<BaseBullet> shoot() {
-        return new LinkedList<>();
-    }
+//    @Override
+//    public List<BaseBullet> shoot() {
+//        return new LinkedList<>();
+//    }
 
     public int getScore() {
         return score;

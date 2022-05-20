@@ -15,26 +15,17 @@
 
   - [x] `refactor: crashCheckAction()`
 
-  - [ ] 策略模式相关代码重构
+  - [x] 策略模式相关代码重构
 
-    - [ ] `AbstractAircraft.java`
-
-
-    - [ ] `HeroAircraft.java`
-
-
-    - [ ] `AbstractGame.java`
-
-
-    - [ ] `Context.java` 
-
+    - [x] `AbstractAircraft.java`
+    - [x] `HeroAircraft.java`
+    - [x] `AbstractGame.java`
+    - [x] `Context.java` 
+      
       > may be removed later
-
-
-    - [ ] `BulletProp.java`
-
-
-    - [ ] `strategy.*`
+      
+    - [x] `BulletProp.java`
+    - [x] `strategy.*`
 
 - [ ] 原始功能移植
   - [ ] 开始界面

@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.aircraft.AbstractEnemy;
 import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.bullet.BaseBullet;
@@ -17,10 +18,16 @@ public class Context {
         this.shootStrategy = shootStrategy;
     }
 
-    public List<BaseBullet> executeShootStrategy(AbstractAircraft aircraft) {
-        if (aircraft instanceof HeroAircraft && ((HeroAircraft) aircraft).getBulletPropStage() > 0) {
+    public List<BaseBullet> executeShootStrategy(AbstractEnemy aircraft) {
+        if (aircraft.getClass().equals(BossEnemy.class)) {
             setShootStrategy(new ScatterShoot());
-        } else if (aircraft instanceof BossEnemy) {
+        } else {
+            setShootStrategy(new StraightShoot());
+        }
+        return shootStrategy.shoot(aircraft);
+    }
+    public List<BaseBullet> executeShootStrategy(HeroAircraft aircraft) {
+        if (aircraft.getBulletPropStage() > 0) {
             setShootStrategy(new ScatterShoot());
         } else {
             setShootStrategy(new StraightShoot());

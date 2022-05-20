@@ -20,9 +20,9 @@ public class BossEnemy extends AbstractEnemy implements BombSubscriber {
         this.setPower(30);
     }
 
-    @Override
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
+//    @Override
+//    public List<BaseBullet> shoot() {
+//        List<BaseBullet> res = new LinkedList<>();
 //        int x = this.getLocationX();
 //        int y = this.getLocationY() + this.getDirection() * 2;
 //        int speedX = 1;
@@ -37,8 +37,8 @@ public class BossEnemy extends AbstractEnemy implements BombSubscriber {
 //            baseBullet = new EnemyBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY, this.getPower());
 //            res.add(baseBullet);
 //        }
-        return res;
-    }
+//        return res;
+//    }
     @Override
     public void forward() {
         super.forward();

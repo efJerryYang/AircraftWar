@@ -38,9 +38,9 @@ public class EliteEnemy extends AbstractEnemy implements BombSubscriber {
 
     }
 
-    @Override
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
+//    @Override
+//    public List<BaseBullet> shoot() {
+//        List<BaseBullet> res = new LinkedList<>();
 //        int x = this.getLocationX();
 //        int y = this.getLocationY() + direction * 2;
 //        int speedX = 0;
@@ -52,8 +52,8 @@ public class EliteEnemy extends AbstractEnemy implements BombSubscriber {
 //            baseBullet = new EnemyBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power);
 //            res.add(baseBullet);
 //        }
-        return res;
-    }
+//        return res;
+//    }
 
     @Override
     public int getShootNum() {

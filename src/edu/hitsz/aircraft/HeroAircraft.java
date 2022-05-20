@@ -77,35 +77,35 @@ public class HeroAircraft extends AbstractAircraft {
     public void forward() {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
-
-    /**
-     * 通过射击产生子弹
-     *
-     * @return 射击出的子弹List
-     */
-    @Override
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + this.getDirection() * 2;
-        int speedX = 1;
-        int speedY = this.getSpeedY() + this.getDirection() * 5;
-        BaseBullet baseBullet;
-        for (int i = 0; i < shootNum; i++) {
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            int center = i * 2 - shootNum + 1;
-            int xloc = x + center * 6;
-            int yloc = y + center * center;
-            if (bulletSpeedUp) {
-                baseBullet = new HeroBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY * 2, Math.max(power, shootNum * power / 2));
-            } else {
-                baseBullet = new HeroBullet(xloc + center * 10, yloc, 0, speedY, power);
-            }
-            res.add(baseBullet);
-        }
-        return res;
-    }
+//
+//    /**
+//     * 通过射击产生子弹
+//     *
+//     * @return 射击出的子弹List
+//     */
+//    @Override
+//    public List<BaseBullet> shoot() {
+//        List<BaseBullet> res = new LinkedList<>();
+//        int x = this.getLocationX();
+//        int y = this.getLocationY() + this.getDirection() * 2;
+//        int speedX = 1;
+//        int speedY = this.getSpeedY() + this.getDirection() * 5;
+//        BaseBullet baseBullet;
+//        for (int i = 0; i < shootNum; i++) {
+//            // 子弹发射位置相对飞机位置向前偏移
+//            // 多个子弹横向分散
+//            int center = i * 2 - shootNum + 1;
+//            int xloc = x + center * 6;
+//            int yloc = y + center * center;
+//            if (bulletSpeedUp) {
+//                baseBullet = new HeroBullet(xloc, yloc, center != 0 ? speedX * center : 0, speedY * 2, Math.max(power, shootNum * power / 2));
+//            } else {
+//                baseBullet = new HeroBullet(xloc + center * 10, yloc, 0, speedY, power);
+//            }
+//            res.add(baseBullet);
+//        }
+//        return res;
+//    }
 
     /* Todo: 这里可以使英雄机不掉血     */
 //    public void decreaseHp(int decrease) { }

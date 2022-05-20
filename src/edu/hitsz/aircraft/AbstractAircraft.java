@@ -2,6 +2,8 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.strategy.ShootStrategy;
+import edu.hitsz.strategy.StraightShoot;
 
 import java.util.List;
 
@@ -13,9 +15,6 @@ import java.util.List;
  */
 public abstract class AbstractAircraft extends AbstractFlyingObject {
     protected int hp;
-    /**
-     * 生命值
-     */
     private int maxHp;
     private int shootNum;
     private int direction;
@@ -25,7 +24,6 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         super(locationX, locationY, speedX, speedY);
         this.hp = hp;
         this.maxHp = hp;
-//        this.score = score;
     }
 
     public int getShootNum() {
@@ -83,7 +81,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         this.hp = hp;
     }
 
-    public abstract List<BaseBullet> shoot();
+//    public abstract List<BaseBullet> shoot();
 
 }
 
