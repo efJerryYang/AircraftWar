@@ -40,6 +40,7 @@ public abstract class AbstractGame extends JPanel {
     public double bombPropGeneration;
     public double bloodPropGeneration;
     public double bulletPropGeneration;
+    public BufferedImage backgroundImage;
     //Scheduled 线程池，用于定时任务调度
     protected ScheduledExecutorService executorService;
     protected MusicThread bulletHitThread = null;
@@ -353,6 +354,19 @@ public abstract class AbstractGame extends JPanel {
         ));
     }
 
+    public void enemyShootAction() {
+        // [DONE] 敌机射击
+        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
+            enemyBullets.addAll(enemyShootContext.executeShootStrategy(enemyAircraft));
+        }
+    }
+
+    public void heroShootAction() {
+        // 英雄射击
+        heroBullets.addAll(heroShootContext.executeShootStrategy(heroAircraft));
+    }
+
+
     public void enemyShootHero() {
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
@@ -610,6 +624,16 @@ public abstract class AbstractGame extends JPanel {
         g.draw3DRect(x, y, 100, 5, true);
     }
 
+    public void paintBackground(Graphics g) {
+        // 绘制背景,图片滚动
+        g.drawImage(backgroundImage, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+        g.drawImage(backgroundImage, 0, this.backGroundTop, null);
+        this.backGroundTop += 1;
+        if (this.backGroundTop == Main.WINDOW_HEIGHT) {
+            this.backGroundTop = 0;
+        }
+    }
+
     /**
      * 重写paint方法
      * 通过重复调用paint方法，实现游戏动画
@@ -638,12 +662,5 @@ public abstract class AbstractGame extends JPanel {
         paintEnemyLife(g);
     }
 
-    abstract public void paintBackground(Graphics g);
-
     abstract public void playBGM();
-
-    abstract public void enemyShootAction();
-
-    abstract public void heroShootAction();
-
 }

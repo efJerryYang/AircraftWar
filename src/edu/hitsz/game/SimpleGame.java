@@ -16,6 +16,7 @@ public class SimpleGame extends AbstractGame {
         bloodPropGeneration = Config.BLOOD_PROP_GENERATION_SIMPLE;
         bombPropGeneration = Config.BOMB_PROP_GENERATION_SIMPLE;
         bulletPropGeneration = Config.BULLET_PROP_GENERATION_SIMPLE;
+        backgroundImage = ImageManager.BACKGROUND_IMAGE_LEVEL1;
     }
 
     @Override
@@ -27,33 +28,6 @@ public class SimpleGame extends AbstractGame {
         if (bgmThread == null || !bgmThread.isAlive()) {
             bgmThread = new MusicThread("src/audios/bgm.wav");
             bgmThread.start();
-        }
-    }
-
-    public void enemyShootAction() {
-        // [DONE] 敌机射击
-        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyShootContext.executeShootStrategy(enemyAircraft));
-        }
-    }
-
-    public void heroShootAction() {
-        // 英雄射击
-        heroBullets.addAll(heroShootContext.executeShootStrategy(heroAircraft));
-    }
-
-    public void aircraftsMoveAction() {
-        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            enemyAircraft.forward();
-        }
-    }
-
-    public void paintBackground(Graphics g) {
-        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL1, 0, this.backGroundTop, null);
-        this.backGroundTop += 1;
-        if (this.backGroundTop == Main.WINDOW_HEIGHT) {
-            this.backGroundTop = 0;
         }
     }
 

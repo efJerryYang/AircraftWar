@@ -17,6 +17,7 @@ public class MediumGame extends AbstractGame {
         bloodPropGeneration = Config.BLOOD_PROP_GENERATION_MEDIUM;
         bombPropGeneration = Config.BOMB_PROP_GENERATION_MEDIUM;
         bulletPropGeneration = Config.BULLET_PROP_GENERATION_MEDIUM;
+        backgroundImage = ImageManager.BACKGROUND_IMAGE_LEVEL2;
     }
 
     @Override
@@ -46,29 +47,6 @@ public class MediumGame extends AbstractGame {
             bgmBossThread = new MusicThread("src/audios/bgm_vsboss.wav");
             bgmBossThread.start();
         }
-    }
-
-    public void enemyShootAction() {
-        // [DONE] 敌机射击
-        for (AbstractEnemy enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyShootContext.executeShootStrategy(enemyAircraft));
-        }
-    }
-
-    public void heroShootAction() {
-        // 英雄射击
-        heroBullets.addAll(heroShootContext.executeShootStrategy(heroAircraft));
-    }
-
-    public void paintBackground(Graphics g) {
-        // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE_LEVEL2, 0, this.backGroundTop, null);
-        this.backGroundTop += 1;
-        if (this.backGroundTop == Main.WINDOW_HEIGHT) {
-            this.backGroundTop = 0;
-        }
-
     }
 
 }
