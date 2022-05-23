@@ -27,9 +27,14 @@
     - [x] `BulletProp.java`
     - [x] `strategy.*`
 
-- [ ] 原始功能移植
-  - [ ] 开始界面
+- [x] 原始功能移植
+  
+  - [x] 开始界面
   - [ ] 游戏主体
+    - [x] 背景滚动
+    - [ ] 游戏逻辑运行（action）
+    - [ ] 血条添加（draw）
   - [ ] 排行榜界面
-
+  - [ ] `refactor: System.out.print to Log.m/i/d/r/w/e`
+  
 - [ ] 联网功能
