@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AircraftWar.iml" filepath="$PROJECT_DIR$/AircraftWar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Defend_The_Frontline.iml" filepath="$PROJECT_DIR$/.idea/modules/Defend_The_Frontline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Defend_The_Frontline.app.unitTest.iml" />
     </modules>
   </component>
 </project>
