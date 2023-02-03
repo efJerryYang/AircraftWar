@@ -1,0 +1,110 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.efjerryyang.defendthefrontline"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="28"
+8-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml
+10
+11    <application
+11-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:6:5-33:19
+12        android:allowBackup="true"
+12-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:7:9-35
+13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+13-->[androidx.core:core:1.7.0] C:\Users\JerryYang\.gradle\caches\transforms-3\d8338c189490aee58604e111af57865f\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+14        android:dataExtractionRules="@xml/data_extraction_rules"
+14-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:8:9-65
+15        android:debuggable="true"
+16        android:extractNativeLibs="false"
+17        android:fullBackupContent="@xml/backup_rules"
+17-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:9:9-54
+18        android:icon="@mipmap/ic_launcher"
+18-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:10:9-43
+19        android:label="@string/app_name"
+19-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:11:9-41
+20        android:roundIcon="@mipmap/ic_launcher_round"
+20-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:12:9-54
+21        android:supportsRtl="true"
+21-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:13:9-35
+22        android:testOnly="true"
+23        android:theme="@style/Theme.DefendTheFrontline" >
+23-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:14:9-56
+24        <activity
+24-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:16:9-23:20
+25            android:name="com.efjerryyang.defendthefrontline.application.MainActivity"
+25-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:17:13-53
+26            android:exported="true" >
+26-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:18:13-36
+27            <intent-filter>
+27-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:19:13-22:29
+28                <action android:name="android.intent.action.MAIN" />
+28-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:20:17-69
+28-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:20:25-66
+29
+30                <category android:name="android.intent.category.LAUNCHER" />
+30-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:21:17-77
+30-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:21:27-74
+31            </intent-filter>
+32        </activity>
+33        <activity
+33-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:25:9-32:20
+34            android:name="com.efjerryyang.defendthefrontline.application.GameActivity"
+34-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:25:19-59
+35            android:exported="false" >
+35-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:26:13-37
+36            <intent-filter>
+36-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:27:13-31:29
+37                <action android:name="com.efjerryyang.application.GAME_START" />
+37-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:28:17-80
+37-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:28:25-78
+38
+39                <category android:name="android.intent.category.DEFAULT" />
+39-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:29:17-75
+39-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:29:27-73
+40                <category android:name="com.efjerryyang.application.GAME_REPLAY" />
+40-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:30:17-83
+40-->D:\Projects\AndroidStudioProjects\DefendTheFrontline\app\src\main\AndroidManifest.xml:30:27-81
+41            </intent-filter>
+42        </activity>
+43
+44        <provider
+44-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+45            android:name="androidx.startup.InitializationProvider"
+45-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:27:13-67
+46            android:authorities="com.efjerryyang.defendthefrontline.androidx-startup"
+46-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:28:13-68
+47            android:exported="false" >
+47-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:29:13-37
+48            <meta-data
+48-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+49                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+49-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:32:17-75
+50                android:value="androidx.startup" />
+50-->[androidx.emoji2:emoji2:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:33:17-49
+51            <meta-data
+51-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\JerryYang\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+52                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+52-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\JerryYang\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+53                android:value="androidx.startup" />
+53-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\JerryYang\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+54        </provider>
+55
+56        <uses-library
+56-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+57            android:name="androidx.window.extensions"
+57-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+58            android:required="false" />
+58-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+59        <uses-library
+59-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+60            android:name="androidx.window.sidecar"
+60-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+61            android:required="false" />
+61-->[androidx.window:window:1.0.0] C:\Users\JerryYang\.gradle\caches\transforms-3\f65b5ca91da7c8c2dd021bd66811129e\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+62    </application>
+63
+64</manifest>

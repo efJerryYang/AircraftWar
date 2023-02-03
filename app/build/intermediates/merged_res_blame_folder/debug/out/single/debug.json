@@ -1,0 +1,190 @@
+[
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_prop_blood.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/prop_blood.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bg4.jpg.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bg4.jpg"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_prop_bullet.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/prop_bullet.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_elite.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/elite.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bg2.jpg.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bg2.jpg"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/layout_activity_main.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bullet.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bullet.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/xml_backup_rules.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bg5.jpg.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bg5.jpg"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/layout_activity_game.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/layout/activity_game.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_hero.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/hero.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bgm_boss.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bgm_boss.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/menu_menu_main.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/menu/menu_main.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bgm_vsboss.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bgm_vsboss.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_get_supply.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/get_supply.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bomb_explosion.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bomb_explosion.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/layout_fragment_first.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/layout/fragment_first.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bullet_hit.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bullet_hit.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bullet_enemy.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bullet_enemy.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/navigation_nav_graph.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_game_over.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/game_over.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/xml_data_extraction_rules.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_mob.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/mob.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_bgm.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/bgm.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bg3.jpg.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bg3.jpg"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bullet_hero.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bullet_hero.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/layout_content_main.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/layout/content_main.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/raw_crash.wav.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/raw/crash.wav"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/layout_fragment_second.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/layout/fragment_second.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_prop_bomb.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/prop_bomb.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_boss.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/boss.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_shield.png.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/shield.png"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/drawable-v24_bg1.jpg.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/drawable-v24/bg1.jpg"
+    },
+    {
+        "merged": "com.efjerryyang.defendthefrontline.app-merged_res-32:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.efjerryyang.defendthefrontline.app-main-34:/mipmap-hdpi/ic_launcher_round.webp"
+    }
+]
