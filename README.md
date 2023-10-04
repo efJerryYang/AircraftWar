@@ -1,5 +1,7 @@
 # Aircraft War
 
+[English](README_en.md) | [中文](README.md)
+
 ## Content
 
 - `docs`
@@ -28,7 +30,7 @@
 
 - `uml`
 
-  本目录下存放有各次实验绘制的uml文件及导出png图片，是`lab-submit`部分的子集
+  本目录下存放有各次实验绘制的 uml 文件及导出 png 图片，是`lab-submit`部分的子集
 
 ## Description
 
@@ -38,5 +40,5 @@
 
 ## Note
 
-* DAO模式，因为添加了gson作为数据操作的包，如果无法直接运行，需要添加lib/gson/目录下的jar包到Project Structure的依赖中
-* 运行游戏，可以双击`AircraftWar.jar`或者使用命令行`java -jar AircraftWar.jar`运行
+- DAO 模式，因为添加了 gson 作为数据操作的包，如果无法直接运行，需要添加 lib/gson/目录下的 jar 包到 Project Structure 的依赖中
+- 运行游戏，可以双击`AircraftWar.jar`或者使用命令行`java -jar AircraftWar.jar`运行
